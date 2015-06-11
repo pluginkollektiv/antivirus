@@ -1,0 +1,162 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: AntiVirus v1.3.5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2014-03-08 22:21:17+0000\n"
+"Last-Translator: Pablo Laguna <laguna.sanchez@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: CSL v1.x\n"
+"X-Poedit-Language: Spanish\n"
+"X-Poedit-Country: SPAIN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
+
+#. translators: plugin header field 'Name'
+#: antivirus.php:0
+#@ antivirus
+msgid "AntiVirus"
+msgstr "AntiVirus"
+
+#. translators: plugin header field 'PluginURI'
+#: antivirus.php:0
+#: antivirus.php:505
+#@ antivirus
+msgid "http://wpantivirus.com"
+msgstr "http://wpantivirus.com"
+
+#. translators: plugin header field 'Description'
+#: antivirus.php:0
+#@ antivirus
+msgid "Security solution as a smart, effectively plugin to protect your blog against exploits and spam injections."
+msgstr "Solución de seguridad en un sencillo y efectivo plugin para proteger tu blog de agujeros e infecciones."
+
+#. translators: plugin header field 'Author'
+#: antivirus.php:0
+#@ antivirus
+msgid "Sergej M&uuml;ller"
+msgstr "Sergej M&uuml;ller"
+
+#. translators: plugin header field 'AuthorURI'
+#: antivirus.php:0
+#@ antivirus
+msgid "http://wpcoder.de"
+msgstr "http://wpcoder.de"
+
+#. translators: plugin header field 'Version'
+#: antivirus.php:0
+#@ antivirus
+msgid "1.3.5"
+msgstr "1.3.5"
+
+#: antivirus.php:182
+#@ default
+msgid "Settings"
+msgstr "Opciones"
+
+#: antivirus.php:431
+#@ antivirus
+msgid "Safe Browsing Alert"
+msgstr "Alerta de Safe Browsing"
+
+#: antivirus.php:434
+#@ antivirus
+msgid "Please check the Google Safe Browsing diagnostic page:"
+msgstr "Por favor, revisa la página de diagnóstico de Google  Safe Browsing:"
+
+#: antivirus.php:458
+#: antivirus.php:1125
+#@ antivirus
+msgid "Virus suspected"
+msgstr "Sospecha de virus"
+
+#: antivirus.php:461
+#: antivirus.php:1126
+#@ antivirus
+msgid "The daily antivirus scan of your blog suggests alarm."
+msgstr "El análisis antivirus diario de tu blog ha dado una alarma."
+
+#: antivirus.php:504
+#@ antivirus
+msgid "Notify message by AntiVirus for WordPress"
+msgstr "Mensaje de notificación de AntiVirus para WordPress"
+
+#: antivirus.php:579
+#@ antivirus
+msgid "There is no virus"
+msgstr "No hay virus"
+
+#: antivirus.php:580
+#@ antivirus
+msgid "View line"
+msgstr "Ver línea"
+
+#: antivirus.php:581
+#@ antivirus
+msgid "Scan finished"
+msgstr "Escaneo finalizado"
+
+#: antivirus.php:1133
+#: antivirus.php:1191
+#@ antivirus
+msgid "Manual malware scan"
+msgstr "Escaneo manual de software malicioso"
+
+#: antivirus.php:1177
+#@ default
+msgid "Settings saved."
+msgstr "Opciones guardadas."
+
+#: antivirus.php:1197
+#@ antivirus
+msgid "Scan the theme templates now"
+msgstr "Escanear los ficheros del tema ahora"
+
+#: antivirus.php:1214
+#@ antivirus
+msgid "Daily malware scan"
+msgstr "Escaneo diario de software malicioso"
+
+#: antivirus.php:1220
+#@ antivirus
+msgid "Check the theme templates for malware"
+msgstr "Revisar los ficheros del tema en busca de software malicioso"
+
+#: antivirus.php:1227
+#@ antivirus
+msgid "Next Run"
+msgstr "Próxima ejecución"
+
+#: antivirus.php:1239
+#@ antivirus
+msgid "Malware detection by Google Safe Browsing"
+msgstr "Detección de software malicioso por Google Safe Browsing"
+
+#: antivirus.php:1243
+#@ antivirus
+msgid "Diagnosis and notification in suspicion case"
+msgstr "Diagnóstico y notificación en caso de sospecha"
+
+#: antivirus.php:1251
+#@ antivirus
+msgid "Email address for notifications"
+msgstr "Dirección electrónica para notificaciones"
+
+#: antivirus.php:1255
+#@ antivirus
+msgid "If the field is empty, the blog admin will be notified"
+msgstr "Si el campo está vacío, se enviarán las notificaciones al administrador del sitio"
+
+#: antivirus.php:1263
+#@ default
+msgid "Save Changes"
+msgstr "Guardar cambios"
+

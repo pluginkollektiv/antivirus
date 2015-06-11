@@ -1,0 +1,94 @@
+/* @group Manual Scan */
+
+#av_manual_scan {
+	height: 1%;
+	overflow: hidden;
+}
+#av_manual_scan a.button {
+	float: left;
+}
+#av_manual_scan .alert {
+	float: left;
+	color: green;
+	margin: 0 10px;
+	border: 1px solid green;
+	display: none;
+	height: 26px;
+	line-height: 26px;
+	padding: 0 10px;
+	background: #fff;
+	border-radius: 3px;
+}
+
+#av_main .inside .output {
+	clear: both;
+	height: 1%;
+	margin: 0 0 0 -6px;
+	padding: 0 0 6px;
+	overflow: hidden;
+}
+#av_main .inside .output div {
+	float: left;
+	color: #FFF;
+	margin: 12px 6px 0;
+	padding: 8px 12px 10px;
+	background: orange;
+	border-radius: 3px;
+
+	transition: background-color 0.5s linear;
+	-o-transition: background-color 0.5s linear;
+	-ms-transition: background-color 0.5s linear;
+	-moz-transition: background-color 0.5s linear;
+	-webkit-transition: background-color 0.5s linear;
+}
+#av_main .inside .output div.done {
+	background: green;
+}
+#av_main .inside .output div.danger {
+	width: 97%;
+	background: red;
+}
+#av_main .inside .output div p {
+	padding: 10px;
+	overflow: hidden;
+	background: #F9F9F9;
+	white-space: nowrap;
+	border-radius: 3px;
+}
+#av_main .inside .output div p a {
+	float: left;
+	color: #646464;
+	margin: 0 6px 12px 0;
+	display: block;
+	border: 1px solid #b4b9be;
+	padding: 2px 5px;
+	background: #f2f2f2;
+	text-decoration: none;
+	border-radius: 3px;
+}
+#av_main .inside .output div p a:hover {
+	color: #000;
+	border: 1px solid #646464;
+}
+#av_main .inside .output div p code {
+	clear: both;
+	float: left;
+	color: #000;
+	padding: 2px 5px;
+	border-radius: 3px;
+}
+#av_main .inside .output div p code span {
+	padding: 2px;
+	background: yellow;
+}
+
+/* @end group */
+
+
+/* @group WordPress 3.8 Fix */
+
+#av_notify_email {
+	line-height: 1.5;
+}
+
+/* @end group */
