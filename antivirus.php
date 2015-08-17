@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: AntiVirus
-Description: Security plugin to protect your blog or website against exploits and spam injections.
+Description: Security solution as a smart, effectively plugin to protect your blog against exploits and spam injections.
 Author:      pluginkollektiv
 Author URI:  http://pluginkollektiv.org
 Plugin URI:  https://wordpress.org/plugins/antivirus/
