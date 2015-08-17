@@ -1,14 +1,15 @@
 <?php
 /*
 Plugin Name: AntiVirus
+Description: Security plugin to protect your blog or website against exploits and spam injections.
+Author:      pluginkollektiv
+Author URI:  http://pluginkollektiv.org
+Plugin URI:  https://wordpress.org/plugins/antivirus/
 Text Domain: antivirus
 Domain Path: /lang
-Description: Security solution as a smart, effectively plugin to protect your blog against exploits and spam injections.
-Author: Sergej M&uuml;ller
-Author URI: http://wpcoder.de
-Plugin URI: http://wpantivirus.com
-License: GPLv2 or later
-Version: 1.3.8
+License:     GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Version:     1.3.8
 */
 
 /*
@@ -225,8 +226,7 @@ class AntiVirus {
 		return array_merge(
 			$data,
 			array(
-				'<a href="https://flattr.com/t/1322865" target="_blank">Flattr</a>',
-				'<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=ZAQUT9RLPW8QN" target="_blank">PayPal</a>'
+				'<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LG5VC9KXMAYXJ" target="_blank">PayPal</a>'
 			)
 		);
 	}
@@ -1287,7 +1287,7 @@ class AntiVirus {
 							<input type="submit" class="button button-primary" value="<?php _e('Save Changes') ?>" />
 						</th>
 						<td>
-							<?php if ( get_locale() == 'de_DE' ) { ?><a href="http://playground.ebiene.de/antivirus-wordpress-plugin/" target="_blank">Handbuch</a> &bull; <?php } ?><a href="https://flattr.com/t/1322865" target="_blank">Flattr</a> &bull; <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=ZAQUT9RLPW8QN" target="_blank">PayPal</a>
+							<?php if ( get_locale() == 'de_DE' ) { ?><a href="https://github.com/pluginkollektiv/antivirus/wiki" target="_blank">Handbuch</a> &bull; <?php } ?><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LG5VC9KXMAYXJ" target="_blank">PayPal</a>
 						</td>
 					</tr>
 				</table>
