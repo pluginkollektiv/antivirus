@@ -88,7 +88,6 @@ msgstr "E-Mail-Adresse für Benachrichtigungen"
 msgid "If the field is empty, the blog admin will be notified"
 msgstr "Bleibt das Eingabefeld leer, wird der Admin benachrichtigt"
 
-#, fuzzy
 msgid ""
 "Security plugin to protect your blog or website against exploits and spam "
 "injections."
@@ -104,6 +103,3 @@ msgstr "http://pluginkollektiv.org"
 
 msgid "https://wordpress.org/plugins/antivirus/"
 msgstr "https://wordpress.org/plugins/antivirus/"
-
-#~ msgid "AntiVirus for WordPress"
-#~ msgstr "AntiVirus für WordPress"
