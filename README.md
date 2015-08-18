@@ -9,7 +9,7 @@
 * License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
 
-Useful plugin that will scan your theme templates for malicious injections. Automatically. Every day. For more blog security.
+Security plugin to protect your blog or website against exploits and spam injections.
 
 
 ## Description ##
@@ -62,6 +62,13 @@ Not literally “protect from”. The plugin’s purpose is to _detect_ any “h
 
 
 ## Changelog ##
+### 1.3.9 ###
+* generated a POT file
+* added German formal translation
+* updated, translated + formatted README.md
+* updated expired link URLs in plugin and languages files
+* updated [plugin authors](https://gist.github.com/glueckpress/f058c0ab973d45a72720)
+
 ### 1.3.8 ###
 * Deutsch: Erkennung der [MailPoet-Sicherheitslücke](http://blog.sucuri.net/2014/07/mailpoet-vulnerability-exploited-in-the-wild-breaking-thousands-of-wordpress-sites.html)
 * English: Detection and warning for the [MailPoet Vulnerability](http://blog.sucuri.net/2014/07/mailpoet-vulnerability-exploited-in-the-wild-breaking-thousands-of-wordpress-sites.html)
