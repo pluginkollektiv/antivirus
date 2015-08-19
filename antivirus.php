@@ -226,7 +226,7 @@ class AntiVirus {
 		return array_merge(
 			$data,
 			array(
-				'<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LG5VC9KXMAYXJ" target="_blank">PayPal</a>'
+				'<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8CH5FPR88QYML" target="_blank">PayPal</a>'
 			)
 		);
 	}
@@ -1287,7 +1287,7 @@ class AntiVirus {
 							<input type="submit" class="button button-primary" value="<?php _e('Save Changes') ?>" />
 						</th>
 						<td>
-							<?php if ( substr( get_locale(), 0, 3 ) === 'de_' ) { ?><a href="https://github.com/pluginkollektiv/antivirus/wiki" target="_blank">Handbuch</a> &bull; <?php } ?><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LG5VC9KXMAYXJ" target="_blank">PayPal</a>
+							<?php if ( substr( get_locale(), 0, 3 ) === 'de_' ) { ?><a href="https://github.com/pluginkollektiv/antivirus/wiki" target="_blank">Handbuch</a> &bull; <?php } ?><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8CH5FPR88QYML" target="_blank">PayPal</a>
 						</td>
 					</tr>
 				</table>
