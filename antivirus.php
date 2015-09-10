@@ -143,7 +143,7 @@ class AntiVirus {
 		return array_merge(
 			$data,
 			array(
-				'<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LG5VC9KXMAYXJ" target="_blank">PayPal</a>',
+				'<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8CH5FPR88QYML" target="_blank">PayPal</a>',
 			)
 		);
 	}
@@ -1025,7 +1025,7 @@ class AntiVirus {
 
 							printf(
 								'<a href="%s" target="_blank">%s</a>',
-								'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LG5VC9KXMAYXJ',
+								'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8CH5FPR88QYML',
 								__( 'PayPal', 'antivirus' )
 							);
 							?>
