@@ -376,8 +376,8 @@ class AntiVirus {
 	 */
 	public static function add_sidebar_menu() {
 		$page = add_options_page(
-			'AntiVirus',
-			'AntiVirus',
+			__( 'AntiVirus', 'antivirus' ),
+			__( 'AntiVirus', 'antivirus' ),
 			'manage_options',
 			'antivirus',
 			array(
