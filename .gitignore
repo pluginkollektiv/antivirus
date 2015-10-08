@@ -3,5 +3,5 @@
 composer.lock
 
 # Vendor (e.g. Composer)
-vendor/*
+vendor
 !vendor/.gitkeep
