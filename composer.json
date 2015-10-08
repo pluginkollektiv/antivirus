@@ -1,0 +1,17 @@
+{
+  "name": "pluginkollektiv/antivirus",
+  "description": "Security plugin to protect your blog or website against exploits and spam injections.",
+  "version": "1.3.9",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0+",
+  "require": {
+    "composer/installers": "~1.0"
+  },
+  "require-dev": {
+    "wp-coding-standards/wpcs": "dev-develop"
+  },
+  "scripts": {
+    "post-install-cmd": "\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs",
+    "post-update-cmd": "\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs"
+  }
+}
