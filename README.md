@@ -8,16 +8,13 @@
 * License:           GPLv2 or later
 * License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
-
 Security plugin to protect your blog or website against exploits and spam injections.
-
 
 ## Description ##
 *AntiVirus for WordPress* is a easy-to-use, safe tool to harden your WordPress site against exploits, malware and spam injections.
 You can configure *AntiVirus* to perform an automated daily scan of your theme files and database tables. If the plugin happens to detect any suspicious code injections, it will send out a notification to a previously configured e-mail address.
 
 In case your WordPress site has been hacked, *AntiVirus* will help you to become aware of the problem very quickly in order for you to take immediate action.
-
 
 ### Features ###
 * Virus alert in the admin bar
@@ -30,7 +27,6 @@ In case your WordPress site has been hacked, *AntiVirus* will help you to become
 * Manual check of template files with alerts on suspected cases
 * Optional: Google Safe Browsing for malware and phishing monitoring.
 
-
 > #### Auf Deutsch? ####
 > Für eine ausführliche Dokumentation besuche bitte das [AntiVirus-Wiki](https://github.com/pluginkollektiv/antivirus/wiki).
 >
@@ -39,7 +35,6 @@ In case your WordPress site has been hacked, *AntiVirus* will help you to become
 ### Credits ###
 * Author: [Sergej Müller](https://sergejmueller.github.io/)
 * Maintainers: [pluginkollektiv](http://pluginkollektiv.org/)
-
 
 ## Installation ##
 * If you don’t know how to install a plugin for WordPress, [here’s how](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins).
@@ -53,8 +48,8 @@ In case your WordPress site has been hacked, *AntiVirus* will help you to become
 ### Will AntiVirus protect my site from being hacked? ###
 Not literally “protect from”. The plugin’s purpose is to _detect_ any “hack” that has already happened and enable you to take immediate action upon it.
 
-
 ## Changelog ##
+
 ### 1.3.9 ###
 * generated a POT file
 * added German formal translation
@@ -153,7 +148,6 @@ Not literally “protect from”. The plugin’s purpose is to _detect_ any “h
 
 ### 0.1 ###
 * AntiVirus for WordPress goes online
-
 
 ## Screenshots ##
 1. WordPress AntiVirus settings
