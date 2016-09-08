@@ -98,5 +98,7 @@ Not literally “protect from”. The plugin’s purpose is to _detect_ any “h
 ### 1.3 ###
 * Xmas Edition
 
+For the complete changelog, check out our [GitHub repository](https://github.com/pluginkollektiv/antivirus).
+
 ## Screenshots ##
 1. WordPress AntiVirus settings
