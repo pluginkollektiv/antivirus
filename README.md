@@ -80,7 +80,7 @@ Not literally “protect from”. The plugin’s purpose is to _detect_ any “h
 * Optimizations for WordPress 3.8
 
 ### 1.3.4 ###
-* [Google Safe Browsing](http://en.wikipedia.org/wiki/Google_Safe_Browsing) for malware and phishing monitoring with e-mail notification. [Additional informations on Google+](https://plus.google.com/110569673423509816572/posts/H72FFwvna1i) (only german)
+* [Google Safe Browsing](http://en.wikipedia.org/wiki/Google_Safe_Browsing) for malware and phishing monitoring with e-mail notification. [Additional information on Google+](https://plus.google.com/110569673423509816572/posts/H72FFwvna1i) (only german)
 
 ### 1.3.3 ###
 * Add inspection for iFrames
