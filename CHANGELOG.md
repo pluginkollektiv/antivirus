@@ -184,4 +184,4 @@
 * **English**
    * AntiVirus for WordPress goes online
 * **Deutsch**
-   * Antivirus für Wordpress geht online
+   * AntiVirus für Wordpress geht online
