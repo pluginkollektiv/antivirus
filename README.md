@@ -22,7 +22,7 @@ In case your WordPress site has been hacked, *AntiVirus* will help you to become
 * Translations into many languages​​
 * Daily scan with email notifications
 * Database tables and theme templates checks
-* WordPress 3.x ready: both visually and technically
+* WordPress 4.x ready: both visually and technically
 * Whitelist solution: Mark suspected cases as "no virus"
 * Manual check of template files with alerts on suspected cases
 * Optional: Google Safe Browsing for malware and phishing monitoring.
