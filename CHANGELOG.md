@@ -1,5 +1,81 @@
 # Changelog
 
+### 1.3.9 ###
+* **English**
+	 * generated a POT file
+	 * added German formal translation
+	 * updated, translated + formatted README.md
+	 * updated expired link URLs in plugin and languages files
+	 * updated [plugin authors](https://gist.github.com/glueckpress/f058c0ab973d45a72720)
+* **Deutsch**
+	 * Eine POT-Datei erstellt
+	 * formale deutsche Übersetzung (Sie) hinzugefügt
+	 * README.md aktualisiert, übersetzt und formatiert
+	 * Abgelaufene Link-Adressen in dem Plug-in und in den Sprachdateien aktualisiert
+	 * [Plugin Author](https://gist.github.com/glueckpress/f058c0ab973d45a72720) aktualisiert
+
+### 1.3.8 ###
+* **English**
+	 * Detection and warning for the [MailPoet Vulnerability](http://blog.sucuri.net/2014/07/mailpoet-vulnerability-exploited-in-the-wild-breaking-thousands-of-wordpress-sites.html)
+* **Deutsch**
+	 * Erkennung der [MailPoet-Sicherheitslücke](http://blog.sucuri.net/2014/07/mailpoet-vulnerability-exploited-in-the-wild-breaking-thousands-of-wordpress-sites.html)
+
+### 1.3.7 ###
+* **English**
+	 * Update the Google Safe Browsing Lookup API to v3.1
+* **Deutsch**
+	 * Aktualisierung auf Safe Browsing Lookup API 3.1
+
+### 1.3.6 ###
+* **English**
+	 * Code revision and data validation
+* **Deutsch**
+	 * Code-Revision und Datenvalidierung
+
+### 1.3.5 ###
+* **English**
+	 * Optimizations for WordPress 3.8
+* **Deutsch**
+	 * Optimierungen für WordPress 3.8
+
+### 1.3.4 ###
+* **English**
+	 * [Google Safe Browsing](http://en.wikipedia.org/wiki/Google_Safe_Browsing) for malware and phishing monitoring with e-mail notification. [Additional information on Google+](https://plus.google.com/110569673423509816572/posts/H72FFwvna1i) (only german)
+* **Deutsch**
+	 * Benachrichtigung per E-Mail, sobald [Google Safe Browsing](http://en.wikipedia.org/wiki/Google_Safe_Browsing) Malware im Blog erkennt. [Mehr auf Google+](https://plus.google.com/110569673423509816572/posts/H72FFwvna1i)
+
+### 1.3.3 ###
+* **English**
+	 * Add inspection for iFrames
+	 * Retina support for teaser and screenshot
+* **Deutsch**
+	 * Inspektion für iFrameshinzugefügt
+	 * Retina-Unterstützung für Teaser und Screenshot
+
+### 1.3.2 ###
+* **English**
+	 * Remove the check for include and require commands (#wpforce)
+* **Deutsch**
+	 * 
+
+### 1.3.1 ###
+* **English**
+	 * Compatibility with WordPress 3.4
+	 * High-resolution plugin icon for retina displays
+	 * Remove icon from the admin sidebar
+	 * System requirements: From PHP 5.0 to PHP 5.1
+* **Deutsch**
+	 * Kompatibilität mit Wordpress 3.4
+	 * Hochauflösendes Plugin Symbol für Retina-Bildschirme
+	 * Symbol aus der Admin-Sidebar entfernbar
+	 * Systemvorraussetzungen: von PHP 5.0 auf PHP 5.1 angehoben
+
+### 1.3 ###
+* **English**
+	 * Xmas Edition
+* **Deutsch**
+	 * Weihnachtsausgabe
+
 ### 1.2 ###
 * **English**
    * "Virus suspected" alert in the admin bar
