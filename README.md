@@ -100,5 +100,10 @@ Not literally “protect from”. The plugin’s purpose is to _detect_ any “h
 
 For the complete changelog, check out our [GitHub repository](https://github.com/pluginkollektiv/antivirus).
 
+## Upgrade Notice ##
+
+### 1.3.9 ###
+This is mainly a maintenance release for better translation (support) and some expired link URLs are corrected.
+
 ## Screenshots ##
 1. WordPress AntiVirus settings
