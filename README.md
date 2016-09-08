@@ -32,6 +32,16 @@ In case your WordPress site has been hacked, *AntiVirus* will help you to become
 >
 > **Community-Support auf Deutsch** erhältst du in einem der [deutschsprachigen Foren](https://de.forums.wordpress.org/forum/plugins); im [Plugin-Forum für AntiVirus](https://wordpress.org/support/plugin/antivirus) wird, wie in allen Plugin-Foren auf wordpress.org, ausschließlich **Englisch** gesprochen.
 
+### Support ###
+* Community support via the [support forums on wordpress.org](https://wordpress.org/support/plugin/antivirus)
+* We don’t handle support via e-mail, Twitter, GitHub issues etc.
+
+### Contribute ###
+* Active development of this plugin is handled [on GitHub](https://github.com/pluginkollektiv/antivirus).
+* Pull requests for documented bugs are highly appreciated.
+* If you think you’ve found a bug (e.g. you’re experiencing unexpected behavior), please post at the [support forums](https://wordpress.org/support/plugin/antivirus) first.
+* If you want to help us translate this plugin you can do so [on WordPress Translate](https://translate.wordpress.org/projects/wp-plugins/antivirus).
+
 ### Credits ###
 * Author: [Sergej Müller](https://sergejmueller.github.io/)
 * Maintainers: [pluginkollektiv](http://pluginkollektiv.org/)
@@ -58,24 +68,19 @@ Not literally “protect from”. The plugin’s purpose is to _detect_ any “h
 * updated [plugin authors](https://gist.github.com/glueckpress/f058c0ab973d45a72720)
 
 ### 1.3.8 ###
-* Deutsch: Erkennung der [MailPoet-Sicherheitslücke](http://blog.sucuri.net/2014/07/mailpoet-vulnerability-exploited-in-the-wild-breaking-thousands-of-wordpress-sites.html)
-* English: Detection and warning for the [MailPoet Vulnerability](http://blog.sucuri.net/2014/07/mailpoet-vulnerability-exploited-in-the-wild-breaking-thousands-of-wordpress-sites.html)
+* Detection and warning for the [MailPoet Vulnerability](http://blog.sucuri.net/2014/07/mailpoet-vulnerability-exploited-in-the-wild-breaking-thousands-of-wordpress-sites.html)
 
 ### 1.3.7 ###
-* Deutsch: Aktualisierung auf Safe Browsing Lookup API 3.1
-* English: Update the Google Safe Browsing Lookup API to v3.1
+* Update the Google Safe Browsing Lookup API to v3.1
 
 ### 1.3.6 ###
-* Deutsch: Code-Revision und Datenvalidierung
-* English: Code revision and data validation
+* Code revision and data validation
 
 ### 1.3.5 ###
-* Deutsch: Optimierungen für WordPress 3.8
-* English: Optimizations for WordPress 3.8
+* Optimizations for WordPress 3.8
 
 ### 1.3.4 ###
-* Deutsch: Benachrichtigung per E-Mail, sobald [Google Safe Browsing](http://en.wikipedia.org/wiki/Google_Safe_Browsing) Malware im Blog erkennt. [Mehr auf Google+](https://plus.google.com/110569673423509816572/posts/H72FFwvna1i)
-* English: [Google Safe Browsing](http://en.wikipedia.org/wiki/Google_Safe_Browsing) for malware and phishing monitoring.
+* [Google Safe Browsing](http://en.wikipedia.org/wiki/Google_Safe_Browsing) for malware and phishing monitoring with e-mail notification. [Additional informations on Google+](https://plus.google.com/110569673423509816572/posts/H72FFwvna1i) (only german)
 
 ### 1.3.3 ###
 * Add inspection for iFrames
