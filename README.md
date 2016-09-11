@@ -47,7 +47,7 @@ In case your WordPress site has been hacked, *AntiVirus* will help you to become
 * Maintainers: [pluginkollektiv](http://pluginkollektiv.org/)
 
 ## Installation ##
-* If you don’t know how to install a plugin for WordPress, [here’s how](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins).
+* If you don’t know how to install a plugin for WordPress, [here’s how](https://codex.wordpress.org/Managing_Plugins#Installing_Plugins).
 
 ### Requirements ###
 * PHP 5.2.4 or greater
@@ -56,7 +56,7 @@ In case your WordPress site has been hacked, *AntiVirus* will help you to become
 ## Frequently Asked Questions ##
 
 ### Will AntiVirus protect my site from being hacked? ###
-Not literally “protect from”. The plugin’s purpose is to _detect_ any “hack” that has already happened and enable you to take immediate action upon it.
+Not literally "protect from". The plugin’s purpose is to *detect* any "hack" that has already happened and enable you to take immediate action upon it.
 
 ## Changelog ##
 
