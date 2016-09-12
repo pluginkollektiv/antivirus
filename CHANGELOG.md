@@ -49,7 +49,7 @@
 	 * Add inspection for iFrames
 	 * Retina support for teaser and screenshot
 * **Deutsch**
-	 * Inspektion für iFrameshinzugefügt
+	 * Inspektion für iFrames hinzugefügt
 	 * Retina-Unterstützung für Teaser und Screenshot
 
 ### 1.3.2 ###
