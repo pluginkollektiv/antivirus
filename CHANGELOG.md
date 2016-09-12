@@ -140,6 +140,7 @@
    * Software architecture changes
 * **Deutsch**
    * Sicherheits-Überprüfung für die aktuelle [Wordpress Permalink Hintertür](http://mashable.com/2009/09/05/wordpress-attack/ "WordPress Permalink Hintertür") hinzugefügt
+   * Software-Architektur Änderungen
 
 ### 0.4 ###
 * **English**
@@ -147,6 +148,7 @@
    * Various changes for more speed, usability and security
 * **Deutsch**
    * Unterstützung für den neuen Changelog readme.txt Standard von Wordpress
+   * Verschiedene Änderungen für mehr Geschwindigkeit, Benutzerfreundlichkeit und Sicherheit
 
 ### 0.3 ###
 * **English**
