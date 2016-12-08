@@ -918,7 +918,7 @@ class AntiVirus {
 			// Save options.
 			self::_update_options( $options ); ?>
 
-			<div id="message" class="updated fade">
+			<div id="message" class="notice notice-success">
 				<p>
 					<strong>
 						<?php esc_html_e( 'Settings saved.', 'antivirus' ); ?>
@@ -928,9 +928,9 @@ class AntiVirus {
 		<?php } ?>
 
 		<div class="wrap" id="av_main">
-			<h2>
+			<h1>
 				<?php esc_html_e( 'AntiVirus', 'antivirus' ); ?>
-			</h2>
+			</h1>
 
 			<table class="form-table">
 				<tr>
