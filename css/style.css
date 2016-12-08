@@ -82,6 +82,10 @@
 	background: yellow;
 }
 
+#av_main tr{
+	vertical-align: top;
+}
+
 /* @end group */
 
 

@@ -933,7 +933,7 @@ class AntiVirus {
 			</h2>
 
 			<table class="form-table">
-				<tr valign="top">
+				<tr>
 					<th scope="row">
 						<?php esc_html_e( 'Manual malware scan', 'antivirus' ); ?>
 					</th>
@@ -953,11 +953,11 @@ class AntiVirus {
 			</table>
 
 
-			<form method="post" action="">
+			<form method="post" action="#">
 				<?php wp_nonce_field( 'antivirus' ) ?>
 
 				<table class="form-table">
-					<tr valign="top">
+					<tr>
 						<th scope="row">
 							<?php esc_html_e( 'Daily malware scan', 'antivirus' ) ?>
 						</th>
@@ -1009,7 +1009,7 @@ class AntiVirus {
 						</td>
 					</tr>
 
-					<tr valign="top">
+					<tr>
 						<th scope="row">
 							<input type="submit" class="button button-primary" value="<?php esc_attr_e( 'Save Changes', 'antivirus' ) ?>"/>
 						</th>
