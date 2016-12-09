@@ -953,7 +953,7 @@ class AntiVirus {
 			</table>
 
 
-			<form method="post" action="#">
+			<form method="post" action="<?php echo esc_url( admin_url( 'options-general.php?page=antivirus' ) ); ?>">
 				<?php wp_nonce_field( 'antivirus' ) ?>
 
 				<table class="form-table">
