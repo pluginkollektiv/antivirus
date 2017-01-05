@@ -3,7 +3,7 @@
 * Tags:              antivirus, malware, scanner, phishing, safe browsing, vulnerability
 * Donate link:       https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8CH5FPR88QYML
 * Requires at least: 3.8
-* Tested up to:      4.6
+* Tested up to:      4.7
 * Stable tag:        1.3.9
 * License:           GPLv2 or later
 * License URI:       http://www.gnu.org/licenses/gpl-2.0.html
@@ -19,18 +19,11 @@ In case your WordPress site has been hacked, *AntiVirus* will help you to become
 ### Features ###
 * Virus alert in the admin bar
 * Cleaning up after plugin removal
-* Translations into many languages​​
 * Daily scan with email notifications
 * Database tables and theme templates checks
-* WordPress 4.x ready: both visually and technically
 * Whitelist solution: Mark suspected cases as "no virus"
 * Manual check of template files with alerts on suspected cases
 * Optional: Google Safe Browsing for malware and phishing monitoring.
-
-> #### Auf Deutsch? ####
-> Für eine ausführliche Dokumentation besuche bitte das [AntiVirus-Wiki](https://github.com/pluginkollektiv/antivirus/wiki).
->
-> **Community-Support auf Deutsch** erhältst du in einem der [deutschsprachigen Foren](https://de.forums.wordpress.org/forum/plugins); im [Plugin-Forum für AntiVirus](https://wordpress.org/support/plugin/antivirus) wird, wie in allen Plugin-Foren auf wordpress.org, ausschließlich **Englisch** gesprochen.
 
 ### Support ###
 * Community support via the [support forums on wordpress.org](https://wordpress.org/support/plugin/antivirus)
@@ -57,6 +50,8 @@ In case your WordPress site has been hacked, *AntiVirus* will help you to become
 
 ### Will AntiVirus protect my site from being hacked? ###
 Not literally "protect from". The plugin’s purpose is to *detect* any "hack" that has already happened and enable you to take immediate action upon it.
+
+A complete documentation is available in the [GitHub repository Wiki](https://github.com/pluginkollektiv/antivirus/wiki).
 
 ## Changelog ##
 
