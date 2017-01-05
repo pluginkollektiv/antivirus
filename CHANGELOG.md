@@ -56,7 +56,7 @@
 * **English**
 	 * Remove the check for include and require commands (#wpforce)
 * **Deutsch**
-	 * 
+	 * Überprüfung für include und require Befehle entfernt (#wpforce)
 
 ### 1.3.1 ###
 * **English**
