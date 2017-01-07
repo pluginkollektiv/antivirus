@@ -40,7 +40,7 @@
 
 ### 1.3.4 ###
 * **English**
-	 * [Google Safe Browsing](http://en.wikipedia.org/wiki/Google_Safe_Browsing) for malware and phishing monitoring with e-mail notification. [Additional information on Google+](https://plus.google.com/110569673423509816572/posts/H72FFwvna1i) (only german)
+	 * [Google Safe Browsing](http://en.wikipedia.org/wiki/Google_Safe_Browsing) for malware and phishing monitoring with e-mail notification. [Additional information on Google+](https://plus.google.com/110569673423509816572/posts/H72FFwvna1i) (only German)
 * **Deutsch**
 	 * Benachrichtigung per E-Mail, sobald [Google Safe Browsing](http://en.wikipedia.org/wiki/Google_Safe_Browsing) Malware im Blog erkennt. [Mehr auf Google+](https://plus.google.com/110569673423509816572/posts/H72FFwvna1i)
 
