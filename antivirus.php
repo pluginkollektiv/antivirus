@@ -143,7 +143,8 @@ class AntiVirus {
 		return array_merge(
 			$data,
 			array(
-				'<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8CH5FPR88QYML" target="_blank" rel="noopener noreferrer">Donate</a>',
+				'<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8CH5FPR88QYML" target="_blank" rel="noopener noreferrer">' . __( 'Donate', 'antivirus' ) . '</a>',
+				'<a href="https://wordpress.org/support/plugin/antivirus" target="_blank" rel="noopener noreferrer">' . __( 'Support', 'antivirus' ) . '</a>',
 			)
 		);
 	}
