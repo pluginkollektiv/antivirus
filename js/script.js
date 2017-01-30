@@ -50,7 +50,7 @@ jQuery(document).ready(
                                 line = lines[i + 1].replace(/@span@/g, '<span>').replace(/@\/span@/g, '</span>'),
                                 file = item.text();
 
-                            item.append('<p><a href="#" id="' + md5 + '" class="button button-primary">' + av_msg_1 + '</a> <code>' + line + '</code></p>');
+                            item.append('<p><button type="button" id="' + md5 + '" class="button button-primary">' + av_msg_1 + '</button> <code>' + line + '</code></p>');
 
                             $('#' + md5).click(
                                 function() {
