@@ -50,10 +50,9 @@ jQuery(document).ready(
                                 line = lines[i + 1].replace(/@span@/g, '<span>').replace(/@\/span@/g, '</span>'),
                                 file = item.text();
 
-                            item.append('<p><button type="button" id="' + md5 + '" class="button button-primary">' + av_msg_1 + '</button> <code>' + line + '</code></p>');
+                            item.append('<p><button type="button" id="' + md5 + '" class="button button-primary" onclick="novirusclick()">' + av_msg_1 + '</button> <code>' + line + '</code></p>');
 
-                            $('#' + md5).click(
-                                function() {
+                                function novirusclick() {
                                     $.post(
                                         ajaxurl,
                                         {
@@ -73,7 +72,7 @@ jQuery(document).ready(
                                                 return;
                                             }
 
-                                            var parent = $('#' + input.data[0]).parent();
+                                            var parent = $(input.data[0]).parent();
 
                                             if (parent.parent().children().length <= 1) {
                                                 parent.parent().hide('slow').remove();
@@ -84,7 +83,6 @@ jQuery(document).ready(
 
                                     return false;
                                 }
-                            );
                         }
                     } else {
                         item.addClass('done');
