@@ -1017,7 +1017,7 @@ class AntiVirus {
 							<?php
 							if ( substr( get_locale(), 0, 3 ) === 'de_' ) {
 								printf(
-									'<a href="%s" target="_blank">%s</a>',
+									'<a href="%s" target="_blank">%s</a> ',
 									'https://github.com/pluginkollektiv/antivirus/wiki',
 									'Handbuch'
 								);
