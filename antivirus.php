@@ -366,7 +366,7 @@ class AntiVirus {
 				"%s\r\n\r\n\r\n%s\r\n%s\r\n",
 				$body,
 				esc_html__( 'Notify message by AntiVirus for WordPress', 'antivirus' ),
-				esc_html__( 'http://wpantivirus.com', 'antivirus' )
+				esc_html__( 'https://wordpress.org/plugins/antivirus/', 'antivirus' )
 			)
 		);
 	}
