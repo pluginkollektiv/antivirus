@@ -122,7 +122,7 @@ class AntiVirus {
 						),
 						admin_url( 'options-general.php' )
 					),
-					__( 'Settings' )
+					__( 'Settings', 'antivirus' )
 				),
 			)
 		);
@@ -997,7 +997,7 @@ class AntiVirus {
 
                                 <label for="av_notify_email"><?php esc_html_e( 'Email address for notifications', 'antivirus' ); ?></label>
 									<input type="text" name="av_notify_email" id="av_notify_email"
-									       value="<?php  self::_get_option( 'notify_email' ) ?>"
+									       value="<?php esc_attr( self::_get_option( 'notify_email' ) ) ?>"
 									       class="regular-text"
 									       placeholder="<?php esc_attr_e( 'john.doe@example.com', 'antivirus' ) ?>"/>
 
