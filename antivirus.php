@@ -283,11 +283,37 @@ class AntiVirus {
 		}
 
 		// Request the API.
-		$response = wp_remote_get(
+		$response = wp_remote_post(
 			sprintf(
-				'https://sb-ssl.google.com/safebrowsing/api/lookup?client=wpantivirus&key=%s&appver=1.3.7&pver=3.1&url=%s',
-				'AIzaSyALNYwuy-Pidn7vx3-In-hU0zgMH5Wr42U',
-				urlencode( get_bloginfo( 'url' ) )
+				'https://safebrowsing.googleapis.com/v4/threatMatches:find?key=%s',
+				'AIzaSyALNYwuy-Pidn7vx3-In-hU0zgMH5Wr42U'
+			),
+			array(
+				'headers' => array(
+					'Content-Type' => 'application/json',
+				),
+				'body'    => json_encode(
+					array(
+						'client'     => array(
+							'clientId'      => 'wpantivirus',
+							'clientVersion' => '1.3.7'
+						),
+						'threatInfo' => array(
+							'threatTypes'      => array(
+								'THREAT_TYPE_UNSPECIFIED',
+								'MALWARE',
+								'SOCIAL_ENGINEERING',
+								'UNWANTED_SOFTWARE',
+								'POTENTIALLY_HARMFUL_APPLICATION'
+							),
+							'platformTypes'    => array( 'ANY_PLATFORM' ),
+							'threatEntryTypes' => array( 'URL' ),
+							'threatEntries'    => array(
+								array( 'url' => urlencode( get_bloginfo( 'url' ) ) ),
+							)
+						)
+					)
+				)
 			)
 		);
 
@@ -296,8 +322,11 @@ class AntiVirus {
 			return;
 		}
 
+		// Get the JSON response of the API request.
+		$response_json = json_decode(wp_remote_retrieve_body( $response ), true);
+
 		// All clear, nothing bad detected.
-		if ( wp_remote_retrieve_response_code( $response ) === 204 ) {
+		if ( wp_remote_retrieve_response_code( $response ) === 200 && empty( $response_json ) ) {
 			return;
 		}
 
@@ -305,7 +334,7 @@ class AntiVirus {
 		self::_send_warning_notification(
 			esc_html__( 'Safe Browsing Alert', 'antivirus' ),
 			sprintf(
-				"%s\r\nhttps://www.google.com/safebrowsing/diagnostic?site=%s&hl=%s",
+				"%s\r\nhttps://transparencyreport.google.com/safe-browsing/search?url=%s&hl=%s",
 				esc_html__( 'Please check the Google Safe Browsing diagnostic page:', 'antivirus' ),
 				urlencode( get_bloginfo( 'url' ) ),
 				substr( get_locale(), 0, 2 )
