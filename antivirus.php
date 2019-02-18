@@ -286,7 +286,7 @@ class AntiVirus {
 		$response = wp_remote_post(
 			sprintf(
 				'https://safebrowsing.googleapis.com/v4/threatMatches:find?key=%s',
-				'AIzaSyALNYwuy-Pidn7vx3-In-hU0zgMH5Wr42U'
+				'AIzaSyCGHXUd7vQAySRLNiC5y1M_wzR2W0kCVKI'
 			),
 			array(
 				'headers' => array(
@@ -296,7 +296,7 @@ class AntiVirus {
 					array(
 						'client'     => array(
 							'clientId'      => 'wpantivirus',
-							'clientVersion' => '1.3.7'
+							'clientVersion' => '1.3.10'
 						),
 						'threatInfo' => array(
 							'threatTypes'      => array(
