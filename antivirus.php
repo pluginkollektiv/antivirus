@@ -122,7 +122,7 @@ class AntiVirus {
 						),
 						admin_url( 'options-general.php' )
 					),
-					__( 'Settings' )
+					__( 'Settings', 'antivirus' )
 				),
 			)
 		);
@@ -966,7 +966,7 @@ class AntiVirus {
 							<fieldset>
 								<label for="av_cronjob_enable">
 									<input type="checkbox" name="av_cronjob_enable" id="av_cronjob_enable"
-									       value="1" <?php checked( self::_get_option( 'cronjob_enable' ), 1 ) ?> />
+										   value="1" <?php checked( self::_get_option( 'cronjob_enable' ), 1 ) ?> />
 									<?php esc_html_e( 'Check the theme templates for malware', 'antivirus' ); ?>
 								</label>
 
@@ -986,7 +986,7 @@ class AntiVirus {
 
 								<label for="av_safe_browsing">
 									<input type="checkbox" name="av_safe_browsing" id="av_safe_browsing"
-									       value="1" <?php checked( self::_get_option( 'safe_browsing' ), 1 ) ?> />
+										   value="1" <?php checked( self::_get_option( 'safe_browsing' ), 1 ) ?> />
 									<?php esc_html_e( 'Malware detection by Google Safe Browsing', 'antivirus' ); ?>
 								</label>
 
@@ -996,12 +996,12 @@ class AntiVirus {
 
 								<br/>
 
-								<label for="av_notify_email">
-									<input type="text" name="av_notify_email" id="av_notify_email"
-									       value="<?php esc_attr_e( self::_get_option( 'notify_email' ) ); ?>"
-									       class="regular-text"
-									       placeholder="<?php esc_attr_e( 'Email address for notifications', 'antivirus' ); ?>"/>
-								</label>
+								<label for="av_notify_email"><?php esc_html_e( 'Email address for notifications', 'antivirus' ); ?></label>
+								<input type="text" name="av_notify_email" id="av_notify_email"
+									   value="<?php esc_attr_e( self::_get_option( 'notify_email' ) ); ?>"
+									   class="regular-text"
+									   placeholder="<?php esc_attr_e( 'Email address for notifications', 'antivirus' ); ?>" />
+
 
 								<p class="description">
 									<?php esc_html_e( 'If the field is empty, the blog admin will be notified', 'antivirus' ); ?>
@@ -1016,29 +1016,29 @@ class AntiVirus {
 						</th>
 						<td>
 							<?php
-								printf(
-									'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
-									'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8CH5FPR88QYML',
-									__( 'Donate', 'antivirus' ),
-								);
+							printf(
+								'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
+								'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8CH5FPR88QYML',
+								esc_html__( 'Donate', 'antivirus' )
+							);
 
-								printf(
-									'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
-									__( 'https://wordpress.org/plugins/antivirus/faq/', 'antivirus' ),
-									__( 'FAQ', 'antivirus' ),
-								);
+							printf(
+								'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
+								esc_attr__( 'https://wordpress.org/plugins/antivirus/faq/', 'antivirus' ),
+								esc_html__( 'FAQ', 'antivirus' )
+							);
 
-								printf(
-									'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
-									'https://github.com/pluginkollektiv/antivirus/wiki',
-									__( 'Manual', 'antivirus' ),
-								);
+							printf(
+								'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
+								'https://github.com/pluginkollektiv/antivirus/wiki',
+								esc_html__( 'Manual', 'antivirus' )
+							);
 
-								printf(
-									'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
-									'https://wordpress.org/support/plugin/antivirus',
-									__( 'Support', 'antivirus' ),
-								);								
+							printf(
+								'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
+								'https://wordpress.org/support/plugin/antivirus',
+								esc_html__( 'Support', 'antivirus' )
+							);
 							?>
 						</td>
 					</tr>
