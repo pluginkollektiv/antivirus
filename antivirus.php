@@ -143,7 +143,8 @@ class AntiVirus {
 		return array_merge(
 			$data,
 			array(
-				'<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=TD4AMD2D8EMZW" target="_blank">PayPal</a>',
+				'<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=TD4AMD2D8EMZW" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Donate', 'antivirus' ) . '</a>',
+				'<a href="https://wordpress.org/support/plugin/antivirus" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Support', 'antivirus' ) . '</a>',
 			)
 		);
 	}
@@ -954,19 +955,19 @@ class AntiVirus {
 
 
 			<form method="post" action="">
-				<?php wp_nonce_field( 'antivirus' ) ?>
+				<?php wp_nonce_field( 'antivirus' ); ?>
 
 				<table class="form-table">
 					<tr valign="top">
 						<th scope="row">
-							<?php esc_html_e( 'Daily malware scan', 'antivirus' ) ?>
+							<?php esc_html_e( 'Daily malware scan', 'antivirus' ); ?>
 						</th>
 						<td>
 							<fieldset>
 								<label for="av_cronjob_enable">
 									<input type="checkbox" name="av_cronjob_enable" id="av_cronjob_enable"
-									       value="1" <?php checked( self::_get_option( 'cronjob_enable' ), 1 ) ?> />
-									<?php esc_html_e( 'Check the theme templates for malware', 'antivirus' ) ?>
+										   value="1" <?php checked( self::_get_option( 'cronjob_enable' ), 1 ) ?> />
+									<?php esc_html_e( 'Check the theme templates for malware', 'antivirus' ); ?>
 								</label>
 
 								<p class="description">
@@ -985,25 +986,25 @@ class AntiVirus {
 
 								<label for="av_safe_browsing">
 									<input type="checkbox" name="av_safe_browsing" id="av_safe_browsing"
-									       value="1" <?php checked( self::_get_option( 'safe_browsing' ), 1 ) ?> />
-									<?php esc_html_e( 'Malware detection by Google Safe Browsing', 'antivirus' ) ?>
+										   value="1" <?php checked( self::_get_option( 'safe_browsing' ), 1 ) ?> />
+									<?php esc_html_e( 'Malware detection by Google Safe Browsing', 'antivirus' ); ?>
 								</label>
 
 								<p class="description">
-									<?php esc_html_e( 'Diagnosis and notification in suspicion case', 'antivirus' ) ?>
+									<?php esc_html_e( 'Diagnosis and notification in suspicion case', 'antivirus' ); ?>
 								</p>
 
 								<br/>
 
-                                <label for="av_notify_email"><?php esc_html_e( 'Email address for notifications', 'antivirus' ); ?></label>
-									<input type="text" name="av_notify_email" id="av_notify_email"
-									       value="<?php esc_attr( self::_get_option( 'notify_email' ) ) ?>"
-									       class="regular-text"
-									       placeholder="<?php esc_attr_e( 'john.doe@example.com', 'antivirus' ) ?>"/>
+								<label for="av_notify_email"><?php esc_html_e( 'Email address for notifications', 'antivirus' ); ?></label>
+								<input type="text" name="av_notify_email" id="av_notify_email"
+									   value="<?php esc_attr_e( self::_get_option( 'notify_email' ) ); ?>"
+									   class="regular-text"
+									   placeholder="<?php esc_attr_e( 'Email address for notifications', 'antivirus' ); ?>" />
 
 
 								<p class="description">
-									<?php esc_html_e( 'If the field is empty, the blog admin will be notified', 'antivirus' ) ?>
+									<?php esc_html_e( 'If the field is empty, the blog admin will be notified', 'antivirus' ); ?>
 								</p>
 							</fieldset>
 						</td>
@@ -1015,18 +1016,29 @@ class AntiVirus {
 						</th>
 						<td>
 							<?php
-							if ( substr( get_locale(), 0, 3 ) === 'de_' ) {
-								printf(
-									'<a href="%s" target="_blank">%s</a> ',
-									'https://github.com/pluginkollektiv/antivirus/wiki',
-									'Handbuch'
-								);
-							}
+							printf(
+								'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
+								'https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=TD4AMD2D8EMZW',
+								esc_html__( 'Donate', 'antivirus' )
+							);
 
 							printf(
-								'<a href="%s" target="_blank">%s</a>',
-								'https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=TD4AMD2D8EMZW',
-								__( 'PayPal', 'antivirus' )
+								'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
+								esc_attr__( 'https://wordpress.org/plugins/antivirus/faq/', 'antivirus' ),
+								esc_html__( 'FAQ', 'antivirus' )
+							);
+
+							printf(
+								'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
+								'https://github.com/pluginkollektiv/antivirus/wiki',
+								esc_html__( 'Manual', 'antivirus' )
+							);
+
+							printf(
+								'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
+								'https://wordpress.org/support/plugin/antivirus',
+								esc_html__( 'Support', 'antivirus' )
+
 							);
 							?>
 						</td>
