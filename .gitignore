@@ -2,6 +2,7 @@
 .DS_Store
 composer.lock
 
-# Vendor (e.g. Composer)
+# Dependencies (e.g. Composer, npm, etc.)
 vendor
 !vendor/.gitkeep
+node_modules

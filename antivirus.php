@@ -3,7 +3,7 @@
  * Plugin Name: AntiVirus
  * Description: Security plugin to protect your blog or website against exploits and spam injections.
  * Author:      pluginkollektiv
- * Author URI:  http://pluginkollektiv.org
+ * Author URI:  https://pluginkollektiv.org
  * Plugin URI:  https://wordpress.org/plugins/antivirus/
  * Text Domain: antivirus
  * Domain Path: /lang
@@ -122,7 +122,7 @@ class AntiVirus {
 						),
 						admin_url( 'options-general.php' )
 					),
-					__( 'Settings' )
+					__( 'Settings', 'antivirus' )
 				),
 			)
 		);
@@ -143,7 +143,8 @@ class AntiVirus {
 		return array_merge(
 			$data,
 			array(
-				'<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8CH5FPR88QYML" target="_blank">PayPal</a>',
+				'<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=TD4AMD2D8EMZW" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Donate', 'antivirus' ) . '</a>',
+				'<a href="https://wordpress.org/support/plugin/antivirus" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Support', 'antivirus' ) . '</a>',
 			)
 		);
 	}
@@ -283,11 +284,37 @@ class AntiVirus {
 		}
 
 		// Request the API.
-		$response = wp_remote_get(
+		$response = wp_remote_post(
 			sprintf(
-				'https://sb-ssl.google.com/safebrowsing/api/lookup?client=wpantivirus&key=%s&appver=1.3.7&pver=3.1&url=%s',
-				'AIzaSyALNYwuy-Pidn7vx3-In-hU0zgMH5Wr42U',
-				urlencode( get_bloginfo( 'url' ) )
+				'https://safebrowsing.googleapis.com/v4/threatMatches:find?key=%s',
+				'AIzaSyCGHXUd7vQAySRLNiC5y1M_wzR2W0kCVKI'
+			),
+			array(
+				'headers' => array(
+					'Content-Type' => 'application/json',
+				),
+				'body'    => json_encode(
+					array(
+						'client'     => array(
+							'clientId'      => 'wpantivirus',
+							'clientVersion' => '1.3.10'
+						),
+						'threatInfo' => array(
+							'threatTypes'      => array(
+								'THREAT_TYPE_UNSPECIFIED',
+								'MALWARE',
+								'SOCIAL_ENGINEERING',
+								'UNWANTED_SOFTWARE',
+								'POTENTIALLY_HARMFUL_APPLICATION'
+							),
+							'platformTypes'    => array( 'ANY_PLATFORM' ),
+							'threatEntryTypes' => array( 'URL' ),
+							'threatEntries'    => array(
+								array( 'url' => urlencode( get_bloginfo( 'url' ) ) ),
+							)
+						)
+					)
+				)
 			)
 		);
 
@@ -296,8 +323,11 @@ class AntiVirus {
 			return;
 		}
 
+		// Get the JSON response of the API request.
+		$response_json = json_decode(wp_remote_retrieve_body( $response ), true);
+
 		// All clear, nothing bad detected.
-		if ( wp_remote_retrieve_response_code( $response ) === 204 ) {
+		if ( wp_remote_retrieve_response_code( $response ) === 200 && empty( $response_json ) ) {
 			return;
 		}
 
@@ -305,7 +335,7 @@ class AntiVirus {
 		self::_send_warning_notification(
 			esc_html__( 'Safe Browsing Alert', 'antivirus' ),
 			sprintf(
-				"%s\r\nhttps://www.google.com/safebrowsing/diagnostic?site=%s&hl=%s",
+				"%s\r\nhttps://transparencyreport.google.com/safe-browsing/search?url=%s&hl=%s",
 				esc_html__( 'Please check the Google Safe Browsing diagnostic page:', 'antivirus' ),
 				urlencode( get_bloginfo( 'url' ) ),
 				substr( get_locale(), 0, 2 )
@@ -477,13 +507,21 @@ class AntiVirus {
 		// Returns the files, stripping out the content dir from the paths.
 		return array_unique(
 			array_map(
-				create_function(
-					'$v',
-					'return str_replace(array(WP_CONTENT_DIR, "wp-content"), "", $v);'
-				),
+				array( 'AntiVirus', '_strip_content_dir' ),
 				$theme['Template Files']
 			)
 		);
+	}
+
+	/**
+	 * Strip out the content dir from a path.
+	 *
+	 * @param string $string
+	 *
+	 * @return string
+	 */
+	private static function _strip_content_dir( $string ) {
+		return str_replace( array( WP_CONTENT_DIR, "wp-content" ), "", $string );
 	}
 
 	/**
@@ -959,14 +997,14 @@ class AntiVirus {
 				<table class="form-table">
 					<tr>
 						<th scope="row">
-							<?php esc_html_e( 'Daily malware scan', 'antivirus' ) ?>
+							<?php esc_html_e( 'Daily malware scan', 'antivirus' ); ?>
 						</th>
 						<td>
 							<fieldset>
 								<label for="av_cronjob_enable">
 									<input type="checkbox" name="av_cronjob_enable" id="av_cronjob_enable"
-									       value="1" <?php checked( self::_get_option( 'cronjob_enable' ), 1 ) ?> />
-									<?php esc_html_e( 'Check the theme templates for malware', 'antivirus' ) ?>
+										   value="1" <?php checked( self::_get_option( 'cronjob_enable' ), 1 ) ?> />
+									<?php esc_html_e( 'Check the theme templates for malware', 'antivirus' ); ?>
 								</label>
 
 								<p class="description">
@@ -985,25 +1023,25 @@ class AntiVirus {
 
 								<label for="av_safe_browsing">
 									<input type="checkbox" name="av_safe_browsing" id="av_safe_browsing"
-									       value="1" <?php checked( self::_get_option( 'safe_browsing' ), 1 ) ?> />
-									<?php esc_html_e( 'Malware detection by Google Safe Browsing', 'antivirus' ) ?>
+										   value="1" <?php checked( self::_get_option( 'safe_browsing' ), 1 ) ?> />
+									<?php esc_html_e( 'Malware detection by Google Safe Browsing', 'antivirus' ); ?>
 								</label>
 
 								<p class="description">
-									<?php esc_html_e( 'Diagnosis and notification in suspicion case', 'antivirus' ) ?>
+									<?php esc_html_e( 'Diagnosis and notification in suspicion case', 'antivirus' ); ?>
 								</p>
 
 								<br/>
 
-								<label for="av_notify_email">
-									<input type="text" name="av_notify_email" id="av_notify_email"
-									       value="<?php esc_attr_e( self::_get_option( 'notify_email' ) ) ?>"
-									       class="regular-text"
-									       placeholder="<?php esc_attr_e( 'Email address for notifications', 'antivirus' ) ?>"/>
-								</label>
+								<label for="av_notify_email"><?php esc_html_e( 'Email address for notifications', 'antivirus' ); ?></label>
+								<input type="text" name="av_notify_email" id="av_notify_email"
+									   value="<?php esc_attr_e( self::_get_option( 'notify_email' ) ); ?>"
+									   class="regular-text"
+									   placeholder="<?php esc_attr_e( 'Email address for notifications', 'antivirus' ); ?>" />
+
 
 								<p class="description">
-									<?php esc_html_e( 'If the field is empty, the blog admin will be notified', 'antivirus' ) ?>
+									<?php esc_html_e( 'If the field is empty, the blog admin will be notified', 'antivirus' ); ?>
 								</p>
 							</fieldset>
 						</td>
@@ -1015,18 +1053,29 @@ class AntiVirus {
 						</th>
 						<td>
 							<?php
-							if ( substr( get_locale(), 0, 3 ) === 'de_' ) {
-								printf(
-									'<a href="%s" target="_blank">%s</a>',
-									'https://github.com/pluginkollektiv/antivirus/wiki',
-									'Handbuch'
-								);
-							}
+							printf(
+								'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
+								'https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=TD4AMD2D8EMZW',
+								esc_html__( 'Donate', 'antivirus' )
+							);
 
 							printf(
-								'<a href="%s" target="_blank">%s</a>',
-								'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8CH5FPR88QYML',
-								__( 'PayPal', 'antivirus' )
+								'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
+								esc_attr__( 'https://wordpress.org/plugins/antivirus/faq/', 'antivirus' ),
+								esc_html__( 'FAQ', 'antivirus' )
+							);
+
+							printf(
+								'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
+								'https://github.com/pluginkollektiv/antivirus/wiki',
+								esc_html__( 'Manual', 'antivirus' )
+							);
+
+							printf(
+								'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
+								'https://wordpress.org/support/plugin/antivirus',
+								esc_html__( 'Support', 'antivirus' )
+
 							);
 							?>
 						</td>
