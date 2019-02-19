@@ -1058,24 +1058,29 @@ class AntiVirus {
 								'https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=TD4AMD2D8EMZW',
 								esc_html__( 'Donate', 'antivirus' )
 							);
-
+							?>
+							&bull;
+							<?php
 							printf(
 								'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
 								esc_attr__( 'https://wordpress.org/plugins/antivirus/faq/', 'antivirus' ),
 								esc_html__( 'FAQ', 'antivirus' )
 							);
-
+							?>
+							&bull;
+							<?php
 							printf(
 								'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
 								'https://github.com/pluginkollektiv/antivirus/wiki',
 								esc_html__( 'Manual', 'antivirus' )
 							);
-
+							?>
+							&bull;
+							<?php
 							printf(
 								'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
 								'https://wordpress.org/support/plugin/antivirus',
 								esc_html__( 'Support', 'antivirus' )
-
 							);
 							?>
 						</td>
