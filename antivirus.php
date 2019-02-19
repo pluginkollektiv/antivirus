@@ -956,7 +956,7 @@ class AntiVirus {
 			// Save options.
 			self::_update_options( $options ); ?>
 
-			<div id="message" class="updated fade">
+			<div id="message" class="notice notice-success">
 				<p>
 					<strong>
 						<?php esc_html_e( 'Settings saved.', 'antivirus' ); ?>
@@ -966,12 +966,12 @@ class AntiVirus {
 		<?php } ?>
 
 		<div class="wrap" id="av_main">
-			<h2>
+			<h1>
 				<?php esc_html_e( 'AntiVirus', 'antivirus' ); ?>
-			</h2>
+			</h1>
 
 			<table class="form-table">
-				<tr valign="top">
+				<tr>
 					<th scope="row">
 						<?php esc_html_e( 'Manual malware scan', 'antivirus' ); ?>
 					</th>
@@ -991,11 +991,11 @@ class AntiVirus {
 			</table>
 
 
-			<form method="post" action="">
-				<?php wp_nonce_field( 'antivirus' ); ?>
+			<form method="post" action="<?php echo esc_url( admin_url( 'options-general.php?page=antivirus' ) ); ?>">
+				<?php wp_nonce_field( 'antivirus' ) ?>
 
 				<table class="form-table">
-					<tr valign="top">
+					<tr>
 						<th scope="row">
 							<?php esc_html_e( 'Daily malware scan', 'antivirus' ); ?>
 						</th>
@@ -1047,7 +1047,7 @@ class AntiVirus {
 						</td>
 					</tr>
 
-					<tr valign="top">
+					<tr>
 						<th scope="row">
 							<input type="submit" class="button button-primary" value="<?php esc_attr_e( 'Save Changes', 'antivirus' ) ?>"/>
 						</th>
