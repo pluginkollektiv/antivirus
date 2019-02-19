@@ -3,7 +3,7 @@
  * Plugin Name: AntiVirus
  * Description: Security plugin to protect your blog or website against exploits and spam injections.
  * Author:      pluginkollektiv
- * Author URI:  http://pluginkollektiv.org
+ * Author URI:  https://pluginkollektiv.org
  * Plugin URI:  https://wordpress.org/plugins/antivirus/
  * Text Domain: antivirus
  * Domain Path: /lang
@@ -143,7 +143,7 @@ class AntiVirus {
 		return array_merge(
 			$data,
 			array(
-				'<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8CH5FPR88QYML" target="_blank">PayPal</a>',
+				'<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=TD4AMD2D8EMZW" target="_blank">PayPal</a>',
 			)
 		);
 	}
@@ -1025,7 +1025,7 @@ class AntiVirus {
 
 							printf(
 								'<a href="%s" target="_blank">%s</a>',
-								'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8CH5FPR88QYML',
+								'https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=TD4AMD2D8EMZW',
 								__( 'PayPal', 'antivirus' )
 							);
 							?>

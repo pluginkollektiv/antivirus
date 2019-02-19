@@ -1,9 +1,9 @@
 # AntiVirus #
 * Contributors:      pluginkollektiv
 * Tags:              antivirus, malware, scanner, phishing, safe browsing, vulnerability
-* Donate link:       https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8CH5FPR88QYML
+* Donate link:       https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=TD4AMD2D8EMZW
 * Requires at least: 3.8
-* Tested up to:      4.9
+* Tested up to:      5.1
 * Stable tag:        1.3.9
 * License:           GPLv2 or later
 * License URI:       http://www.gnu.org/licenses/gpl-2.0.html
