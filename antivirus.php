@@ -507,13 +507,21 @@ class AntiVirus {
 		// Returns the files, stripping out the content dir from the paths.
 		return array_unique(
 			array_map(
-				create_function(
-					'$v',
-					'return str_replace(array(WP_CONTENT_DIR, "wp-content"), "", $v);'
-				),
+				array( 'AntiVirus', '_strip_content_dir' ),
 				$theme['Template Files']
 			)
 		);
+	}
+
+	/**
+	 * Strip out the content dir from a path.
+	 *
+	 * @param string $string
+	 *
+	 * @return string
+	 */
+	private static function _strip_content_dir( $string ) {
+		return str_replace( array( WP_CONTENT_DIR, "wp-content" ), "", $string );
 	}
 
 	/**
