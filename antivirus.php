@@ -82,7 +82,6 @@ class AntiVirus {
 				add_action( 'wp_ajax_get_ajax_response', array( __CLASS__, 'get_ajax_response' ) );
 			} else {
 				/* Actions */
-				add_action( 'init', array( __CLASS__, 'load_plugin_lang' ) );
 				add_action( 'admin_menu', array( __CLASS__, 'add_sidebar_menu' ) );
 				add_action( 'admin_notices', array( __CLASS__, 'show_dashboard_notice' ) );
 				add_action( 'deactivate_' . self::$base, array( __CLASS__, 'clear_scheduled_hook' ) );
@@ -90,13 +89,6 @@ class AntiVirus {
 				add_action( 'plugin_action_links_' . self::$base, array( __CLASS__, 'init_action_links' ) );
 			}
 		}
-	}
-
-	/**
-	 * Load plugin translations.
-	 */
-	public static function load_plugin_lang() {
-		load_plugin_textdomain( 'antivirus', false, basename( dirname( plugin_dir_path( __FILE__ ) ) ) . '/lang' );
 	}
 
 	/**
@@ -263,9 +255,6 @@ class AntiVirus {
 		if ( ! self::_get_option( 'cronjob_enable' ) ) {
 			return;
 		}
-
-		// Load plugin textdomain.
-		self::load_plugin_lang();
 
 		// Check the Safe Browsing API.
 		self::_check_safe_browsing();
