@@ -4,7 +4,7 @@
 * Donate link:       https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=TD4AMD2D8EMZW
 * Requires at least: 3.8
 * Tested up to:      5.1
-* Stable tag:        1.3.9
+* Stable tag:        1.3.10
 * License:           GPLv2 or later
 * License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,6 +54,18 @@ Not literally "protect from". The plugin’s purpose is to *detect* any "hack" t
 A complete documentation is available in the [GitHub repository Wiki](https://github.com/pluginkollektiv/antivirus/wiki).
 
 ## Changelog ##
+
+### 1.3.10 ###
+
+* Updated PayPal link for donations
+* Improve coding standards
+* Translation fixes, improvements and cleanups
+* Bump 'Tested up to' value
+* Better documentation
+* Some minor markup, styling, accessibility and security improvements
+* Update to Safe Browsing API v4 (fixing false positive email notifications)
+* PHP 7.x compatibility fixes
+* Better regex to prevent false positives in file scans
 
 ### 1.3.9 ###
 * generated a POT file
