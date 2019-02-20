@@ -60,7 +60,6 @@ A complete documentation is available in the [GitHub repository Wiki](https://gi
 * Updated PayPal link for donations
 * Improve coding standards
 * Translation fixes, improvements and cleanups
-* Bump 'Tested up to' value
 * Better documentation
 * Some minor markup, styling, accessibility and security improvements
 * Update to Safe Browsing API v4 (fixing false positive email notifications)
@@ -109,8 +108,8 @@ For the complete changelog, check out our [GitHub repository](https://github.com
 
 ## Upgrade Notice ##
 
-### 1.3.9 ###
-This is mainly a maintenance release for better translation (support) and some expired link URLs are corrected.
+### 1.3.10 ###
+This is a maintenance release, fixing our Google Safe Browsing lookup and some minor issues.
 
 ## Screenshots ##
 1. WordPress AntiVirus settings

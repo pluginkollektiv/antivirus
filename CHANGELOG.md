@@ -5,7 +5,6 @@
 	 * Updated PayPal link for donations
 	 * Improve coding standards
 	 * Translation fixes, improvements and cleanups
-	 * Bump 'Tested up to' value
 	 * Better documentation
 	 * Some minor markup, styling, accessibility and security improvements
 	 * Update to Safe Browsing API v4 (fixing false positive email notifications)
@@ -15,7 +14,6 @@
 	 * Aktualisierung des PayPal Senden-Buttons
 	 * Verbesserung der Coding-Standards
 	 * Kleinere Korrektur und Verbesserungen an den Übersetzungen
-	 * Erhöhung des 'Tested up to' Wertes
 	 * Bessere Dokumentation
 	 * Einige kleine Verbesserungen an Markup, Styles, Barrierefreiheit und Sicherheit
 	 * Aktualisierung der Safe-Browsing-API auf Version 4 (zur Verhinderung von False-Positive E-Mail-Benachrichtigungen)
