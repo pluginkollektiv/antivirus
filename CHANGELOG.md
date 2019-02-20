@@ -1,5 +1,25 @@
 # Changelog
 
+### 1.3.10 ###
+* **English**
+	 * Updated PayPal link for donations
+	 * Improve coding standards
+	 * Translation fixes, improvements and cleanups
+	 * Better documentation
+	 * Some minor markup, styling, accessibility and security improvements
+	 * Update to Safe Browsing API v4 (fixing false positive email notifications)
+	 * PHP 7.x compatibility fixes
+	 * Better regex to prevent false positives in file scans
+* **Deutsch**
+	 * Aktualisierung des PayPal Senden-Buttons
+	 * Verbesserung der Coding-Standards
+	 * Kleinere Korrektur und Verbesserungen an den Übersetzungen
+	 * Bessere Dokumentation
+	 * Einige kleine Verbesserungen an Markup, Styles, Barrierefreiheit und Sicherheit
+	 * Aktualisierung der Safe-Browsing-API auf Version 4 (zur Verhinderung von False-Positive E-Mail-Benachrichtigungen)
+	 * PHP 7.x Kompatibilitätsanpassungen
+	 * Ein besserer regulärer Ausdruck zur Vermeidung von False-Positives beim Datei-Scan
+
 ### 1.3.9 ###
 * **English**
 	 * generated a POT file

@@ -4,7 +4,7 @@
 * Donate link:       https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=TD4AMD2D8EMZW
 * Requires at least: 3.8
 * Tested up to:      5.1
-* Stable tag:        1.3.9
+* Stable tag:        1.3.10
 * License:           GPLv2 or later
 * License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,17 @@ A complete documentation is available in the [GitHub repository Wiki](https://gi
 
 ## Changelog ##
 
+### 1.3.10 ###
+
+* Updated PayPal link for donations
+* Improve coding standards
+* Translation fixes, improvements and cleanups
+* Better documentation
+* Some minor markup, styling, accessibility and security improvements
+* Update to Safe Browsing API v4 (fixing false positive email notifications)
+* PHP 7.x compatibility fixes
+* Better regex to prevent false positives in file scans
+
 ### 1.3.9 ###
 * generated a POT file
 * added German formal translation
@@ -97,8 +108,8 @@ For the complete changelog, check out our [GitHub repository](https://github.com
 
 ## Upgrade Notice ##
 
-### 1.3.9 ###
-This is mainly a maintenance release for better translation (support) and some expired link URLs are corrected.
+### 1.3.10 ###
+This is a maintenance release, fixing our Google Safe Browsing lookup and some minor issues.
 
 ## Screenshots ##
 1. WordPress AntiVirus settings
