@@ -86,7 +86,7 @@ A complete documentation is available in the [GitHub repository Wiki](https://gi
 * Optimizations for WordPress 3.8
 
 ### 1.3.4 ###
-* [Google Safe Browsing](http://en.wikipedia.org/wiki/Google_Safe_Browsing) for malware and phishing monitoring with e-mail notification. [Additional information on Google+](https://plus.google.com/110569673423509816572/posts/H72FFwvna1i) (only german)
+* [Google Safe Browsing](http://en.wikipedia.org/wiki/Google_Safe_Browsing) for malware and phishing monitoring with e-mail notification. [Additional information on ~~Google+~~_GitHub_](https://github.com/pluginkollektiv/antispam-bee/wiki/de-News-2013-05-08) (only german)
 
 ### 1.3.3 ###
 * Add inspection for iFrames
