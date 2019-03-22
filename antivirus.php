@@ -325,7 +325,7 @@ class AntiVirus {
 			esc_html__( 'Safe Browsing Alert', 'antivirus' ),
 			sprintf(
 				"%s\r\nhttps://transparencyreport.google.com/safe-browsing/search?url=%s&hl=%s",
-				esc_html__( 'Please check the Google Safe Browsing diagnostic page:', 'antivirus' ),
+				esc_html__( 'Google has found a problem on your page and probably listed it on a blacklist. It is likely that your website or your hosting account has been hacked and malware or phishing code was installed. We recommend to check your site. For more details please check the Google Safe Browsing diagnostic page:', 'antivirus' ),
 				urlencode( get_bloginfo( 'url' ) ),
 				substr( get_locale(), 0, 2 )
 			)
@@ -1017,7 +1017,13 @@ class AntiVirus {
 								</label>
 
 								<p class="description">
-									<?php esc_html_e( 'Diagnosis and notification in suspicion case', 'antivirus' ); ?>
+                                    <?php
+                                    /* translators: Link for transparency report in english */
+                                    $start_tag = sprintf( '<a href="%s">', __( 'https://transparencyreport.google.com/safe-browsing/search?hl=en', 'antivirus' ) );
+                                    $end_tag = '</a>';
+                                    /* translators: First placeholder (%s) starting link tag to transparency report, second placeholder closing link tag */
+                                    printf( __( 'Diagnosis and notification in suspicion case. For more details read %s the transparency report %s.', 'antivirus' ), $start_tag, $end_tag );
+                                    ?>
 								</p>
 
 								<br/>
