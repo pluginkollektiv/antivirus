@@ -183,11 +183,12 @@ class AntiVirus {
 		$options = wp_parse_args(
 			get_option( 'antivirus' ),
 			array(
-				'cronjob_enable' => 0,
-				'cronjob_alert'  => 0,
-				'safe_browsing'  => 0,
-				'notify_email'   => '',
-				'white_list'     => '',
+				'cronjob_enable'    => 0,
+				'cronjob_alert'     => 0,
+				'safe_browsing'     => 0,
+				'safe_browsing_key' => '',
+				'notify_email'      => '',
+				'white_list'        => '',
 			)
 		);
 
@@ -272,11 +273,18 @@ class AntiVirus {
 			return;
 		}
 
+		// Check if API key is provided in config.
+		$key = self::_get_option( 'safe_browsing_key' );
+		// Fallback to default key if not.
+		if ( empty( $key ) ) {
+			$key = 'AIzaSyCGHXUd7vQAySRLNiC5y1M_wzR2W0kCVKI';
+		}
+
 		// Request the API.
 		$response = wp_remote_post(
 			sprintf(
 				'https://safebrowsing.googleapis.com/v4/threatMatches:find?key=%s',
-				'AIzaSyCGHXUd7vQAySRLNiC5y1M_wzR2W0kCVKI'
+				$key
 			),
 			array(
 				'headers' => array(
@@ -924,15 +932,17 @@ class AntiVirus {
 
 			// Save values.
 			$options = array(
-				'cronjob_enable' => (int) ( ! empty( $_POST['av_cronjob_enable'] ) ),
-				'notify_email'   => sanitize_email( @$_POST['av_notify_email'] ),
-				'safe_browsing'  => (int) ( ! empty( $_POST['av_safe_browsing'] ) ),
+				'cronjob_enable'     => (int) ( ! empty( $_POST['av_cronjob_enable'] ) ),
+				'notify_email'       => sanitize_email( @$_POST['av_notify_email'] ),
+				'safe_browsing'      => (int) ( ! empty( $_POST['av_safe_browsing'] ) ),
+				'safe_browsing_key' => sanitize_text_field( @$_POST['av_safe_browsing_key'] ),
 			);
 
 			// No cronjob?
 			if ( empty( $options['cronjob_enable'] ) ) {
-				$options['notify_email']  = '';
-				$options['safe_browsing'] = 0;
+				$options['notify_email']      = '';
+                $options['safe_browsing']     = 0;
+				$options['safe_browsing_key'] = '';
 			}
 
 			// Stop cron if it was disabled.
@@ -1024,6 +1034,21 @@ class AntiVirus {
                                     /* translators: First placeholder (%s) starting link tag to transparency report, second placeholder closing link tag */
                                     printf( __( 'Diagnosis and notification in suspicion case. For more details read %s the transparency report %s.', 'antivirus' ), $start_tag, $end_tag );
                                     ?>
+								</p>
+
+								<br/>
+
+								<label for="av_safe_browsing_key">
+									<?php esc_html_e( 'Safe Browsing API key', 'antivirus' ); ?>
+								</label>
+								<br/>
+								<input type="text" name="av_safe_browsing_key" id="av_safe_browsing_key"
+								       value="<?php esc_attr_e( self::_get_option( 'safe_browsing_key' ) ); ?>" />
+
+								<p class="description">
+									<?php
+									esc_html_e( 'Provide a custom key for the Google Safe Browsing API (v4). If this value is left empty, a fallback will be used. However, to ensure valid results due to rate limitations, it is recommended to use your own key.', 'antivirus' );
+									?>
 								</p>
 
 								<br/>
