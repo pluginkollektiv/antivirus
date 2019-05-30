@@ -320,24 +320,33 @@ class AntiVirus {
 			return;
 		}
 
-		// Get the JSON response of the API request.
+		// Get the response code and JSON response of the API request.
+		$response_code = wp_remote_retrieve_response_code( $response );
 		$response_json = json_decode(wp_remote_retrieve_body( $response ), true);
 
-		// All clear, nothing bad detected.
-		if ( wp_remote_retrieve_response_code( $response ) === 200 && empty( $response_json ) ) {
-			return;
-		}
+		if ( 200 === $response_code ) {
+			// Successful request.
+			if ( empty( $response_json ) ) {
+				// All clear, nothing bad detected.
+			} else {
+				// Send notification.
+				self::_send_warning_notification(
+					esc_html__( 'Safe Browsing Alert', 'antivirus' ),
+					sprintf(
+						"%s\r\nhttps://transparencyreport.google.com/safe-browsing/search?url=%s&hl=%s",
+						esc_html__( 'Google has found a problem on your page and probably listed it on a blacklist. It is likely that your website or your hosting account has been hacked and malware or phishing code was installed. We recommend to check your site. For more details please check the Google Safe Browsing diagnostic page:', 'antivirus' ),
+						urlencode( get_bloginfo( 'url' ) ),
+						substr( get_locale(), 0, 2 )
+					)
+				);
+			}
+		} elseif ( 400 === $response_code || 403 === $response_code  ) {
+			// Invalid request (most likely invalid key) or expired/exceeded key.
 
-		// Send notification.
-		self::_send_warning_notification(
-			esc_html__( 'Safe Browsing Alert', 'antivirus' ),
-			sprintf(
-				"%s\r\nhttps://transparencyreport.google.com/safe-browsing/search?url=%s&hl=%s",
-				esc_html__( 'Google has found a problem on your page and probably listed it on a blacklist. It is likely that your website or your hosting account has been hacked and malware or phishing code was installed. We recommend to check your site. For more details please check the Google Safe Browsing diagnostic page:', 'antivirus' ),
-				urlencode( get_bloginfo( 'url' ) ),
-				substr( get_locale(), 0, 2 )
-			)
-		);
+			// TODO: inform the user about potential misconfiguration
+		} else {
+			// Unexpected response code (likely 5xx).
+		}
 	}
 
 	/**
