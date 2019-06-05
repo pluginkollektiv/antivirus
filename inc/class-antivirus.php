@@ -166,6 +166,7 @@ class AntiVirus {
 				'cronjob_alert'     => 0,
 				'safe_browsing'     => 0,
 				'safe_browsing_key' => '',
+				'checksum_verifier' => 0,
 				'notify_email'      => '',
 				'white_list'        => '',
 			)
@@ -241,6 +242,11 @@ class AntiVirus {
 
 		// Check the theme and permalinks.
 		self::_check_blog_internals();
+
+		// Check the theme and permalinks.
+		if ( self::_get_option( 'checksum_verifier' ) ) {
+			AntiVirus_ChecksumVerifier::verify_files();
+		}
 	}
 
 	/**
@@ -392,7 +398,7 @@ class AntiVirus {
 	 * @param string $subject Subject of the notification email.
 	 * @param string $body    Email body.
 	 */
-	private static function _send_warning_notification( $subject, $body ) {
+	protected static function _send_warning_notification( $subject, $body ) {
 		// Get recipient email address.
 		$email = self::_get_option( 'notify_email' );
 
@@ -956,10 +962,11 @@ class AntiVirus {
 
 			// Save values.
 			$options = array(
-				'cronjob_enable'     => (int) ( ! empty( $_POST['av_cronjob_enable'] ) ),
-				'notify_email'       => sanitize_email( @$_POST['av_notify_email'] ),
-				'safe_browsing'      => (int) ( ! empty( $_POST['av_safe_browsing'] ) ),
+				'cronjob_enable'    => (int) ( ! empty( $_POST['av_cronjob_enable'] ) ),
+				'notify_email'      => sanitize_email( @$_POST['av_notify_email'] ),
+				'safe_browsing'     => (int) ( ! empty( $_POST['av_safe_browsing'] ) ),
 				'safe_browsing_key' => sanitize_text_field( @$_POST['av_safe_browsing_key'] ),
+				'checksum_verifier' => (int) ( ! empty( $_POST['av_checksum_verifier'] ) ),
 			);
 
 			// No cronjob?
@@ -967,6 +974,7 @@ class AntiVirus {
 				$options['notify_email']      = '';
                 $options['safe_browsing']     = 0;
 				$options['safe_browsing_key'] = '';
+				$options['checksum_verifier'] = 0;
 			}
 
 			// Stop cron if it was disabled.
@@ -1072,6 +1080,20 @@ class AntiVirus {
 								<p class="description">
 									<?php
 									esc_html_e( 'Provide a custom key for the Google Safe Browsing API (v4). If this value is left empty, a fallback will be used. However, to ensure valid results due to rate limitations, it is recommended to use your own key.', 'antivirus' );
+									?>
+								</p>
+
+								<br/>
+
+								<label for="av_checksum_verifier">
+									<input type="checkbox" name="av_checksum_verifier" id="av_checksum_verifier"
+										   value="1" <?php checked( self::_get_option( 'checksum_verifier' ), 1 ) ?> />
+									<?php esc_html_e( 'Checksum verification of WP core files', 'antivirus' ); ?>
+								</label>
+
+								<p class="description">
+									<?php
+									esc_html_e( 'Matches checksums of all WordPress core files against the values provided by the official API.', 'antivirus' );
 									?>
 								</p>
 
