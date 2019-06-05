@@ -181,7 +181,7 @@ class AntiVirus {
 	 * @param string     $field The option name.
 	 * @param string|int $value The option value.
 	 */
-	private static function _update_option( $field, $value ) {
+	protected static function _update_option( $field, $value ) {
 		self::_update_options(
 			array(
 				$field => $value,
@@ -237,159 +237,18 @@ class AntiVirus {
 			return;
 		}
 
-		// Check the Safe Browsing API.
-		self::_check_safe_browsing();
-
 		// Check the theme and permalinks.
-		self::_check_blog_internals();
+		AntiVirus_CheckInternals::check_blog_internals();
+
+		// Check the Safe Browsing API.
+		if ( self::_get_option( 'safe_browsing' ) ) {
+			AntiVirus_SafeBrowsing::check_safe_browsing();
+		}
 
 		// Check the theme and permalinks.
 		if ( self::_get_option( 'checksum_verifier' ) ) {
 			AntiVirus_ChecksumVerifier::verify_files();
 		}
-	}
-
-	/**
-	 * Pings the Safe Browsing API to see if the website is infected.
-	 */
-	private static function _check_safe_browsing() {
-		// Check if option is enabled in the plugin.
-		if ( ! self::_get_option( 'safe_browsing' ) ) {
-			return;
-		}
-
-		// Check if API key is provided in config.
-		$key        = self::_get_option( 'safe_browsing_key' );
-		$custom_key = true;
-		// Fallback to default key if not.
-		if ( empty( $key ) ) {
-			$key        = 'AIzaSyCGHXUd7vQAySRLNiC5y1M_wzR2W0kCVKI';
-			$custom_key = false;
-		}
-
-		// Request the API.
-		$response = wp_remote_post(
-			sprintf(
-				'https://safebrowsing.googleapis.com/v4/threatMatches:find?key=%s',
-				$key
-			),
-			array(
-				'headers' => array(
-					'Content-Type' => 'application/json',
-				),
-				'body'    => json_encode(
-					array(
-						'client'     => array(
-							'clientId'      => 'wpantivirus',
-							'clientVersion' => '1.3.10'
-						),
-						'threatInfo' => array(
-							'threatTypes'      => array(
-								'THREAT_TYPE_UNSPECIFIED',
-								'MALWARE',
-								'SOCIAL_ENGINEERING',
-								'UNWANTED_SOFTWARE',
-								'POTENTIALLY_HARMFUL_APPLICATION'
-							),
-							'platformTypes'    => array( 'ANY_PLATFORM' ),
-							'threatEntryTypes' => array( 'URL' ),
-							'threatEntries'    => array(
-								array( 'url' => urlencode( get_bloginfo( 'url' ) ) ),
-							)
-						)
-					)
-				)
-			)
-		);
-
-		// API error?
-		if ( is_wp_error( $response ) ) {
-			return;
-		}
-
-		// Get the response code and JSON response of the API request.
-		$response_code = wp_remote_retrieve_response_code( $response );
-		$response_json = json_decode( wp_remote_retrieve_body( $response ), true );
-
-		if ( 200 === $response_code ) {
-			// Successful request.
-			if ( empty( $response_json ) ) {
-				// All clear, nothing bad detected.
-			} else {
-				// Send notification.
-				self::_send_warning_notification(
-					esc_html__( 'Safe Browsing Alert', 'antivirus' ),
-					sprintf(
-						"%s\r\nhttps://transparencyreport.google.com/safe-browsing/search?url=%s&hl=%s",
-						esc_html__( 'Google has found a problem on your page and probably listed it on a blacklist. It is likely that your website or your hosting account has been hacked and malware or phishing code was installed. We recommend to check your site. For more details please check the Google Safe Browsing diagnostic page:', 'antivirus' ),
-						urlencode( get_bloginfo( 'url' ) ),
-						substr( get_locale(), 0, 2 )
-					)
-				);
-			}
-		} elseif ( 400 === $response_code || 403 === $response_code ) {
-			// Invalid request (most likely invalid key) or expired/exceeded key.
-			$mail_body = sprintf(
-				"%s\r\n\r\n%s",
-				esc_html__( 'Checking yout site against the Google Safe Browsing API has failed.', 'antivirus' ),
-				esc_html__( 'This does not mean that your site has been infected, but that the status could not be determinined.', 'antivirus' )
-			);
-
-			// Add (sanitized) error message, if available
-			if ( isset( $response_json['error']['message'] ) ) {
-				$mail_body .= sprintf(
-					"\r\n\r\n%s:\r\n  %s\r\n",
-					esc_html__( 'Error message from API', 'antivirus' ),
-					filter_var( $response_json['error']['message'], FILTER_SANITIZE_STRING )
-				);
-			}
-
-			// Add advice to solve the problem, depending on the key (custom or default).
-			if ( $custom_key ) {
-				$mail_body .= sprintf(
-					"\r\n%s",
-					esc_html__( 'Please check if your API key is correct and its limit not exceeded. If everything is correct and the error persists for the next requests, please contact the Plugin support.', 'antivirus' )
-				);
-			} else {
-				$mail_body .= sprintf(
-					"\r\n%s",
-					esc_html__( 'This might be due to an exceeded rate limit on the shared API key. To ensure this does not happen please consider providing your own key using the Plugin settings page.', 'antivirus' )
-				);
-			}
-
-			self::_send_warning_notification(
-				esc_html__( 'Safe Browsing check failed', 'antivirus' ),
-				$mail_body
-			);
-		} else {
-			// Unexpected response code (likely 5xx).
-		}
-	}
-
-	/**
-	 * Check blog internals like theme files and the permalink structure.
-	 */
-	private static function _check_blog_internals() {
-		// Execute checks.
-		if ( ! self::_check_theme_files() && ! self::_check_permalink_structure() ) {
-			return;
-		}
-
-		// Send notification.
-		self::_send_warning_notification(
-			esc_html__( 'Virus suspected', 'antivirus' ),
-			sprintf(
-				"%s\r\n%s",
-				esc_html__( 'The daily antivirus scan of your blog suggests alarm.', 'antivirus' ),
-				get_bloginfo( 'url' )
-			)
-		);
-
-		// Store alert in database.
-		self::_update_option(
-			'cronjob_alert',
-			1
-		);
 	}
 
 	/**
@@ -516,7 +375,7 @@ class AntiVirus {
 	 *
 	 * @return array|false Theme files or false on failure.
 	 */
-	private static function _get_theme_files() {
+	protected static function _get_theme_files() {
 		// Check if the theme exists.
 		if ( ! $theme = self::_get_current_theme() ) {
 			return false;
@@ -570,7 +429,7 @@ class AntiVirus {
 	 *
 	 * @return array MD5 hashes of whitelisted files.
 	 */
-	private static function _get_white_list() {
+	protected static function _get_white_list() {
 		return explode(
 			':',
 			self::_get_option( 'white_list' )
@@ -608,7 +467,7 @@ class AntiVirus {
 				break;
 
 			case 'check_theme_file':
-				if ( ! empty( $_POST['_theme_file'] ) && $lines = self::_check_theme_file( $_POST['_theme_file'] ) ) {
+				if ( ! empty( $_POST['_theme_file'] ) && $lines = AntiVirus_CheckInternals::check_theme_file( $_POST['_theme_file'] ) ) {
 					foreach ( $lines as $num => $line ) {
 						foreach ( $line as $string ) {
 							$values[] = $num;
@@ -653,278 +512,6 @@ class AntiVirus {
 		}
 
 		exit();
-	}
-
-	/**
-	 * Get file contents
-	 *
-	 * @param string $file File path.
-	 *
-	 * @return array An array containing all the lines of the file.
-	 */
-	private static function _get_file_content( $file ) {
-		return file( WP_CONTENT_DIR . $file );
-	}
-
-	/**
-	 * Shorten a string, append ellipsis.
-	 *
-	 * @param string $line The line.
-	 * @param string $tag  The tag we're looking for.
-	 * @param int    $max  Maximum number of chars on each side.
-	 *
-	 * @return string|false The shortened string or false on failure.
-	 */
-	private static function _get_dotted_line( $line, $tag, $max = 100 ) {
-		// No values?
-		if ( ! $line || ! $tag ) {
-			return false;
-		}
-
-		// Return tag if it's higher than the maximum.
-		if ( strlen( $tag ) > $max ) {
-			return $tag;
-		}
-
-		// Get difference between the tag and the maximum.
-		$left = round( ( $max - strlen( $tag ) ) / 2 );
-
-		// Quote regular expression characters.
-		$tag = preg_quote( $tag );
-
-		// Shorten string on the right side.
-		$output = preg_replace(
-			'/(' . $tag . ')(.{' . $left . '}).{0,}$/',
-			'$1$2 ...',
-			$line
-		);
-
-		// Shorten string on the left side.
-		$output = preg_replace(
-			'/^.{0,}(.{' . $left . ',})(' . $tag . ')/',
-			'... $1$2',
-			$output
-		);
-
-		return $output;
-	}
-
-	/**
-	 * Get the regular expression for all disallowed words/functions.
-	 *
-	 * @return string Regular expression.
-	 */
-	private static function _php_match_pattern() {
-		return '/\b(assert|file_get_contents|curl_exec|popen|proc_open|unserialize|eval|base64_encode|base64_decode|create_function|exec|shell_exec|system|passthru|ob_get_contents|file|curl_init|readfile|fopen|fsockopen|pfsockopen|fclose|fread|file_put_contents)\b\s*?\(/';
-	}
-
-	/**
-	 * Check a specific line number.
-	 *
-	 * @param string $line The line to check.
-	 * @param int    $num  Line number.
-	 *
-	 * @return array|bool An array of matched lines or false on failure.
-	 */
-	private static function _check_file_line( $line = '', $num ) {
-		// Trim value.
-		$line = trim( (string) $line );
-
-		// Make sure the values aren't empty.
-		if ( ! $line || ! isset( $num ) ) {
-			return false;
-		}
-
-		$results = array();
-		$output  = array();
-
-		// Check if the regex matches.
-		preg_match_all(
-			self::_php_match_pattern(),
-			$line,
-			$matches
-		);
-
-		// Save matches.
-		if ( $matches[1] ) {
-			$results = $matches[1];
-		}
-
-		// Search for base64 encoded strings.
-		preg_match_all(
-			'/[\'\"\$\\ \/]*?([a-zA-Z0-9]{' . strlen( base64_encode( 'sergej + swetlana = love.' ) ) . ',})/', /* get length of my life ;) */
-			$line,
-			$matches
-		);
-
-		// Save matches.
-		if ( $matches[1] ) {
-			$results = array_merge( $results, $matches[1] );
-		}
-
-		// Look for frames.
-		preg_match_all(
-			'/<\s*?(i?frame)/',
-			$line,
-			$matches
-		);
-
-		// Save matches.
-		if ( $matches[1] ) {
-			$results = array_merge( $results, $matches[1] );
-		}
-
-		// Look for the MailPoet vulnerability.
-		preg_match_all(
-			'/explode\s?\(chr\s?\(\s?\(\d{3}\s?-\s?\d{3}\s?\)\s?\)\s?,/',
-			$line,
-			$matches
-		);
-
-		// Save matches.
-		if ( $matches[0] ) {
-			$results = array_merge( $results, $matches[0] );
-		}
-
-		// Look for `get_option` calls.
-		preg_match(
-			'/get_option\s*\(\s*[\'"](.*?)[\'"]\s*\)/',
-			$line,
-			$matches
-		);
-
-		// Check option.
-		if ( $matches && $matches[1] && self::_check_file_line( get_option( $matches[1] ), $num ) ) {
-			array_push( $results, 'get_option' );
-		}
-
-		if ( $results ) {
-			// Remove duplicates.
-			$results = array_unique( $results );
-
-			// Get whitelist.
-			$md5 = self::_get_white_list();
-
-			// Loop through results.
-			foreach ( $results as $tag ) {
-				$string = str_replace(
-					$tag,
-					'@span@' . $tag . '@/span@',
-					self::_get_dotted_line( $line, $tag )
-				);
-
-				// Add line to output if it's not on the whitelist.
-				if ( ! in_array( md5( $num . $string ), $md5 ) ) {
-					$output[] = $string;
-				}
-			}
-
-			return $output;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Check the files of the currently activated theme.
-	 *
-	 * @return array|false Results array or false on failure.
-	 */
-	private static function _check_theme_files() {
-		// Check if there are any files.
-		if ( ! $files = self::_get_theme_files() ) {
-			return false;
-		}
-
-		$results = array();
-
-		// Loop through files.
-		foreach ( $files as $file ) {
-			if ( $result = self::_check_theme_file( $file ) ) {
-				$results[ $file ] = $result;
-			}
-		}
-
-		// Return results if found.
-		if ( ! empty( $results ) ) {
-			return $results;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Check a single file.
-	 *
-	 * @param string $file File path.
-	 *
-	 * @return array|false Results array or false on failure.
-	 */
-	private static function _check_theme_file( $file ) {
-		// Simple file path check.
-		if ( filter_var( $file, FILTER_SANITIZE_URL ) !== $file ) {
-			return false;
-		}
-
-		// Sanitize file string.
-		if ( validate_file( $file ) !== 0 ) {
-			return false;
-		}
-
-		// No file?
-		if ( ! $file ) {
-			return false;
-		}
-
-		// Get file content.
-		$content = self::_get_file_content( $file );
-
-		if ( ! $content ) {
-			return false;
-		}
-
-		$results = array();
-
-		// Loop through lines.
-		foreach ( $content as $num => $line ) {
-			if ( $result = self::_check_file_line( $line, $num ) ) {
-				$results[ $num ] = $result;
-			}
-		}
-
-		// Return results if found.
-		if ( ! empty( $results ) ) {
-			return $results;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Check the permalink structure.
-	 *
-	 * @return array|false Results array or false on failure.
-	 */
-	private static function _check_permalink_structure() {
-		$structure = get_option( 'permalink_structure' );
-
-		if ( ! $structure ) {
-			return false;
-		}
-
-		// Regex check.
-		preg_match_all(
-			self::_php_match_pattern(),
-			$structure,
-			$matches
-		);
-
-		// Save matches.
-		if ( $matches[1] ) {
-			return $matches[1];
-		}
-
-		return false;
 	}
 
 	/**

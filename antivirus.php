@@ -43,7 +43,7 @@ if ( ! class_exists( 'WP' ) ) {
  * @param string $class The classname.
  */
 function antivirus_autoload( $class ) {
-	if ( in_array( $class, array( 'AntiVirus', 'AntiVirus_ChecksumVerifier' ), true ) ) {
+	if ( in_array( $class, array( 'AntiVirus', 'AntiVirus_CheckInternals', 'AntiVirus_SafeBrowsing', 'AntiVirus_ChecksumVerifier' ), true ) ) {
 		require_once sprintf(
 			'%s%s%s%sclass-%s.php',
 			dirname( __FILE__ ),
