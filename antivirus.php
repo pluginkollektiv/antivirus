@@ -347,14 +347,14 @@ class AntiVirus {
 			$mail_body = sprintf(
 				"%s\r\n\r\n%s",
 				esc_html__( 'Checking yout site against the Google Safe Browsing API has failed.', 'antivirus' ),
-				esc_html__( 'This does not mean that your site has been infected, but that the status could not be determinined.', 'antivirus' ),
+				esc_html__( 'This does not mean that your site has been infected, but that the status could not be determinined.', 'antivirus' )
 			);
 
 			// Add (sanitized) error message, if available
 			if ( isset( $response_json['error']['message'] ) ) {
 				$mail_body .= sprintf(
-					"\r\n\r\n%s:  %s\r\n",
-					esc_html__( '', 'antivirus' ),
+					"\r\n\r\n%s:\r\n  %s\r\n",
+					esc_html__( 'Error message from API', 'antivirus' ),
 					filter_var( $response_json['error']['message'], FILTER_SANITIZE_STRING )
 				);
 			}
