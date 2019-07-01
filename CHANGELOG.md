@@ -1,5 +1,12 @@
 # Changelog
 
+### unreleased ###
+* **English**
+	 * Option to provide a custom key for the Google Safe Browsing API
+* **Deutsch**
+	* Möglichkeit einen eigenen Schlüssel für die Google Safe Browsing API zu verwenden
+
+
 ### 1.3.10 ###
 * **English**
 	 * Updated PayPal link for donations

@@ -183,11 +183,12 @@ class AntiVirus {
 		$options = wp_parse_args(
 			get_option( 'antivirus' ),
 			array(
-				'cronjob_enable' => 0,
-				'cronjob_alert'  => 0,
-				'safe_browsing'  => 0,
-				'notify_email'   => '',
-				'white_list'     => '',
+				'cronjob_enable'    => 0,
+				'cronjob_alert'     => 0,
+				'safe_browsing'     => 0,
+				'safe_browsing_key' => '',
+				'notify_email'      => '',
+				'white_list'        => '',
 			)
 		);
 
@@ -272,11 +273,20 @@ class AntiVirus {
 			return;
 		}
 
+		// Check if API key is provided in config.
+		$key        = self::_get_option( 'safe_browsing_key' );
+		$custom_key = true;
+		// Fallback to default key if not.
+		if ( empty( $key ) ) {
+			$key        = 'AIzaSyCGHXUd7vQAySRLNiC5y1M_wzR2W0kCVKI';
+			$custom_key = false;
+		}
+
 		// Request the API.
 		$response = wp_remote_post(
 			sprintf(
 				'https://safebrowsing.googleapis.com/v4/threatMatches:find?key=%s',
-				'AIzaSyCGHXUd7vQAySRLNiC5y1M_wzR2W0kCVKI'
+				$key
 			),
 			array(
 				'headers' => array(
@@ -312,24 +322,63 @@ class AntiVirus {
 			return;
 		}
 
-		// Get the JSON response of the API request.
-		$response_json = json_decode(wp_remote_retrieve_body( $response ), true);
+		// Get the response code and JSON response of the API request.
+		$response_code = wp_remote_retrieve_response_code( $response );
+		$response_json = json_decode( wp_remote_retrieve_body( $response ), true );
 
-		// All clear, nothing bad detected.
-		if ( wp_remote_retrieve_response_code( $response ) === 200 && empty( $response_json ) ) {
-			return;
+		if ( 200 === $response_code ) {
+			// Successful request.
+			if ( empty( $response_json ) ) {
+				// All clear, nothing bad detected.
+			} else {
+				// Send notification.
+				self::_send_warning_notification(
+					esc_html__( 'Safe Browsing Alert', 'antivirus' ),
+					sprintf(
+						"%s\r\nhttps://transparencyreport.google.com/safe-browsing/search?url=%s&hl=%s",
+						esc_html__( 'Google has found a problem on your page and probably listed it on a blacklist. It is likely that your website or your hosting account has been hacked and malware or phishing code was installed. We recommend to check your site. For more details please check the Google Safe Browsing diagnostic page:', 'antivirus' ),
+						urlencode( get_bloginfo( 'url' ) ),
+						substr( get_locale(), 0, 2 )
+					)
+				);
+			}
+		} elseif ( 400 === $response_code || 403 === $response_code ) {
+			// Invalid request (most likely invalid key) or expired/exceeded key.
+			$mail_body = sprintf(
+				"%s\r\n\r\n%s",
+				esc_html__( 'Checking yout site against the Google Safe Browsing API has failed.', 'antivirus' ),
+				esc_html__( 'This does not mean that your site has been infected, but that the status could not be determinined.', 'antivirus' )
+			);
+
+			// Add (sanitized) error message, if available
+			if ( isset( $response_json['error']['message'] ) ) {
+				$mail_body .= sprintf(
+					"\r\n\r\n%s:\r\n  %s\r\n",
+					esc_html__( 'Error message from API', 'antivirus' ),
+					filter_var( $response_json['error']['message'], FILTER_SANITIZE_STRING )
+				);
+			}
+
+			// Add advice to solve the problem, depending on the key (custom or default).
+			if ( $custom_key ) {
+				$mail_body .= sprintf(
+					"\r\n%s",
+					esc_html__( 'Please check if your API key is correct and its limit not exceeded. If everything is correct and the error persists for the next requests, please contact the Plugin support.', 'antivirus' )
+				);
+			} else {
+				$mail_body .= sprintf(
+					"\r\n%s",
+					esc_html__( 'This might be due to an exceeded rate limit on the shared API key. To ensure this does not happen please consider providing your own key using the Plugin settings page.', 'antivirus' )
+				);
+			}
+
+			self::_send_warning_notification(
+				esc_html__( 'Safe Browsing check failed', 'antivirus' ),
+				$mail_body
+			);
+		} else {
+			// Unexpected response code (likely 5xx).
 		}
-
-		// Send notification.
-		self::_send_warning_notification(
-			esc_html__( 'Safe Browsing Alert', 'antivirus' ),
-			sprintf(
-				"%s\r\nhttps://transparencyreport.google.com/safe-browsing/search?url=%s&hl=%s",
-				esc_html__( 'Google has found a problem on your page and probably listed it on a blacklist. It is likely that your website or your hosting account has been hacked and malware or phishing code was installed. We recommend to check your site. For more details please check the Google Safe Browsing diagnostic page:', 'antivirus' ),
-				urlencode( get_bloginfo( 'url' ) ),
-				substr( get_locale(), 0, 2 )
-			)
-		);
 	}
 
 	/**
@@ -924,15 +973,17 @@ class AntiVirus {
 
 			// Save values.
 			$options = array(
-				'cronjob_enable' => (int) ( ! empty( $_POST['av_cronjob_enable'] ) ),
-				'notify_email'   => sanitize_email( @$_POST['av_notify_email'] ),
-				'safe_browsing'  => (int) ( ! empty( $_POST['av_safe_browsing'] ) ),
+				'cronjob_enable'     => (int) ( ! empty( $_POST['av_cronjob_enable'] ) ),
+				'notify_email'       => sanitize_email( @$_POST['av_notify_email'] ),
+				'safe_browsing'      => (int) ( ! empty( $_POST['av_safe_browsing'] ) ),
+				'safe_browsing_key' => sanitize_text_field( @$_POST['av_safe_browsing_key'] ),
 			);
 
 			// No cronjob?
 			if ( empty( $options['cronjob_enable'] ) ) {
-				$options['notify_email']  = '';
-				$options['safe_browsing'] = 0;
+				$options['notify_email']      = '';
+                $options['safe_browsing']     = 0;
+				$options['safe_browsing_key'] = '';
 			}
 
 			// Stop cron if it was disabled.
@@ -1024,6 +1075,21 @@ class AntiVirus {
                                     /* translators: First placeholder (%s) starting link tag to transparency report, second placeholder closing link tag */
                                     printf( __( 'Diagnosis and notification in suspicion case. For more details read %s the transparency report %s.', 'antivirus' ), $start_tag, $end_tag );
                                     ?>
+								</p>
+
+								<br/>
+
+								<label for="av_safe_browsing_key">
+									<?php esc_html_e( 'Safe Browsing API key', 'antivirus' ); ?>
+								</label>
+								<br/>
+								<input type="text" name="av_safe_browsing_key" id="av_safe_browsing_key"
+								       value="<?php esc_attr_e( self::_get_option( 'safe_browsing_key' ) ); ?>" />
+
+								<p class="description">
+									<?php
+									esc_html_e( 'Provide a custom key for the Google Safe Browsing API (v4). If this value is left empty, a fallback will be used. However, to ensure valid results due to rate limitations, it is recommended to use your own key.', 'antivirus' );
+									?>
 								</p>
 
 								<br/>

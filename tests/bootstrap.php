@@ -17,3 +17,6 @@ function _manually_load_oembed_api_plugin() {
 tests_add_filter( 'muplugins_loaded', '_manually_load_oembed_api_plugin' );
 
 require $_tests_dir . '/includes/bootstrap.php';
+
+// Include custom mocks.
+require 'wp_mocks.php';
