@@ -408,7 +408,8 @@ class AntiVirus {
 	 */
 	protected static function _get_theme_files() {
 		// Check if the theme exists.
-		if ( ! $theme = self::_get_theme_data(  wp_get_theme() ) ) {
+		$theme = self::_get_theme_data( wp_get_theme() );
+		if ( ! $theme ) {
 			return false;
 		}
 
@@ -452,7 +453,8 @@ class AntiVirus {
 	 * @return string|false The theme name or false on failure.
 	 */
 	private static function _get_theme_name() {
-		if ( $theme = self::_get_theme_data(  wp_get_theme() ) ) {
+		$theme = self::_get_theme_data( wp_get_theme() );
+		if ( $theme ) {
 			if ( ! empty( $theme['Slug'] ) ) {
 				return $theme['Slug'];
 			}
@@ -507,12 +509,15 @@ class AntiVirus {
 				break;
 
 			case 'check_theme_file':
-				if ( ! empty( $_POST['_theme_file'] ) && $lines = AntiVirus_CheckInternals::check_theme_file( $_POST['_theme_file'] ) ) {
-					foreach ( $lines as $num => $line ) {
-						foreach ( $line as $string ) {
-							$values[] = $num;
-							$values[] = htmlentities( $string, ENT_QUOTES );
-							$values[] = md5( $num . $string );
+				if ( ! empty( $_POST['_theme_file'] ) ) {
+					$lines = AntiVirus_CheckInternals::check_theme_file( $_POST['_theme_file'] );
+					if ( $lines ) {
+						foreach ( $lines as $num => $line ) {
+							foreach ( $line as $string ) {
+								$values[] = $num;
+								$values[] = htmlentities( $string, ENT_QUOTES );
+								$values[] = md5( $num . $string );
+							}
 						}
 					}
 				}
@@ -671,7 +676,8 @@ class AntiVirus {
 
 								<p class="description">
 									<?php
-									if ( $timestamp = wp_next_scheduled( 'antivirus_daily_cronjob' ) ) {
+									$timestamp = wp_next_scheduled( 'antivirus_daily_cronjob' );
+									if ( $timestamp ) {
 										echo sprintf(
 											'%s: %s',
 											esc_html__( 'Next Run', 'antivirus' ),

@@ -50,7 +50,8 @@ class AntiVirus_CheckInternals extends AntiVirus {
 	 */
 	public static function _check_theme_files() {
 		// Check if there are any files.
-		if ( ! $files = self::_get_theme_files() ) {
+		$files = self::_get_theme_files();
+		if ( ! $files ) {
 			return false;
 		}
 
@@ -58,7 +59,8 @@ class AntiVirus_CheckInternals extends AntiVirus {
 
 		// Loop through files.
 		foreach ( $files as $file ) {
-			if ( $result = self::check_theme_file( $file ) ) {
+			$result = self::check_theme_file( $file );
+			if ( $result ) {
 				$results[ $file ] = $result;
 			}
 		}
@@ -105,7 +107,8 @@ class AntiVirus_CheckInternals extends AntiVirus {
 
 		// Loop through lines.
 		foreach ( $content as $num => $line ) {
-			if ( $result = self::_check_file_line( $line, $num ) ) {
+			$result = self::_check_file_line( $line, $num );
+			if ( $result ) {
 				$results[ $num ] = $result;
 			}
 		}
