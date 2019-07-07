@@ -12,10 +12,6 @@ defined( 'ABSPATH' ) || exit;
 /**
  * AntiVirus: Main plugin class.
  */
-
-/**
- *
- */
 class AntiVirus {
 	/**
 	 * The basename of a plugin.
@@ -157,7 +153,7 @@ class AntiVirus {
 	 * @return array The options array.
 	 * @since 1.4 Extracted from _get_option() for use with _cron_enabled().
 	 */
-	private static function _get_options( ) {
+	private static function _get_options() {
 		return wp_parse_args(
 			get_option( 'antivirus' ),
 			array(
@@ -442,12 +438,12 @@ class AntiVirus {
 	/**
 	 * Strip out the content dir from a path.
 	 *
-	 * @param string $string
+	 * @param string $string Path to strip from.
 	 *
-	 * @return string
+	 * @return string The stripped path.
 	 */
 	private static function _strip_content_dir( $string ) {
-		return str_replace( array( WP_CONTENT_DIR, "wp-content" ), "", $string );
+		return str_replace( array( WP_CONTENT_DIR, 'wp-content' ), '', $string );
 	}
 
 	/**
@@ -559,8 +555,7 @@ class AntiVirus {
 	}
 
 	/**
-	 * Show notice on the dashbo
-	 * ard.
+	 * Show notice on the dashboard.
 	 */
 	public static function show_dashboard_notice() {
 		// Only show notice if there's an alert.
@@ -573,12 +568,14 @@ class AntiVirus {
 			'<div class="error"><p><strong>%1$s:</strong> %2$s <a href="%3$s">%4$s &rarr;</a></p></div>',
 			esc_html__( 'Virus suspected', 'antivirus' ),
 			esc_html__( 'The daily antivirus scan of your blog suggests alarm.', 'antivirus' ),
-			esc_url( add_query_arg(
-				array(
-					'page' => 'antivirus',
-				),
-				admin_url( 'options-general.php' )
-			) ),
+			esc_url(
+				add_query_arg(
+					array(
+						'page' => 'antivirus',
+					),
+					admin_url( 'options-general.php' )
+				)
+			),
 			esc_html__( 'Manual malware scan', 'antivirus' )
 		);
 	}
@@ -657,7 +654,7 @@ class AntiVirus {
 
 
 			<form id="av_settings" method="post" action="<?php echo esc_url( admin_url( 'options-general.php?page=antivirus' ) ); ?>">
-				<?php wp_nonce_field( 'antivirus' ) ?>
+				<?php wp_nonce_field( 'antivirus' ); ?>
 
 				<table class="form-table">
 					<tr>
@@ -668,7 +665,7 @@ class AntiVirus {
 							<fieldset>
 								<label for="av_cronjob_enable">
 									<input type="checkbox" name="av_cronjob_enable" id="av_cronjob_enable"
-										   value="1" <?php checked( self::_get_option( 'cronjob_enable' ), 1 ) ?> />
+										   value="1" <?php checked( self::_get_option( 'cronjob_enable' ), 1 ); ?> />
 									<?php esc_html_e( 'Check the theme templates for malware', 'antivirus' ); ?>
 								</label>
 
@@ -690,18 +687,18 @@ class AntiVirus {
 							<fieldset>
 								<label for="av_safe_browsing">
 									<input type="checkbox" name="av_safe_browsing" id="av_safe_browsing"
-										   value="1" <?php checked( self::_get_option( 'safe_browsing' ), 1 ) ?> />
+										   value="1" <?php checked( self::_get_option( 'safe_browsing' ), 1 ); ?> />
 									<?php esc_html_e( 'Malware detection by Google Safe Browsing', 'antivirus' ); ?>
 								</label>
 
 								<p class="description">
-                                    <?php
-                                    /* translators: Link for transparency report in english */
-                                    $start_tag = sprintf( '<a href="%s">', __( 'https://transparencyreport.google.com/safe-browsing/search?hl=en', 'antivirus' ) );
-                                    $end_tag = '</a>';
-                                    /* translators: First placeholder (%s) starting link tag to transparency report, second placeholder closing link tag */
-                                    printf( __( 'Diagnosis and notification in suspicion case. For more details read %s the transparency report %s.', 'antivirus' ), $start_tag, $end_tag );
-                                    ?>
+									<?php
+									/* translators: Link for transparency report in english */
+									$start_tag = sprintf( '<a href="%s">', __( 'https://transparencyreport.google.com/safe-browsing/search?hl=en', 'antivirus' ) );
+									$end_tag = '</a>';
+									/* translators: First placeholder (%s) starting link tag to transparency report, second placeholder closing link tag */
+									printf( __( 'Diagnosis and notification in suspicion case. For more details read %1$s the transparency report %2$s.', 'antivirus' ), $start_tag, $end_tag );
+									?>
 								</p>
 
 								<br/>
@@ -711,7 +708,7 @@ class AntiVirus {
 								</label>
 								<br/>
 								<input type="text" name="av_safe_browsing_key" id="av_safe_browsing_key"
-								       value="<?php esc_attr_e( self::_get_option( 'safe_browsing_key' ) ); ?>" />
+									   value="<?php esc_attr_e( self::_get_option( 'safe_browsing_key' ) ); ?>" />
 
 								<p class="description">
 									<?php
@@ -725,7 +722,7 @@ class AntiVirus {
 							<fieldset>
 								<label for="av_checksum_verifier">
 									<input type="checkbox" name="av_checksum_verifier" id="av_checksum_verifier"
-										   value="1" <?php checked( self::_get_option( 'checksum_verifier' ), 1 ) ?> />
+										   value="1" <?php checked( self::_get_option( 'checksum_verifier' ), 1 ); ?> />
 									<?php esc_html_e( 'Checksum verification of WP core files', 'antivirus' ); ?>
 								</label>
 
@@ -755,7 +752,7 @@ class AntiVirus {
 
 					<tr>
 						<th scope="row">
-							<input type="submit" class="button button-primary" value="<?php esc_attr_e( 'Save Changes', 'antivirus' ) ?>"/>
+							<input type="submit" class="button button-primary" value="<?php esc_attr_e( 'Save Changes', 'antivirus' ); ?>"/>
 						</th>
 						<td>
 							<?php
@@ -794,5 +791,6 @@ class AntiVirus {
 				</table>
 			</form>
 		</div>
-	<?php }
+		<?php
+	}
 }

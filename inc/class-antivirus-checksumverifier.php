@@ -131,7 +131,6 @@ class AntiVirus_ChecksumVerifier extends AntiVirus {
 	 * @return  array            File paths
 	 *
 	 * @hook    array  antivirus_checksum_verifier_ignore_files
-	 *
 	 */
 	private static function match_checksums( $checksums ) {
 		// Ignore files filter.
