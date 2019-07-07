@@ -510,12 +510,13 @@ class AntiVirus {
 
 			case 'check_theme_file':
 				if ( ! empty( $_POST['_theme_file'] ) ) {
-					$lines = AntiVirus_CheckInternals::check_theme_file( $_POST['_theme_file'] );
+					$theme_file = sanitize_file_name( wp_unslash( $_POST['_theme_file'] ) );
+					$lines = AntiVirus_CheckInternals::check_theme_file( $theme_file );
 					if ( $lines ) {
 						foreach ( $lines as $num => $line ) {
 							foreach ( $line as $string ) {
 								$values[] = $num;
-								$values[] = htmlentities( $string, ENT_QUOTES );
+								$values[] = htmlentities( $string, ENT_QUOTES, 'UTF-8' );
 								$values[] = md5( $num . $string );
 							}
 						}
@@ -524,21 +525,24 @@ class AntiVirus {
 				break;
 
 			case 'update_white_list':
-				if ( ! empty( $_POST['_file_md5'] ) && preg_match( '/^[a-f0-9]{32}$/', $_POST['_file_md5'] ) ) {
-					self::_update_option(
-						'white_list',
-						implode(
-							':',
-							array_unique(
-								array_merge(
-									self::_get_white_list(),
-									array( $_POST['_file_md5'] )
+				if ( ! empty( $_POST['_file_md5'] ) ) {
+					$file_md5 = sanitize_text_field( wp_unslash( $_POST['_file_md5'] ) );
+					if ( preg_match( '/^[a-f0-9]{32}$/', $file_md5 ) ) {
+						self::_update_option(
+							'white_list',
+							implode(
+								':',
+								array_unique(
+									array_merge(
+										self::_get_white_list(),
+										array( $file_md5 )
+									)
 								)
 							)
-						)
-					);
+						);
 
-					$values = array( $_POST['_file_md5'] );
+						$values = array( $file_md5 );
+					}
 				}
 				break;
 
@@ -548,10 +552,16 @@ class AntiVirus {
 
 		// Send response.
 		if ( $values ) {
+			if ( isset( $_POST['_ajax_nonce'] ) ) {
+				$nonce = sanitize_text_field( wp_unslash( $_POST['_ajax_nonce'] ) );
+			} else {
+				$nonce = '';
+			}
+
 			wp_send_json(
 				array(
 					'data'  => array_values( $values ),
-					'nonce' => $_POST['_ajax_nonce'],
+					'nonce' => $nonce,
 				)
 			);
 		}
@@ -597,9 +607,9 @@ class AntiVirus {
 			// Save values.
 			$options = array(
 				'cronjob_enable'    => (int) ( ! empty( $_POST['av_cronjob_enable'] ) ),
-				'notify_email'      => sanitize_email( @$_POST['av_notify_email'] ),
+				'notify_email'      => ( ! empty( $_POST['av_notify_email'] ) ) ? sanitize_email( wp_unslash( $_POST['av_notify_email'] ) ) : '',
 				'safe_browsing'     => (int) ( ! empty( $_POST['av_safe_browsing'] ) ),
-				'safe_browsing_key' => sanitize_text_field( @$_POST['av_safe_browsing_key'] ),
+				'safe_browsing_key' => ( ! empty( $_POST['av_safe_browsing_key'] ) ) ? sanitize_text_field( wp_unslash( $_POST['av_safe_browsing_key'] ) ) : '',
 				'checksum_verifier' => (int) ( ! empty( $_POST['av_checksum_verifier'] ) ),
 			);
 
