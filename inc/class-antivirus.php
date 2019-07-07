@@ -681,7 +681,7 @@ class AntiVirus {
 										echo sprintf(
 											'%s: %s',
 											esc_html__( 'Next Run', 'antivirus' ),
-											date_i18n( 'd.m.Y H:i:s', $timestamp + get_option( 'gmt_offset' ) * 3600 )
+											esc_html( date_i18n( 'd.m.Y H:i:s', $timestamp + get_option( 'gmt_offset' ) * 3600 ) )
 										);
 									}
 									?>
@@ -700,10 +700,13 @@ class AntiVirus {
 								<p class="description">
 									<?php
 									/* translators: Link for transparency report in english */
-									$start_tag = sprintf( '<a href="%s">', __( 'https://transparencyreport.google.com/safe-browsing/search?hl=en', 'antivirus' ) );
+									$start_tag = sprintf( '<a href="%s">', esc_attr__( 'https://transparencyreport.google.com/safe-browsing/search?hl=en', 'antivirus' ) );
 									$end_tag = '</a>';
-									/* translators: First placeholder (%s) starting link tag to transparency report, second placeholder closing link tag */
-									printf( __( 'Diagnosis and notification in suspicion case. For more details read %1$s the transparency report %2$s.', 'antivirus' ), $start_tag, $end_tag );
+									echo wp_kses(
+										/* translators: First placeholder (%s) starting link tag to transparency report, second placeholder closing link tag */
+										sprintf( __( 'Diagnosis and notification in suspicion case. For more details read %1$s the transparency report %2$s.', 'antivirus' ), $start_tag, $end_tag ),
+										array( 'a' => array( 'href' ) )
+									);
 									?>
 								</p>
 
@@ -714,7 +717,7 @@ class AntiVirus {
 								</label>
 								<br/>
 								<input type="text" name="av_safe_browsing_key" id="av_safe_browsing_key"
-									   value="<?php esc_attr_e( self::_get_option( 'safe_browsing_key' ) ); ?>" />
+									   value="<?php esc_attr( self::_get_option( 'safe_browsing_key' ) ); ?>" />
 
 								<p class="description">
 									<?php
@@ -744,7 +747,7 @@ class AntiVirus {
 							<fieldset>
 								<label for="av_notify_email"><?php esc_html_e( 'Email address for notifications', 'antivirus' ); ?></label>
 								<input type="text" name="av_notify_email" id="av_notify_email"
-									   value="<?php esc_attr_e( self::_get_option( 'notify_email' ) ); ?>"
+									   value="<?php esc_attr( self::_get_option( 'notify_email' ) ); ?>"
 									   class="regular-text"
 									   placeholder="<?php esc_attr_e( 'Email address for notifications', 'antivirus' ); ?>" />
 
