@@ -312,7 +312,7 @@ class AntiVirus {
 		// Enqueue the JavaScript.
 		wp_enqueue_script(
 			'av_script',
-			plugins_url( 'js/script.min.js', __FILE__ ),
+			plugins_url( 'js/script.min.js', dirname( __FILE__ ) ),
 			array( 'jquery' ),
 			$data['Version']
 		);
@@ -341,7 +341,7 @@ class AntiVirus {
 		// Enqueue the stylesheet.
 		wp_enqueue_style(
 			'av_css',
-			plugins_url( 'css/style.min.css', __FILE__ ),
+			plugins_url( 'css/style.min.css', dirname( __FILE__ ) ),
 			array(),
 			$data['Version']
 		);
