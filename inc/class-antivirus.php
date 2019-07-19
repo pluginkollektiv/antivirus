@@ -45,7 +45,7 @@ class AntiVirus {
 		}
 
 		// Save the plugin basename.
-		self::$base = plugin_basename( __FILE__ );
+		self::$base = plugin_basename( ANTIVIRUS_FILE );
 
 		// Run the daily cronjob.
 		if ( defined( 'DOING_CRON' ) ) {
@@ -307,12 +307,12 @@ class AntiVirus {
 	 */
 	public static function add_enqueue_script() {
 		// Get plugin data.
-		$data = get_plugin_data( __FILE__ );
+		$data = get_plugin_data( ANTIVIRUS_FILE );
 
 		// Enqueue the JavaScript.
 		wp_enqueue_script(
 			'av_script',
-			plugins_url( 'js/script.min.js', dirname( __FILE__ ) ),
+			plugins_url( 'js/script.min.js', ANTIVIRUS_FILE ),
 			array( 'jquery' ),
 			$data['Version']
 		);
@@ -336,12 +336,12 @@ class AntiVirus {
 	 */
 	public static function add_enqueue_style() {
 		// Get plugin data.
-		$data = get_plugin_data( __FILE__ );
+		$data = get_plugin_data( ANTIVIRUS_FILE );
 
 		// Enqueue the stylesheet.
 		wp_enqueue_style(
 			'av_css',
-			plugins_url( 'css/style.min.css', dirname( __FILE__ ) ),
+			plugins_url( 'css/style.min.css', ANTIVIRUS_FILE ),
 			array(),
 			$data['Version']
 		);
