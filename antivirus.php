@@ -37,6 +37,8 @@ if ( ! class_exists( 'WP' ) ) {
 	die();
 }
 
+define( 'ANTIVIRUS_FILE', __FILE__ );
+
 /**
  * Plugin autoloader.
  *
