@@ -351,10 +351,20 @@ class AntiVirus {
 	/**
 	 * Get the currently activated theme.
 	 *
+	 * @param WP_Theme|false $t Theme to parse.
+	 *
 	 * @return array|false An array holding the theme data or false on failure.
+	 *
+	 * @since 1.4 Added $t parameter.
 	 */
-	private static function _get_current_theme() {
-		$theme = wp_get_theme();
+	private static function _get_current_theme( $t = false ) {
+		if ( $t ) {
+			$theme = $t;
+		} else {
+			$theme = wp_get_theme();
+		}
+
+		// Extract data.
 		$name  = $theme->get( 'Name' );
 		$slug  = $theme->get_stylesheet();
 		$files = $theme->get_files( 'php', 1 );
@@ -364,10 +374,23 @@ class AntiVirus {
 			return false;
 		}
 
+		// Append parent's data, if we got a child theme.
+		if ( false !== $theme->parent() ) {
+			$parent = self::_get_current_theme( $theme->parent() );
+		} else {
+			$parent = false;
+		}
+
+		// Return false if there are no files in current theme and no parent.
+		if ( empty( $files ) && ! $parent ) {
+			return false;
+		}
+
 		return array(
 			'Name'           => $name,
 			'Slug'           => $slug,
 			'Template Files' => $files,
+			'Parent'         => $parent,
 		);
 	}
 
@@ -382,8 +405,17 @@ class AntiVirus {
 			return false;
 		}
 
+		$files = $theme['Template Files'];
+
+		// Append parent files, if available.
+		$parent = $theme['Parent'];
+		while ( false !== $parent ) {
+			$files  = array_merge( $files, $parent['Template Files'] );
+			$parent = $parent['Parent'];
+		}
+
 		// Check its files.
-		if ( empty( $theme['Template Files'] ) ) {
+		if ( empty( $files ) ) {
 			return false;
 		}
 
@@ -391,7 +423,7 @@ class AntiVirus {
 		return array_unique(
 			array_map(
 				array( 'AntiVirus', '_strip_content_dir' ),
-				$theme['Template Files']
+				$files
 			)
 		);
 	}

@@ -3,8 +3,10 @@
 ### unreleased ###
 * **English**
 	 * Option to provide a custom key for the Google Safe Browsing API
+	 * Scan files of parent theme if a child theme is active
 * **Deutsch**
 	* Möglichkeit einen eigenen Schlüssel für die Google Safe Browsing API zu verwenden
+	* Dateien des Parent Themes scannen, falls ein Child Theme aktiv ist
 
 
 ### 1.3.10 ###
