@@ -100,7 +100,7 @@ class AntiVirus_ChecksumVerifier extends AntiVirus {
 		);
 
 		// Exit on JSON error.
-		if ( json_last_error() !== JSON_ERROR_NONE ) {
+		if ( null === $json ) {
 			return false;
 		}
 
