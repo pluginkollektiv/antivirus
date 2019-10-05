@@ -3,6 +3,7 @@
 * Tags:              antivirus, malware, scanner, phishing, safe browsing, vulnerability
 * Donate link:       https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=TD4AMD2D8EMZW
 * Requires at least: 3.8
+* Requires PHP:      5.2
 * Tested up to:      5.1
 * Stable tag:        1.3.10
 * License:           GPLv2 or later
