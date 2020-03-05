@@ -13,7 +13,7 @@ Security plugin to protect your blog or website against exploits and spam inject
 
 ## Description ##
 *AntiVirus for WordPress* is a easy-to-use, safe tool to harden your WordPress site against exploits, malware and spam injections.
-You can configure *AntiVirus* to perform an automated daily scan of your theme files and database tables. If the plugin happens to detect any suspicious code injections, it will send out a notification to a previously configured e-mail address.
+You can configure *AntiVirus* to perform an automated daily scan of your theme files. If the plugin happens to detect any suspicious code injections, it will send out a notification to a previously configured e-mail address.
 
 In case your WordPress site has been hacked, *AntiVirus* will help you to become aware of the problem very quickly in order for you to take immediate action.
 
@@ -21,7 +21,7 @@ In case your WordPress site has been hacked, *AntiVirus* will help you to become
 * Virus alert in the admin bar
 * Cleaning up after plugin removal
 * Daily scan with email notifications
-* Database tables and theme templates checks
+* Theme template checks
 * Whitelist solution: Mark suspected cases as "no virus"
 * Manual check of template files with alerts on suspected cases
 * Optional: Google Safe Browsing for malware and phishing monitoring.
