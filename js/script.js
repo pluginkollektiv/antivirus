@@ -6,6 +6,7 @@ jQuery(document).ready(
         av_msg_1 = av_settings.msg_1;
         av_msg_2 = av_settings.msg_2;
         av_msg_3 = av_settings.msg_3;
+        av_msg_4 = av_settings.msg_4;
 
         /* Einzelne Datei prüfen */
         function check_theme_file(current) {
@@ -50,7 +51,7 @@ jQuery(document).ready(
                                 line = lines[i + 1].replace(/@span@/g, '<span>').replace(/@\/span@/g, '</span>'),
                                 file = item.text();
 
-                            item.append('<p><a href="#" id="' + md5 + '">' + av_msg_1 + '</a> <code>' + line + '</code></p>');
+                            item.append('<p><a href="#" id="' + md5 + '" class="button" title="' + av_msg_4 + '">' + av_msg_1 + '</a> <code>' + line + '</code></p>');
 
                             $('#' + md5).click(
                                 function() {
