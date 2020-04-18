@@ -350,16 +350,14 @@ class AntiVirus {
 	/**
 	 * Get the currently activated theme.
 	 *
-	 * @param WP_Theme|false $t Theme to parse.
+	 * @param WP_Theme|false $theme Theme to parse.
 	 *
 	 * @return array|false An array holding the theme data or false on failure.
 	 *
 	 * @since 1.4 Added $t parameter.
 	 */
-	private static function _get_current_theme( $t = false ) {
-		if ( $t ) {
-			$theme = $t;
-		} else {
+	private static function _get_current_theme( $theme = false ) {
+		if ( false === $theme ) {
 			$theme = wp_get_theme();
 		}
 
