@@ -354,11 +354,12 @@ class AntiVirus {
 	 *
 	 * @return array|false An array holding the theme data or false on failure.
 	 *
-	 * @since 1.4 Added $t parameter.
+	 * @since 1.4 Added $theme parameter.
 	 */
-	private static function _get_current_theme( $theme = false ) {
-		if ( false === $theme ) {
-			$theme = wp_get_theme();
+	private static function _get_theme_data( $theme ) {
+		// Break recursion if no valid (parent) theme is given.
+		if ( ! $theme ) {
+			return false;
 		}
 
 		// Extract data.
@@ -366,17 +367,8 @@ class AntiVirus {
 		$slug  = $theme->get_stylesheet();
 		$files = $theme->get_files( 'php', 1 );
 
-		// Check if empty.
-		if ( empty( $name ) || empty( $files ) ) {
-			return false;
-		}
-
 		// Append parent's data, if we got a child theme.
-		if ( false !== $theme->parent() ) {
-			$parent = self::_get_current_theme( $theme->parent() );
-		} else {
-			$parent = false;
-		}
+		$parent = self::_get_theme_data( $theme->parent() );
 
 		// Return false if there are no files in current theme and no parent.
 		if ( empty( $files ) && ! $parent ) {
@@ -398,7 +390,7 @@ class AntiVirus {
 	 */
 	protected static function _get_theme_files() {
 		// Check if the theme exists.
-		if ( ! $theme = self::_get_current_theme() ) {
+		if ( ! $theme = self::_get_theme_data(  wp_get_theme() ) ) {
 			return false;
 		}
 
@@ -442,7 +434,7 @@ class AntiVirus {
 	 * @return string|false The theme name or false on failure.
 	 */
 	private static function _get_theme_name() {
-		if ( $theme = self::_get_current_theme() ) {
+		if ( $theme = self::_get_theme_data(  wp_get_theme() ) ) {
 			if ( ! empty( $theme['Slug'] ) ) {
 				return $theme['Slug'];
 			}
