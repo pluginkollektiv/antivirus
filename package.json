@@ -11,6 +11,8 @@
     "grunt": "^1.0.1",
     "grunt-contrib-cssmin": "^3.0.0",
     "grunt-contrib-uglify": "^4.0.0",
-    "load-grunt-tasks": "^3.4.1"
+    "load-grunt-tasks": "^3.4.1",
+    "eslint": "^6",
+    "@wordpress/eslint-plugin": "^5"
   }
 }
