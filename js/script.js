@@ -1,181 +1,184 @@
-jQuery(document).ready(
-    function($) {
-        /* Init */
-        av_nonce = av_settings.nonce;
-        av_theme = av_settings.theme;
-        av_msg_1 = av_settings.msg_1;
-        av_msg_2 = av_settings.msg_2;
-        av_msg_3 = av_settings.msg_3;
-        av_msg_4 = av_settings.msg_4;
+jQuery( document ).ready(
+	function( $ ) {
+		/* Init */
+		var avNonce = av_settings.nonce;
+		var avTheme = av_settings.theme;
+		var avMsg1 = av_settings.msg_1;
+		var avMsg2 = av_settings.msg_2;
+		var avMsg3 = av_settings.msg_3;
+		var avMsg4 = av_settings.msg_4;
+		var avFiles = [];
+		var avFilesLoaded;
 
-        /* Einzelne Datei prüfen */
-        function check_theme_file(current) {
-            /* ID umwandeln */
-            var id = parseInt(current || 0);
+		/* Einzelne Datei prüfen */
+		function checkThemeFile( current ) {
+			/* ID umwandeln */
+			var id = parseInt( current || 0 );
 
-            /* File ermitteln */
-            var file = av_files[id];
+			/* File ermitteln */
+			var file = avFiles[id];
 
-            /* Request starten */
-            $.post(
-                ajaxurl,
-                {
-                    'action':           'get_ajax_response',
-                    '_ajax_nonce':      av_nonce,
-                    '_theme_file':      file,
-                    '_action_request':  'check_theme_file'
-                },
-                function(input) {
-                    /* Wert initialisieren */
-                    var item = $('#av_template_' + id);
+			/* Request starten */
+			$.post(
+				ajaxurl,
+				{
+					action: 'get_ajax_response',
+					_ajax_nonce: avNonce,
+					_theme_file: file,
+					_action_request: 'check_theme_file',
+				},
+				function( input ) {
+					/* Wert initialisieren */
+					var item = $( '#av_template_' + id );
+					var i;
+					var lines;
+					var line;
+					var md5;
 
-                    /* Daten vorhanden? */
-                    if ( input ) {
-                        /* Sicherheitscheck */
-                        if ( !input.nonce || input.nonce != av_nonce ) {
-                            return;
-                        }
+					/* Daten vorhanden? */
+					if ( input ) {
+						/* Sicherheitscheck */
+						if ( ! input.nonce || input.nonce !== avNonce ) {
+							return;
+						}
 
-                        /* Farblich anpassen */
-                        item.addClass('danger');
+						/* Farblich anpassen */
+						item.addClass( 'danger' );
 
-                        /* Init */
-                        var i,
-                            lines = input.data,
-                            len = lines.length;
+						/* Init */
+						lines = input.data;
 
-                        /* Zeilen loopen */
-                        for (i = 0; i < len; i = i + 3) {
-                            var num = parseInt(lines[i]) + 1,
-                                md5 = lines[i + 2],
-                                line = lines[i + 1].replace(/@span@/g, '<span>').replace(/@\/span@/g, '</span>'),
-                                file = item.text();
+						/* Zeilen loopen */
+						for ( i = 0; i < lines.length; i = i + 3 ) {
+							md5 = lines[i + 2];
+							line = lines[i + 1].replace( /@span@/g, '<span>' ).replace( /@\/span@/g, '</span>' );
 
-                            item.append('<p><a href="#" id="' + md5 + '" class="button" title="' + av_msg_4 + '">' + av_msg_1 + '</a> <code>' + line + '</code></p>');
+							item.append( '<p><a href="#" id="' + md5 + '" class="button" title="' + avMsg4 + '">' + avMsg1 + '</a> <code>' + line + '</code></p>' );
 
-                            $('#' + md5).click(
-                                function() {
-                                    $.post(
-                                        ajaxurl,
-                                        {
-                                            'action':           'get_ajax_response',
-                                            '_ajax_nonce':      av_nonce,
-                                            '_file_md5':        $(this).attr('id'),
-                                            '_action_request':  'update_white_list'
-                                        },
-                                        function(input) {
-                                            /* Keine Daten? */
-                                            if (!input) {
-                                                return;
-                                            }
+							$( '#' + md5 ).click(
+								function() {
+									$.post(
+										ajaxurl,
+										{
+											action: 'get_ajax_response',
+											_ajax_nonce: avNonce,
+											_file_md5: $( this ).attr( 'id' ),
+											_action_request: 'update_white_list',
+										},
+										function( res ) {
+											var parent;
 
-                                            /* Sicherheitscheck */
-                                            if (!input.nonce || input.nonce != av_nonce) {
-                                                return;
-                                            }
+											/* Keine Daten? */
+											if ( ! res ) {
+												return;
+											}
 
-                                            var parent = $('#' + input.data[0]).parent();
+											/* Sicherheitscheck */
+											if ( ! res.nonce || res.nonce !== avNonce ) {
+												return;
+											}
 
-                                            if (parent.parent().children().length <= 1) {
-                                                parent.parent().hide('slow').remove();
-                                            }
-                                            parent.hide('slow').remove();
-                                        }
-                                    );
+											parent = $( '#' + res.data[0] ).parent();
 
-                                    return false;
-                                }
-                            );
-                        }
-                    } else {
-                        item.addClass('done');
-                    }
+											if ( parent.parent().children().length <= 1 ) {
+												parent.parent().hide( 'slow' ).remove();
+											}
+											parent.hide( 'slow' ).remove();
+										}
+									);
 
-                    /* Counter erhöhen */
-                    av_files_loaded ++;
+									return false;
+								}
+							);
+						}
+					} else {
+						item.addClass( 'done' );
+					}
 
-                    /* Hinweis ausgeben */
-                    if ( av_files_loaded >= av_files_total ) {
-                        $('#av_manual_scan .alert').text(av_msg_3).fadeIn().fadeOut().fadeIn().fadeOut().fadeIn().animate({opacity: 1.0}, 500).fadeOut(
-                            'slow',
-                            function() {
-                                $(this).empty();
-                            }
-                        );
-                    } else {
-                        check_theme_file(id + 1);
-                    }
-                }
-            );
-        }
+					/* Counter erhöhen */
+					avFilesLoaded++;
 
-        /* Tempates Check */
-        $('#av_manual_scan a.button').click(
-            function() {
-                /* Request */
-                $.post(
-                    ajaxurl,
-                    {
-                        action:         'get_ajax_response',
-                        _ajax_nonce:     av_nonce,
-                        _action_request: 'get_theme_files'
-                    },
-                    function(input) {
-                        /* Keine Daten? */
-                        if ( !input ) {
-                            return;
-                        }
+					/* Hinweis ausgeben */
+					if ( avFilesLoaded >= avFiles.length ) {
+						$( '#av_manual_scan .alert' ).text( avMsg3 ).fadeIn().fadeOut().fadeIn().fadeOut().fadeIn().animate( { opacity: 1.0 }, 500 ).fadeOut(
+							'slow',
+							function() {
+								$( this ).empty();
+							}
+						);
+					} else {
+						checkThemeFile( id + 1 );
+					}
+				}
+			);
+		}
 
-                        /* Sicherheitscheck */
-                        if ( !input.nonce || input.nonce != av_nonce ) {
-                            return;
-                        }
+		/* Tempates Check */
+		$( '#av_manual_scan a.button' ).click(
+			function() {
+				/* Request */
+				$.post(
+					ajaxurl,
+					{
+						action: 'get_ajax_response',
+						_ajax_nonce: avNonce,
+						_action_request: 'get_theme_files',
+					},
+					function( input ) {
+						/* Wert initialisieren */
+						var output = '';
 
-                        /* Wert initialisieren */
-                        var output = '';
+						/* Keine Daten? */
+						if ( ! input ) {
+							return;
+						}
 
-                        /* Globale Werte */
-                        av_files = input.data;
-                        av_files_total = av_files.length;
-                        av_files_loaded = 0;
+						/* Sicherheitscheck */
+						if ( ! input.nonce || input.nonce !== avNonce ) {
+							return;
+						}
 
-                        /* Files visualisieren */
-                        jQuery.each(
-                            av_files,
-                            function(i, val) {
-                                output += '<div id="av_template_' + i + '">' + val + '</div>';
-                            }
-                        );
+						/* Globale Werte */
+						avFiles = input.data;
+						avFilesLoaded = 0;
 
-                        /* Werte zuweisen */
-                        $('#av_manual_scan .alert').empty();
-                        $('#av_manual_scan .output').empty().append(output);
+						/* Files visualisieren */
+						jQuery.each(
+							avFiles,
+							function( i, val ) {
+								output += '<div id="av_template_' + i + '">' + val + '</div>';
+							}
+						);
 
-                        /* Files loopen */
-                        check_theme_file();
-                    }
-                );
+						/* Werte zuweisen */
+						$( '#av_manual_scan .alert' ).empty();
+						$( '#av_manual_scan .output' ).empty().append( output );
 
-                return false;
-            }
-        );
+						/* Files loopen */
+						checkThemeFile();
+					}
+				);
 
-        /* Checkboxen markieren */
-        function manage_options() {
-            var $$ = $('#av_cronjob_enable'),
-                input = $$.parents('fieldset').find(':text, :checkbox').not($$);
+				return false;
+			}
+		);
 
-            if ( typeof $.fn.prop === 'function' ) {
-                input.prop('disabled', !$$.prop('checked'));
-            } else {
-                input.attr('disabled', !$$.attr('checked'));
-            }
-        }
+		/* Checkboxen markieren */
+		function manageOptions() {
+			var $$ = $( '#av_cronjob_enable' );
+			var input = $$.parents( 'fieldset' ).find( ':text, :checkbox' ).not( $$ );
 
-        /* Checkbox überwachen */
-        $('#av_cronjob_enable').click(manage_options);
+			if ( typeof $.fn.prop === 'function' ) {
+				input.prop( 'disabled', ! $$.prop( 'checked' ) );
+			} else {
+				input.attr( 'disabled', ! $$.attr( 'checked' ) );
+			}
+		}
 
-        /* Fire! */
-        manage_options();
-    }
+		/* Checkbox überwachen */
+		$( '#av_cronjob_enable' ).click( manageOptions );
+
+		/* Fire! */
+		manageOptions();
+	}
 );
