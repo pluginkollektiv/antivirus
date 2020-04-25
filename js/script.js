@@ -170,19 +170,37 @@ jQuery( document ).ready(
 		/**
 		 * Manage dependent option inputs.
 		 */
-		function manageOptions() {
-			var $$ = $( '#av_cronjob_enable' );
-			var input = $$.parents( 'fieldset' ).find( ':text, :checkbox' ).not( $$ );
+		function manageOptions( ) {
+			var cbSelectors = [ '#av_cronjob_enable', '#av_safe_browsing', '#av_checksum_verifier' ];
+			var anyEnabled = false;
 
+			cbSelectors.forEach( function( c ) {
+				var cb = $( c );
+				var inputs = cb.parents( 'fieldset' ).find( ':text, :checkbox' ).not( cb );
+				var enabled;
+
+				// Disable all other inputs of current fieldset, if unchecked.
+				if ( typeof $.fn.prop === 'function' ) {
+					enabled = !! cb.prop( 'checked' );
+					inputs.prop( 'disabled', ! enabled );
+				} else {
+					enabled = !! cb.attr( 'checked' );
+					inputs.attr( 'disabled', ! enabled );
+				}
+
+				anyEnabled = anyEnabled || enabled;
+			} );
+
+			// Enable email notification if any module is enabled.
 			if ( typeof $.fn.prop === 'function' ) {
-				input.prop( 'disabled', ! $$.prop( 'checked' ) );
+				$( '#av_notify_email' ).prop( 'disabled', ! anyEnabled );
 			} else {
-				input.attr( 'disabled', ! $$.attr( 'checked' ) );
+				$( '#av_notify_email' ).attr( 'disabled', ! anyEnabled );
 			}
 		}
 
 		// Watch checkboxes.
-		$( '#av_cronjob_enable' ).click( manageOptions );
+		$( '#av_settings input[type=checkbox]' ).click( manageOptions );
 
 		// Handle initial checkbox values.
 		manageOptions();

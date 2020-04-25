@@ -132,7 +132,7 @@ class AntiVirus {
 		);
 
 		// Add cron schedule.
-		if ( self::_get_option( 'cronjob_enable' ) ) {
+		if ( self::_cron_enabled() ) {
 			self::_add_scheduled_hook();
 		}
 	}
@@ -220,6 +220,18 @@ class AntiVirus {
 	}
 
 	/**
+	 * Is at least one cron check enabled?
+	 *
+	 * @return bool TRUE, if at least one check is enabled.
+	 * @since 1.4
+	 */
+	private static function _cron_enabled() {
+		return self::_get_option( 'cronjob_enable' )
+			|| self::_get_option( 'safe_browsing' )
+			|| self::_get_option( 'checksum_verifier' );
+	}
+
+	/**
 	 * Cancel the daily cronjob.
 	 */
 	public static function clear_scheduled_hook() {
@@ -232,13 +244,10 @@ class AntiVirus {
 	 * Cronjob callback.
 	 */
 	public static function do_daily_cronjob() {
-		// Check if cronjob is enabled in the plugin.
-		if ( ! self::_get_option( 'cronjob_enable' ) ) {
-			return;
-		}
-
 		// Check the theme and permalinks.
-		AntiVirus_CheckInternals::check_blog_internals();
+		if ( self::_get_option( 'cronjob_enable' ) ) {
+			AntiVirus_CheckInternals::check_blog_internals();
+		}
 
 		// Check the Safe Browsing API.
 		if ( self::_get_option( 'safe_browsing' ) ) {
@@ -538,7 +547,8 @@ class AntiVirus {
 	}
 
 	/**
-	 * Show notice on the dashboard.
+	 * Show notice on the dashbo
+	 * ard.
 	 */
 	public static function show_dashboard_notice() {
 		// Only show notice if there's an alert.
@@ -579,18 +589,22 @@ class AntiVirus {
 				'checksum_verifier' => (int) ( ! empty( $_POST['av_checksum_verifier'] ) ),
 			);
 
+			$cron_enabled = $options['cronjob_enable'] || $options['safe_browsing'] || $options['checksum_verifier'];
+
 			// No cronjob?
-			if ( empty( $options['cronjob_enable'] ) ) {
+			if ( ! $cron_enabled ) {
 				$options['notify_email']      = '';
-                $options['safe_browsing']     = 0;
+			}
+
+			// No Safe Browsing?
+			if ( ! $options['safe_browsing'] ) {
 				$options['safe_browsing_key'] = '';
-				$options['checksum_verifier'] = 0;
 			}
 
 			// Stop cron if it was disabled.
-			if ( $options['cronjob_enable'] && ! self::_get_option( 'cronjob_enable' ) ) {
+			if ( $cron_enabled && ! self::_cron_enabled() ) {
 				self::_add_scheduled_hook();
-			} else if ( ! $options['cronjob_enable'] && self::_get_option( 'cronjob_enable' ) ) {
+			} else if ( ! $cron_enabled && self::_cron_enabled() ) {
 				self::clear_scheduled_hook();
 			}
 
@@ -632,7 +646,7 @@ class AntiVirus {
 			</table>
 
 
-			<form method="post" action="<?php echo esc_url( admin_url( 'options-general.php?page=antivirus' ) ); ?>">
+			<form id="av_settings" method="post" action="<?php echo esc_url( admin_url( 'options-general.php?page=antivirus' ) ); ?>">
 				<?php wp_nonce_field( 'antivirus' ) ?>
 
 				<table class="form-table">
@@ -659,9 +673,11 @@ class AntiVirus {
 									}
 									?>
 								</p>
+							</fieldset>
 
-								<br/>
+							<br/>
 
+							<fieldset>
 								<label for="av_safe_browsing">
 									<input type="checkbox" name="av_safe_browsing" id="av_safe_browsing"
 										   value="1" <?php checked( self::_get_option( 'safe_browsing' ), 1 ) ?> />
@@ -692,9 +708,11 @@ class AntiVirus {
 									esc_html_e( 'Provide a custom key for the Google Safe Browsing API (v4). If this value is left empty, a fallback will be used. However, to ensure valid results due to rate limitations, it is recommended to use your own key.', 'antivirus' );
 									?>
 								</p>
+							</fieldset>
 
-								<br/>
+							<br/>
 
+							<fieldset>
 								<label for="av_checksum_verifier">
 									<input type="checkbox" name="av_checksum_verifier" id="av_checksum_verifier"
 										   value="1" <?php checked( self::_get_option( 'checksum_verifier' ), 1 ) ?> />
@@ -706,9 +724,11 @@ class AntiVirus {
 									esc_html_e( 'Matches checksums of all WordPress core files against the values provided by the official API.', 'antivirus' );
 									?>
 								</p>
+							</fieldset>
 
-								<br/>
+							<br/>
 
+							<fieldset>
 								<label for="av_notify_email"><?php esc_html_e( 'Email address for notifications', 'antivirus' ); ?></label>
 								<input type="text" name="av_notify_email" id="av_notify_email"
 									   value="<?php esc_attr_e( self::_get_option( 'notify_email' ) ); ?>"
