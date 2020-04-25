@@ -1,6 +1,6 @@
 jQuery( document ).ready(
 	function( $ ) {
-		/* Init */
+		// Initialize.
 		var avNonce = av_settings.nonce;
 		var avTheme = av_settings.theme;
 		var avMsg1 = av_settings.msg_1;
@@ -10,15 +10,19 @@ jQuery( document ).ready(
 		var avFiles = [];
 		var avFilesLoaded;
 
-		/* Einzelne Datei prüfen */
+		/**
+		 * Scan a single file.
+		 *
+		 * @param {number} current File index to scan.
+		 */
 		function checkThemeFile( current ) {
-			/* ID umwandeln */
+			// Sanitize ID.
 			var id = parseInt( current || 0 );
 
-			/* File ermitteln */
+			// Get corresponding file.
 			var file = avFiles[id];
 
-			/* Request starten */
+			// Issue the request.
 			$.post(
 				ajaxurl,
 				{
@@ -28,27 +32,27 @@ jQuery( document ).ready(
 					_action_request: 'check_theme_file',
 				},
 				function( input ) {
-					/* Wert initialisieren */
+					// Initialize value.
 					var item = $( '#av_template_' + id );
 					var i;
 					var lines;
 					var line;
 					var md5;
 
-					/* Daten vorhanden? */
+					// Data present?
 					if ( input ) {
 						/* Sicherheitscheck */
 						if ( ! input.nonce || input.nonce !== avNonce ) {
 							return;
 						}
 
-						/* Farblich anpassen */
+						// Set highlighting color.
 						item.addClass( 'danger' );
 
-						/* Init */
+						// Initialize lines of current file.
 						lines = input.data;
 
-						/* Zeilen loopen */
+						// Loop through lines.
 						for ( i = 0; i < lines.length; i = i + 3 ) {
 							md5 = lines[i + 2];
 							line = lines[i + 1].replace( /@span@/g, '<span>' ).replace( /@\/span@/g, '</span>' );
@@ -68,12 +72,12 @@ jQuery( document ).ready(
 										function( res ) {
 											var parent;
 
-											/* Keine Daten? */
+											// No data received?
 											if ( ! res ) {
 												return;
 											}
 
-											/* Sicherheitscheck */
+											// Security check.
 											if ( ! res.nonce || res.nonce !== avNonce ) {
 												return;
 											}
@@ -95,10 +99,10 @@ jQuery( document ).ready(
 						item.addClass( 'done' );
 					}
 
-					/* Counter erhöhen */
+					// Increment counter.
 					avFilesLoaded++;
 
-					/* Hinweis ausgeben */
+					// Output notification.
 					if ( avFilesLoaded >= avFiles.length ) {
 						$( '#av_manual_scan .alert' ).text( avMsg3 ).fadeIn().fadeOut().fadeIn().fadeOut().fadeIn().animate( { opacity: 1.0 }, 500 ).fadeOut(
 							'slow',
@@ -113,10 +117,10 @@ jQuery( document ).ready(
 			);
 		}
 
-		/* Tempates Check */
+		// Check templates.
 		$( '#av_manual_scan a.button' ).click(
 			function() {
-				/* Request */
+				// Request.
 				$.post(
 					ajaxurl,
 					{
@@ -125,24 +129,24 @@ jQuery( document ).ready(
 						_action_request: 'get_theme_files',
 					},
 					function( input ) {
-						/* Wert initialisieren */
+						// Initialize output value.
 						var output = '';
 
-						/* Keine Daten? */
+						// No data received?
 						if ( ! input ) {
 							return;
 						}
 
-						/* Sicherheitscheck */
+						// Security check.
 						if ( ! input.nonce || input.nonce !== avNonce ) {
 							return;
 						}
 
-						/* Globale Werte */
+						// Update global values.
 						avFiles = input.data;
 						avFilesLoaded = 0;
 
-						/* Files visualisieren */
+						// Visualize files.
 						jQuery.each(
 							avFiles,
 							function( i, val ) {
@@ -150,11 +154,11 @@ jQuery( document ).ready(
 							}
 						);
 
-						/* Werte zuweisen */
+						// assign values.
 						$( '#av_manual_scan .alert' ).empty();
 						$( '#av_manual_scan .output' ).empty().append( output );
 
-						/* Files loopen */
+						// Start loop through files.
 						checkThemeFile();
 					}
 				);
@@ -163,7 +167,9 @@ jQuery( document ).ready(
 			}
 		);
 
-		/* Checkboxen markieren */
+		/**
+		 * Manage dependent option inputs.
+		 */
 		function manageOptions() {
 			var $$ = $( '#av_cronjob_enable' );
 			var input = $$.parents( 'fieldset' ).find( ':text, :checkbox' ).not( $$ );
@@ -175,10 +181,10 @@ jQuery( document ).ready(
 			}
 		}
 
-		/* Checkbox überwachen */
+		// Watch checkboxes.
 		$( '#av_cronjob_enable' ).click( manageOptions );
 
-		/* Fire! */
+		// Handle initial checkbox values.
 		manageOptions();
 	}
 );
