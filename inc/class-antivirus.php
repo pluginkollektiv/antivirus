@@ -132,7 +132,7 @@ class AntiVirus {
 		);
 
 		// Add cron schedule.
-		if ( self::_cron_enabled() ) {
+		if ( self::_cron_enabled( self::_get_options() ) ) {
 			self::_add_scheduled_hook();
 		}
 	}
@@ -152,14 +152,13 @@ class AntiVirus {
 	}
 
 	/**
-	 * Get a plugin option value.
+	 * Get a plugin options array.
 	 *
-	 * @param string $field Option name.
-	 *
-	 * @return string The option value.
+	 * @return array The options array.
+	 * @since 1.4 Extracted from _get_option() for use with _cron_enabled().
 	 */
-	private static function _get_option( $field ) {
-		$options = wp_parse_args(
+	private static function _get_options( ) {
+		return wp_parse_args(
 			get_option( 'antivirus' ),
 			array(
 				'cronjob_enable'    => 0,
@@ -171,6 +170,17 @@ class AntiVirus {
 				'white_list'        => '',
 			)
 		);
+	}
+
+	/**
+	 * Get a plugin option value.
+	 *
+	 * @param string $field Option name.
+	 *
+	 * @return string The option value.
+	 */
+	private static function _get_option( $field ) {
+		$options = self::_get_options();
 
 		return ( empty( $options[ $field ] ) ? '' : $options[ $field ] );
 	}
@@ -222,13 +232,15 @@ class AntiVirus {
 	/**
 	 * Is at least one cron check enabled?
 	 *
+	 * @param array $options Options wo perform the checks on.
+	 *
 	 * @return bool TRUE, if at least one check is enabled.
 	 * @since 1.4
 	 */
-	private static function _cron_enabled() {
-		return self::_get_option( 'cronjob_enable' )
-			|| self::_get_option( 'safe_browsing' )
-			|| self::_get_option( 'checksum_verifier' );
+	private static function _cron_enabled( $options ) {
+		return ( isset( $options['cronjob_enable'] ) && $options['cronjob_enable'] )
+			|| ( isset( $options['safe_browsing'] ) && $options['safe_browsing'] )
+			|| ( isset( $options['checksum_verifier'] ) && $options['checksum_verifier'] );
 	}
 
 	/**
@@ -589,10 +601,8 @@ class AntiVirus {
 				'checksum_verifier' => (int) ( ! empty( $_POST['av_checksum_verifier'] ) ),
 			);
 
-			$cron_enabled = $options['cronjob_enable'] || $options['safe_browsing'] || $options['checksum_verifier'];
-
 			// No cronjob?
-			if ( ! $cron_enabled ) {
+			if ( ! self::_cron_enabled( $options ) ) {
 				$options['notify_email']      = '';
 			}
 
@@ -602,9 +612,9 @@ class AntiVirus {
 			}
 
 			// Stop cron if it was disabled.
-			if ( $cron_enabled && ! self::_cron_enabled() ) {
+			if ( self::_cron_enabled( $options ) && ! self::_cron_enabled( self::_get_options() ) ) {
 				self::_add_scheduled_hook();
-			} else if ( ! $cron_enabled && self::_cron_enabled() ) {
+			} else if ( ! self::_cron_enabled( $options ) && self::_cron_enabled( self::_get_options() ) ) {
 				self::clear_scheduled_hook();
 			}
 
