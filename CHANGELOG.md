@@ -4,9 +4,13 @@
 * **English**
 	 * Option to provide a custom key for the Google Safe Browsing API
 	 * Scan files of parent theme if a child theme is active
+	 * Verify checksums of WP core files (integrated functionality from _Checksum Verifier_ plugin)
+	 * Ability to enable _Safe Browsing_ and _Checksum Verifier_ as cronjob without Theme scan
 * **Deutsch**
 	* Möglichkeit einen eigenen Schlüssel für die Google Safe Browsing API zu verwenden
 	* Dateien des übergeordneten Themes scannen, falls ein Child-Theme aktiv ist
+	* Verifiziere Prüfsummen der WP Core Dateien (Funktionalität des _Checksum Verifier_ Plugins integriert)
+	* Möglichkeit _Safe Browsing_ und _Checksum Verifier_ als Cronjob ohne Theme-Scan zu aktivieren
 
 
 ### 1.3.10 ###
