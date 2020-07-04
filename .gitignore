@@ -1,6 +1,7 @@
 # General
 .DS_Store
 composer.lock
+package-lock.json
 
 # Dependencies (e.g. Composer, npm, etc.)
 vendor

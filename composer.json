@@ -10,11 +10,16 @@
   },
   "require-dev": {
     "lipemat/wp-unit": "^1.5",
+    "matthiasmullie/minify": "^1.3",
     "phpunit/phpunit": "^7.0",
     "wp-coding-standards/wpcs": "dev-develop"
   },
   "scripts": {
     "post-install-cmd": "\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs",
-    "post-update-cmd": "\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs"
+    "post-update-cmd": "\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs",
+    "minify": [
+      "minifycss css/style.css > css/style.min.css",
+      "minifyjs js/script.js > js/script.min.js"
+    ]
   }
 }
