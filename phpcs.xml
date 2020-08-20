@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<ruleset name="AntiVirus">
+    <description>Sniffs for the coding standards of the plugin</description>
+
+    <arg value="psvn"/>
+    <arg name="colors"/>
+
+    <!-- Files to sniff -->
+    <file>antivirus.php</file>
+    <file>inc</file>
+
+    <!-- Extend from WPCS ruleset -->
+    <rule ref="WordPress"/>
+
+	<!-- Verify i18n text domain -->
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array" value="antivirus"/>
+		</properties>
+	</rule>
+
+    <!-- PHP compatibility level -->
+    <config name="testVersion" value="5.2-"/>
+    <rule ref="PHPCompatibility"/>
+</ruleset>

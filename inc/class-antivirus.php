@@ -12,10 +12,6 @@ defined( 'ABSPATH' ) || exit;
 /**
  * AntiVirus: Main plugin class.
  */
-
-/**
- *
- */
 class AntiVirus {
 	/**
 	 * The basename of a plugin.
@@ -157,7 +153,7 @@ class AntiVirus {
 	 * @return array The options array.
 	 * @since 1.4 Extracted from _get_option() for use with _cron_enabled().
 	 */
-	private static function _get_options( ) {
+	private static function _get_options() {
 		return wp_parse_args(
 			get_option( 'antivirus' ),
 			array(
@@ -412,7 +408,8 @@ class AntiVirus {
 	 */
 	protected static function _get_theme_files() {
 		// Check if the theme exists.
-		if ( ! $theme = self::_get_theme_data(  wp_get_theme() ) ) {
+		$theme = self::_get_theme_data( wp_get_theme() );
+		if ( ! $theme ) {
 			return false;
 		}
 
@@ -442,12 +439,12 @@ class AntiVirus {
 	/**
 	 * Strip out the content dir from a path.
 	 *
-	 * @param string $string
+	 * @param string $string Path to strip from.
 	 *
-	 * @return string
+	 * @return string The stripped path.
 	 */
 	private static function _strip_content_dir( $string ) {
-		return str_replace( array( WP_CONTENT_DIR, "wp-content" ), "", $string );
+		return str_replace( array( WP_CONTENT_DIR, 'wp-content' ), '', $string );
 	}
 
 	/**
@@ -456,7 +453,8 @@ class AntiVirus {
 	 * @return string|false The theme name or false on failure.
 	 */
 	private static function _get_theme_name() {
-		if ( $theme = self::_get_theme_data(  wp_get_theme() ) ) {
+		$theme = self::_get_theme_data( wp_get_theme() );
+		if ( $theme ) {
 			if ( ! empty( $theme['Slug'] ) ) {
 				return $theme['Slug'];
 			}
@@ -511,33 +509,40 @@ class AntiVirus {
 				break;
 
 			case 'check_theme_file':
-				if ( ! empty( $_POST['_theme_file'] ) && $lines = AntiVirus_CheckInternals::check_theme_file( $_POST['_theme_file'] ) ) {
-					foreach ( $lines as $num => $line ) {
-						foreach ( $line as $string ) {
-							$values[] = $num;
-							$values[] = htmlentities( $string, ENT_QUOTES );
-							$values[] = md5( $num . $string );
+				if ( ! empty( $_POST['_theme_file'] ) ) {
+					$theme_file = sanitize_file_name( wp_unslash( $_POST['_theme_file'] ) );
+					$lines = AntiVirus_CheckInternals::check_theme_file( $theme_file );
+					if ( $lines ) {
+						foreach ( $lines as $num => $line ) {
+							foreach ( $line as $string ) {
+								$values[] = $num;
+								$values[] = htmlentities( $string, ENT_QUOTES, 'UTF-8' );
+								$values[] = md5( $num . $string );
+							}
 						}
 					}
 				}
 				break;
 
 			case 'update_white_list':
-				if ( ! empty( $_POST['_file_md5'] ) && preg_match( '/^[a-f0-9]{32}$/', $_POST['_file_md5'] ) ) {
-					self::_update_option(
-						'white_list',
-						implode(
-							':',
-							array_unique(
-								array_merge(
-									self::_get_white_list(),
-									array( $_POST['_file_md5'] )
+				if ( ! empty( $_POST['_file_md5'] ) ) {
+					$file_md5 = sanitize_text_field( wp_unslash( $_POST['_file_md5'] ) );
+					if ( preg_match( '/^[a-f0-9]{32}$/', $file_md5 ) ) {
+						self::_update_option(
+							'white_list',
+							implode(
+								':',
+								array_unique(
+									array_merge(
+										self::_get_white_list(),
+										array( $file_md5 )
+									)
 								)
 							)
-						)
-					);
+						);
 
-					$values = array( $_POST['_file_md5'] );
+						$values = array( $file_md5 );
+					}
 				}
 				break;
 
@@ -547,10 +552,16 @@ class AntiVirus {
 
 		// Send response.
 		if ( $values ) {
+			if ( isset( $_POST['_ajax_nonce'] ) ) {
+				$nonce = sanitize_text_field( wp_unslash( $_POST['_ajax_nonce'] ) );
+			} else {
+				$nonce = '';
+			}
+
 			wp_send_json(
 				array(
 					'data'  => array_values( $values ),
-					'nonce' => $_POST['_ajax_nonce'],
+					'nonce' => $nonce,
 				)
 			);
 		}
@@ -559,8 +570,7 @@ class AntiVirus {
 	}
 
 	/**
-	 * Show notice on the dashbo
-	 * ard.
+	 * Show notice on the dashboard.
 	 */
 	public static function show_dashboard_notice() {
 		// Only show notice if there's an alert.
@@ -573,12 +583,14 @@ class AntiVirus {
 			'<div class="error"><p><strong>%1$s:</strong> %2$s <a href="%3$s">%4$s &rarr;</a></p></div>',
 			esc_html__( 'Virus suspected', 'antivirus' ),
 			esc_html__( 'The daily antivirus scan of your blog suggests alarm.', 'antivirus' ),
-			esc_url( add_query_arg(
-				array(
-					'page' => 'antivirus',
-				),
-				admin_url( 'options-general.php' )
-			) ),
+			esc_url(
+				add_query_arg(
+					array(
+						'page' => 'antivirus',
+					),
+					admin_url( 'options-general.php' )
+				)
+			),
 			esc_html__( 'Manual malware scan', 'antivirus' )
 		);
 	}
@@ -595,9 +607,9 @@ class AntiVirus {
 			// Save values.
 			$options = array(
 				'cronjob_enable'    => (int) ( ! empty( $_POST['av_cronjob_enable'] ) ),
-				'notify_email'      => sanitize_email( @$_POST['av_notify_email'] ),
+				'notify_email'      => ( ! empty( $_POST['av_notify_email'] ) ) ? sanitize_email( wp_unslash( $_POST['av_notify_email'] ) ) : '',
 				'safe_browsing'     => (int) ( ! empty( $_POST['av_safe_browsing'] ) ),
-				'safe_browsing_key' => sanitize_text_field( @$_POST['av_safe_browsing_key'] ),
+				'safe_browsing_key' => ( ! empty( $_POST['av_safe_browsing_key'] ) ) ? sanitize_text_field( wp_unslash( $_POST['av_safe_browsing_key'] ) ) : '',
 				'checksum_verifier' => (int) ( ! empty( $_POST['av_checksum_verifier'] ) ),
 			);
 
@@ -657,7 +669,7 @@ class AntiVirus {
 
 
 			<form id="av_settings" method="post" action="<?php echo esc_url( admin_url( 'options-general.php?page=antivirus' ) ); ?>">
-				<?php wp_nonce_field( 'antivirus' ) ?>
+				<?php wp_nonce_field( 'antivirus' ); ?>
 
 				<table class="form-table">
 					<tr>
@@ -668,17 +680,18 @@ class AntiVirus {
 							<fieldset>
 								<label for="av_cronjob_enable">
 									<input type="checkbox" name="av_cronjob_enable" id="av_cronjob_enable"
-										   value="1" <?php checked( self::_get_option( 'cronjob_enable' ), 1 ) ?> />
+										   value="1" <?php checked( self::_get_option( 'cronjob_enable' ), 1 ); ?> />
 									<?php esc_html_e( 'Check the theme templates for malware', 'antivirus' ); ?>
 								</label>
 
 								<p class="description">
 									<?php
-									if ( $timestamp = wp_next_scheduled( 'antivirus_daily_cronjob' ) ) {
+									$timestamp = wp_next_scheduled( 'antivirus_daily_cronjob' );
+									if ( $timestamp ) {
 										echo sprintf(
 											'%s: %s',
 											esc_html__( 'Next Run', 'antivirus' ),
-											date_i18n( 'd.m.Y H:i:s', $timestamp + get_option( 'gmt_offset' ) * 3600 )
+											esc_html( date_i18n( 'd.m.Y H:i:s', $timestamp + get_option( 'gmt_offset' ) * 3600 ) )
 										);
 									}
 									?>
@@ -690,18 +703,21 @@ class AntiVirus {
 							<fieldset>
 								<label for="av_safe_browsing">
 									<input type="checkbox" name="av_safe_browsing" id="av_safe_browsing"
-										   value="1" <?php checked( self::_get_option( 'safe_browsing' ), 1 ) ?> />
+										   value="1" <?php checked( self::_get_option( 'safe_browsing' ), 1 ); ?> />
 									<?php esc_html_e( 'Malware detection by Google Safe Browsing', 'antivirus' ); ?>
 								</label>
 
 								<p class="description">
-                                    <?php
-                                    /* translators: Link for transparency report in english */
-                                    $start_tag = sprintf( '<a href="%s">', __( 'https://transparencyreport.google.com/safe-browsing/search?hl=en', 'antivirus' ) );
-                                    $end_tag = '</a>';
-                                    /* translators: First placeholder (%s) starting link tag to transparency report, second placeholder closing link tag */
-                                    printf( __( 'Diagnosis and notification in suspicion case. For more details read %s the transparency report %s.', 'antivirus' ), $start_tag, $end_tag );
-                                    ?>
+									<?php
+									/* translators: Link for transparency report in english */
+									$start_tag = sprintf( '<a href="%s">', esc_attr__( 'https://transparencyreport.google.com/safe-browsing/search?hl=en', 'antivirus' ) );
+									$end_tag = '</a>';
+									echo wp_kses(
+										/* translators: First placeholder (%s) starting link tag to transparency report, second placeholder closing link tag */
+										sprintf( __( 'Diagnosis and notification in suspicion case. For more details read %1$s the transparency report %2$s.', 'antivirus' ), $start_tag, $end_tag ),
+										array( 'a' => array( 'href' ) )
+									);
+									?>
 								</p>
 
 								<br/>
@@ -711,7 +727,7 @@ class AntiVirus {
 								</label>
 								<br/>
 								<input type="text" name="av_safe_browsing_key" id="av_safe_browsing_key"
-								       value="<?php esc_attr_e( self::_get_option( 'safe_browsing_key' ) ); ?>" />
+									   value="<?php esc_attr( self::_get_option( 'safe_browsing_key' ) ); ?>" />
 
 								<p class="description">
 									<?php
@@ -725,7 +741,7 @@ class AntiVirus {
 							<fieldset>
 								<label for="av_checksum_verifier">
 									<input type="checkbox" name="av_checksum_verifier" id="av_checksum_verifier"
-										   value="1" <?php checked( self::_get_option( 'checksum_verifier' ), 1 ) ?> />
+										   value="1" <?php checked( self::_get_option( 'checksum_verifier' ), 1 ); ?> />
 									<?php esc_html_e( 'Checksum verification of WP core files', 'antivirus' ); ?>
 								</label>
 
@@ -741,7 +757,7 @@ class AntiVirus {
 							<fieldset>
 								<label for="av_notify_email"><?php esc_html_e( 'Email address for notifications', 'antivirus' ); ?></label>
 								<input type="text" name="av_notify_email" id="av_notify_email"
-									   value="<?php esc_attr_e( self::_get_option( 'notify_email' ) ); ?>"
+									   value="<?php esc_attr( self::_get_option( 'notify_email' ) ); ?>"
 									   class="regular-text"
 									   placeholder="<?php esc_attr_e( 'Email address for notifications', 'antivirus' ); ?>" />
 
@@ -755,7 +771,7 @@ class AntiVirus {
 
 					<tr>
 						<th scope="row">
-							<input type="submit" class="button button-primary" value="<?php esc_attr_e( 'Save Changes', 'antivirus' ) ?>"/>
+							<input type="submit" class="button button-primary" value="<?php esc_attr_e( 'Save Changes', 'antivirus' ); ?>"/>
 						</th>
 						<td>
 							<?php
@@ -794,5 +810,6 @@ class AntiVirus {
 				</table>
 			</form>
 		</div>
-	<?php }
+		<?php
+	}
 }

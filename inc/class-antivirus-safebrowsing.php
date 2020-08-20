@@ -35,7 +35,7 @@ class AntiVirus_SafeBrowsing extends AntiVirus {
 					array(
 						'client'     => array(
 							'clientId'      => 'wpantivirus',
-							'clientVersion' => '1.3.10'
+							'clientVersion' => '1.3.10',
 						),
 						'threatInfo' => array(
 							'threatTypes'      => array(
@@ -43,16 +43,16 @@ class AntiVirus_SafeBrowsing extends AntiVirus {
 								'MALWARE',
 								'SOCIAL_ENGINEERING',
 								'UNWANTED_SOFTWARE',
-								'POTENTIALLY_HARMFUL_APPLICATION'
+								'POTENTIALLY_HARMFUL_APPLICATION',
 							),
 							'platformTypes'    => array( 'ANY_PLATFORM' ),
 							'threatEntryTypes' => array( 'URL' ),
 							'threatEntries'    => array(
 								array( 'url' => urlencode( get_bloginfo( 'url' ) ) ),
-							)
-						)
+							),
+						),
 					)
-				)
+				),
 			)
 		);
 

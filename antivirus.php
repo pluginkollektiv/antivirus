@@ -11,6 +11,7 @@
  * Version:     1.3.10
  *
  * [](http://coderisk.com/wp/plugin/antivirus/RIPS-x1EDAuZC-C)
+ *
  * @package AntiVirus
  */
 
