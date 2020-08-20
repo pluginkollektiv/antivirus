@@ -4,14 +4,16 @@
 	height: 1%;
 	overflow: hidden;
 }
+
 #av_manual_scan a.button {
 	float: left;
 }
+
 #av_manual_scan .alert {
 	float: left;
-	color: green;
+	color: #008000;
 	margin: 0 10px;
-	border: 1px solid green;
+	border: 1px solid #008000;
 	display: none;
 	height: 26px;
 	line-height: 26px;
@@ -27,12 +29,13 @@
 	padding: 0 0 6px;
 	overflow: hidden;
 }
+
 #av_main .inside .output div {
 	float: left;
-	color: #FFF;
+	color: #fff;
 	margin: 12px 6px 0;
 	padding: 8px 12px 10px;
-	background: orange;
+	background: #ffa500;
 	border-radius: 3px;
 
 	transition: background-color 0.5s linear;
@@ -41,23 +44,28 @@
 	-moz-transition: background-color 0.5s linear;
 	-webkit-transition: background-color 0.5s linear;
 }
+
 #av_main .inside .output div.done {
-	background: green;
+	background: #008000;
 }
+
 #av_main .inside .output div.danger {
 	width: 97%;
-	background: red;
+	background: #f00;
 }
+
 #av_main .inside .output div p {
 	padding: 10px;
 	overflow: hidden;
-	background: #F9F9F9;
+	background: #f9f9f9;
 	white-space: nowrap;
 	border-radius: 3px;
 }
+
 #av_main .inside .output div p a {
 	margin: 0 6px 12px 0;
 }
+
 #av_main .inside .output div p code {
 	clear: both;
 	float: left;
@@ -65,9 +73,10 @@
 	padding: 2px 5px;
 	border-radius: 3px;
 }
+
 #av_main .inside .output div p code span {
 	padding: 2px;
-	background: yellow;
+	background: #ff0;
 }
 
 /* @end group */

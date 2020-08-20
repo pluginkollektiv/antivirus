@@ -5,11 +5,11 @@
   "type": "wordpress-plugin",
   "license": "GPL-2.0+",
   "require": {
-    "composer/installers": "~1.0",
+    "php": "^5.2|^7",
     "ext-json": "*"
   },
   "require-dev": {
-    "dealerdirect/phpcodesniffer-composer-installer": "^0.4",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
     "lipemat/wp-unit": "^1.5",
     "matthiasmullie/minify": "^1.3",
     "phpcompatibility/php-compatibility": "^9.3",
@@ -18,10 +18,38 @@
     "wp-coding-standards/wpcs": "^2.3"
   },
   "scripts": {
+    "post-install-cmd": [
+      "@build"
+    ],
+    "post-update-cmd": [
+      "@build"
+    ],
+    "build": [
+      "@minify"
+    ],
+    "cs": [
+      "@lint-php"
+    ],
+    "csfix": [
+      "phpcbf --standard=phpcs.xml"
+    ],
+    "lint-all": [
+      "@lint-php",
+      "@lint-js",
+      "@lint-css"
+    ],
+    "lint-css": [
+      "npx stylelint css/style.css"
+    ],
+    "lint-js": [
+      "npx eslint js/script.js"
+    ],
+    "lint-php": [
+      "phpcs --standard=phpcs.xml -s"
+    ],
     "minify": [
       "minifycss css/style.css > css/style.min.css",
       "minifyjs js/script.js > js/script.min.js"
-    ],
-    "lint": "phpcs"
+    ]
   }
 }
