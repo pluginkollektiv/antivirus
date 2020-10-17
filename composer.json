@@ -50,6 +50,9 @@
     "minify": [
       "minifycss css/style.css > css/style.min.css",
       "minifyjs js/script.js > js/script.min.js"
+    ],
+    "test": [
+      "phpunit --coverage-clover clover.xml"
     ]
   }
 }

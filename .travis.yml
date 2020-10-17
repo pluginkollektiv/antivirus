@@ -32,7 +32,7 @@ before_script:
 script:
   - composer build
   - composer lint-all
-  - phpunit --coverage-clover clover.xml
+  - composer test
 
 after_script:
   # Push coverage off to Codecov
