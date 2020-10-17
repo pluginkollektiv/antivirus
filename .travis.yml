@@ -9,6 +9,9 @@ php:
   - '7.4'
   - nightly
 
+services:
+  - mysql
+
 matrix:
     allow_failures:
       - php: nightly
