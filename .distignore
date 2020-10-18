@@ -12,6 +12,7 @@
 /.gitignore
 /.stylelintrc.json
 /.travis.yml
+/clover.xml
 /composer.json
 /package.json
 /package-lock.json

@@ -1,23 +1,20 @@
-<phpunit
-	bootstrap="tests/bootstrap.php"
-	backupGlobals="false"
-	colors="true"
-	convertErrorsToExceptions="true"
-	convertNoticesToExceptions="true"
-	convertWarningsToExceptions="true"
-	>
+<phpunit bootstrap="tests/bootstrap.php"
+		 backupGlobals="false"
+		 colors="true"
+		 convertErrorsToExceptions="true"
+		 convertNoticesToExceptions="true"
+		 convertWarningsToExceptions="true"
+		 processIsolation="true">
 	<testsuites>
-		<testsuite>
+		<testsuite name="AntiVirus TestSuite">
 			<directory prefix="test-" suffix=".php">tests/</directory>
 		</testsuite>
 	</testsuites>
 
 	<filter>
-		<blacklist>
-			<directory suffix=".php">.</directory>
-		</blacklist>
 		<whitelist>
 			<file>./antivirus.php</file>
+			<directory suffix=".php">./inc/</directory>
 		</whitelist>
 	</filter>
 </phpunit>

@@ -3,3 +3,4 @@ css/*.min.css
 js/*.min.js
 vendor/
 node_modules/
+clover.xml
