@@ -21,11 +21,18 @@ class AntiVirus_SafeBrowsing extends AntiVirus {
 	 * Pings the Safe Browsing API to see if the website is infected.
 	 */
 	public static function check_safe_browsing() {
+		// Check if API key is provided in config.
+		$key = parent::_get_option( 'safe_browsing_key' );
+		// Fallback to default key if not.
+		if ( empty( $key ) ) {
+			$key = 'AIzaSyCGHXUd7vQAySRLNiC5y1M_wzR2W0kCVKI';
+		}
+
 		// Request the API.
 		$response = wp_remote_post(
 			sprintf(
 				'https://safebrowsing.googleapis.com/v4/threatMatches:find?key=%s',
-				'AIzaSyCGHXUd7vQAySRLNiC5y1M_wzR2W0kCVKI'
+				$key
 			),
 			array(
 				'headers' => array(

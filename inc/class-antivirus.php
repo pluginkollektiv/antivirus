@@ -175,7 +175,7 @@ class AntiVirus {
 	 *
 	 * @return string The option value.
 	 */
-	private static function _get_option( $field ) {
+	protected static function _get_option( $field ) {
 		$options = self::_get_options();
 
 		return ( empty( $options[ $field ] ) ? '' : $options[ $field ] );
