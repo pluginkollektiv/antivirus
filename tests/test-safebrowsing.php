@@ -10,7 +10,7 @@
  *
  * Unit tests for the Safe Browsing module.
  */
-class AntiVirus_Test_Safebrowsing extends AntiVirus_TestCase {
+class AntiVirus_Safebrowsing_Test extends AntiVirus_TestCase {
 
 	/**
 	 * Set up test.

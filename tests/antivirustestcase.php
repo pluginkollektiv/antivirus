@@ -43,6 +43,30 @@ abstract class AntiVirus_TestCase extends WP_Mock\Tools\TestCase {
 		);
 		WP_Mock::userFunction( 'get_bloginfo' )->with( 'name' )->andReturn( 'AntiVirus Test Blog' );
 		WP_Mock::userFunction( 'get_bloginfo' )->with( 'admin_email' )->andReturn( 'admin@example.com' );
+
+		WP_Mock::userFunction( 'add_query_arg' )
+			->withAnyArgs()
+			->andReturnUsing(
+				function ( $args, $url ) {
+					if ( false === strpos( $url, '?' )) {
+						$url .= '?';
+					} else {
+						$url .= '&';
+					}
+
+					return $url .
+					       implode(
+						       '&',
+						       array_map(
+							       function( $k, $v ) {
+								       return urlencode( $k ) . '=' . urlencode( $v );
+							       },
+							       array_keys( $args ),
+							       $args
+						       )
+					       );
+				}
+			);
 	}
 
 	/**
