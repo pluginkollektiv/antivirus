@@ -105,7 +105,7 @@ class AntiVirus_Safebrowsing_Test extends AntiVirus_TestCase {
 
 		self::assertEquals( 'admin@example.com', $mail_recipient, 'Mail should have been sent to site admin' );
 		self::assertEquals( '[AntiVirus Test Blog] Safe Browsing Alert', $mail_subject, 'Unexpected mail subject' );
-		self::assertContains(
+		self::assertStringContainsString(
 			'https://transparencyreport.google.com/safe-browsing/search?url=https%3A%2F%2Fantivirus.pluginkollektiv.org%2Ftest%2F&hl=de',
 			$mail_body,
 			'Mail body does not contain expected link to transparency report'
@@ -144,7 +144,7 @@ class AntiVirus_Safebrowsing_Test extends AntiVirus_TestCase {
 			$mail_subject,
 			'expected different subject for Safe Browsing check failing with 403'
 		);
-		self::assertContains( "\r\n  Quota exceeded\r\n", $mail_body, 'Message from response not transported to mail' );
+		self::assertStringContainsString( "\r\n  Quota exceeded\r\n", $mail_body, 'Message from response not transported to mail' );
 
 		/*
 		 * Case 5: Assume code 400 for invalid key.
@@ -155,6 +155,6 @@ class AntiVirus_Safebrowsing_Test extends AntiVirus_TestCase {
 			$mail_subject,
 			'expected different subject for Safe Browsing check failing with 400'
 		);
-		self::assertContains( "\r\n  Invalid API key\r\n", $mail_body, 'Message from response not transported to mail' );
+		self::assertStringContainsString( "\r\n  Invalid API key\r\n", $mail_body, 'Message from response not transported to mail' );
 	}
 }

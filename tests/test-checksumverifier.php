@@ -161,7 +161,7 @@ class AntiVirus_ChecksumVerifier_Test extends AntiVirus_TestCase {
 
 		self::assertEquals( 'admin@example.com', $mail_recipient, 'Mail should have been sent to site admin' );
 		self::assertEquals( '[AntiVirus Test Blog] Checksum Verifier Alert', $mail_subject, 'Unexpected mail subject' );
-		self::assertContains( 'testfile2', $mail_body, 'Mail body does not contain expected filename' );
+		self::assertStringContainsString( 'testfile2', $mail_body, 'Mail body does not contain expected filename' );
 
 		/*
 		 * Case 6: Cached checksums, so invalid response will not be used.

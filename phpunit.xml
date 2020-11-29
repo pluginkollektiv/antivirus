@@ -1,20 +1,23 @@
-<phpunit bootstrap="tests/bootstrap.php"
+<?xml version="1.0"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.4/phpunit.xsd"
+		 bootstrap="tests/bootstrap.php"
 		 backupGlobals="false"
 		 colors="true"
 		 convertErrorsToExceptions="true"
 		 convertNoticesToExceptions="true"
 		 convertWarningsToExceptions="true"
 		 processIsolation="true">
+	<coverage>
+		<include>
+			<file>./antivirus.php</file>
+			<directory suffix=".php">./inc/</directory>
+		</include>
+	</coverage>
+
 	<testsuites>
 		<testsuite name="AntiVirus TestSuite">
 			<directory prefix="test-" suffix=".php">tests/</directory>
 		</testsuite>
 	</testsuites>
-
-	<filter>
-		<whitelist>
-			<file>./antivirus.php</file>
-			<directory suffix=".php">./inc/</directory>
-		</whitelist>
-	</filter>
 </phpunit>
