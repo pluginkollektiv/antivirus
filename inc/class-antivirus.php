@@ -175,7 +175,7 @@ class AntiVirus {
 	 *
 	 * @return string The option value.
 	 */
-	private static function _get_option( $field ) {
+	protected static function _get_option( $field ) {
 		$options = self::_get_options();
 
 		return ( empty( $options[ $field ] ) ? '' : $options[ $field ] );
@@ -725,7 +725,7 @@ class AntiVirus {
 								</label>
 								<br/>
 								<input type="text" name="av_safe_browsing_key" id="av_safe_browsing_key"
-									   value="<?php esc_attr( self::_get_option( 'safe_browsing_key' ) ); ?>" />
+									   value="<?php echo esc_attr( self::_get_option( 'safe_browsing_key' ) ); ?>" />
 
 								<p class="description">
 									<?php
@@ -755,10 +755,9 @@ class AntiVirus {
 							<fieldset>
 								<label for="av_notify_email"><?php esc_html_e( 'Email address for notifications', 'antivirus' ); ?></label>
 								<input type="text" name="av_notify_email" id="av_notify_email"
-									   value="<?php esc_attr( self::_get_option( 'notify_email' ) ); ?>"
+									   value="<?php echo esc_attr( self::_get_option( 'notify_email' ) ); ?>"
 									   class="regular-text"
 									   placeholder="<?php esc_attr_e( 'Email address for notifications', 'antivirus' ); ?>" />
-
 
 								<p class="description">
 									<?php esc_html_e( 'If the field is empty, the blog admin will be notified', 'antivirus' ); ?>

@@ -21,11 +21,20 @@ class AntiVirus_SafeBrowsing extends AntiVirus {
 	 * Pings the Safe Browsing API to see if the website is infected.
 	 */
 	public static function check_safe_browsing() {
+		// Check if API key is provided in config.
+		$key = parent::_get_option( 'safe_browsing_key' );
+		$custom_key = true;
+		// Fallback to default key if not.
+		if ( empty( $key ) ) {
+			$key = 'AIzaSyCGHXUd7vQAySRLNiC5y1M_wzR2W0kCVKI';
+			$custom_key = false;
+		}
+
 		// Request the API.
 		$response = wp_remote_post(
 			sprintf(
 				'https://safebrowsing.googleapis.com/v4/threatMatches:find?key=%s',
-				'AIzaSyCGHXUd7vQAySRLNiC5y1M_wzR2W0kCVKI'
+				$key
 			),
 			array(
 				'headers' => array(
@@ -61,23 +70,58 @@ class AntiVirus_SafeBrowsing extends AntiVirus {
 			return;
 		}
 
-		// Get the JSON response of the API request.
+		// Get the response code and JSON response of the API request.
+		$response_code = wp_remote_retrieve_response_code( $response );
 		$response_json = json_decode( wp_remote_retrieve_body( $response ), true );
 
-		// All clear, nothing bad detected.
-		if ( wp_remote_retrieve_response_code( $response ) === 200 && empty( $response_json ) ) {
-			return;
-		}
+		if ( 200 === $response_code ) {
+			// Successful request.
+			if ( ! empty( $response_json ) ) {
+				// Send notification.
+				self::_send_warning_notification(
+					esc_html__( 'Safe Browsing Alert', 'antivirus' ),
+					sprintf(
+						"%s\r\nhttps://transparencyreport.google.com/safe-browsing/search?url=%s&hl=%s",
+						esc_html__( 'Google has found a problem on your page and probably listed it on a blacklist. It is likely that your website or your hosting account has been hacked and malware or phishing code was installed. We recommend to check your site. For more details please check the Google Safe Browsing diagnostic page:', 'antivirus' ),
+						urlencode( get_bloginfo( 'url' ) ),
+						substr( get_locale(), 0, 2 )
+					)
+				);
+			}
+		} elseif ( 400 === $response_code || 403 === $response_code ) {
+			// Invalid request (most likely invalid key) or expired/exceeded key.
+			$mail_body = sprintf(
+				"%s\r\n\r\n%s",
+				esc_html__( 'Checking yout site against the Google Safe Browsing API has failed.', 'antivirus' ),
+				esc_html__( 'This does not mean that your site has been infected, but that the status could not be determinined.', 'antivirus' )
+			);
 
-		// Send notification.
-		self::_send_warning_notification(
-			esc_html__( 'Safe Browsing Alert', 'antivirus' ),
-			sprintf(
-				"%s\r\nhttps://transparencyreport.google.com/safe-browsing/search?url=%s&hl=%s",
-				esc_html__( 'Google has found a problem on your page and probably listed it on a blacklist. It is likely that your website or your hosting account has been hacked and malware or phishing code was installed. We recommend to check your site. For more details please check the Google Safe Browsing diagnostic page:', 'antivirus' ),
-				urlencode( get_bloginfo( 'url' ) ),
-				substr( get_locale(), 0, 2 )
-			)
-		);
+			// Add (sanitized) error message, if available.
+			if ( isset( $response_json['error']['message'] ) ) {
+				$mail_body .= sprintf(
+					"\r\n\r\n%s:\r\n  %s\r\n",
+					esc_html__( 'Error message from API', 'antivirus' ),
+					filter_var( $response_json['error']['message'], FILTER_SANITIZE_STRING )
+				);
+			}
+
+			// Add advice to solve the problem, depending on the key (custom or default).
+			if ( $custom_key ) {
+				$mail_body .= sprintf(
+					"\r\n%s",
+					esc_html__( 'Please check if your API key is correct and its limit not exceeded. If everything is correct and the error persists for the next requests, please contact the Plugin support.', 'antivirus' )
+				);
+			} else {
+				$mail_body .= sprintf(
+					"\r\n%s",
+					esc_html__( 'This might be due to an exceeded rate limit on the shared API key. To ensure this does not happen please consider providing your own key using the Plugin settings page.', 'antivirus' )
+				);
+			}
+
+			self::_send_warning_notification(
+				esc_html__( 'Safe Browsing check failed', 'antivirus' ),
+				$mail_body
+			);
+		}
 	}
 }
