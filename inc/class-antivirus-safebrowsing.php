@@ -76,9 +76,7 @@ class AntiVirus_SafeBrowsing extends AntiVirus {
 
 		if ( 200 === $response_code ) {
 			// Successful request.
-			if ( empty( $response_json ) ) {
-				// All clear, nothing bad detected.
-			} else {
+			if ( ! empty( $response_json ) ) {
 				// Send notification.
 				self::_send_warning_notification(
 					esc_html__( 'Safe Browsing Alert', 'antivirus' ),
@@ -90,7 +88,7 @@ class AntiVirus_SafeBrowsing extends AntiVirus {
 					)
 				);
 			}
-		} elseif ( 400 === $response_code || 403 === $response_code  ) {
+		} elseif ( 400 === $response_code || 403 === $response_code ) {
 			// Invalid request (most likely invalid key) or expired/exceeded key.
 			$mail_body = sprintf(
 				"%s\r\n\r\n%s",
@@ -98,7 +96,7 @@ class AntiVirus_SafeBrowsing extends AntiVirus {
 				esc_html__( 'This does not mean that your site has been infected, but that the status could not be determinined.', 'antivirus' )
 			);
 
-			// Add (sanitized) error message, if available
+			// Add (sanitized) error message, if available.
 			if ( isset( $response_json['error']['message'] ) ) {
 				$mail_body .= sprintf(
 					"\r\n\r\n%s:\r\n  %s\r\n",
@@ -124,8 +122,6 @@ class AntiVirus_SafeBrowsing extends AntiVirus {
 				esc_html__( 'Safe Browsing check failed', 'antivirus' ),
 				$mail_body
 			);
-		} else {
-			// Unexpected response code (likely 5xx).
 		}
 	}
 }
