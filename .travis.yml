@@ -3,6 +3,7 @@ language: php
 php:
   - '7.3'
   - '7.4'
+  - '8.0'
   - nightly
 
 matrix:
@@ -10,7 +11,7 @@ matrix:
       - php: nightly
 
 before_install:
-  - nvm install 12
+  - nvm install 14
 
 # Clones WordPress and configures our testing environment.
 before_script:
@@ -25,3 +26,6 @@ script:
 after_script:
   # Push coverage off to Codecov
   - bash <(curl -s https://codecov.io/bash)
+
+notifications:
+  email: false
