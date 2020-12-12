@@ -1,0 +1,21 @@
+# Directories
+/.git
+/.github
+/.wordpress-org
+/node_modules
+/vendor
+
+# Files
+/.distignore
+/.eslintrc.json
+/.gitattributes
+/.gitignore
+/.stylelintrc.json
+/.travis.yml
+/clover.xml
+/composer.json
+/package.json
+/package-lock.json
+/composer.lock
+/phpcs.xml
+/phpunit.xml export-ignore

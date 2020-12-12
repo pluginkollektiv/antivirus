@@ -340,9 +340,7 @@ class AntiVirus {
 			'av_settings',
 			array(
 				'nonce' => wp_create_nonce( 'av_ajax_nonce' ),
-				'theme' => esc_js( urlencode( self::_get_theme_name() ) ),
 				'msg_1' => esc_js( __( 'Dismiss', 'antivirus' ) ),
-				'msg_2' => esc_js( __( 'View line', 'antivirus' ) ),
 				'msg_3' => esc_js( __( 'Scan finished', 'antivirus' ) ),
 				'msg_4' => esc_js( __( 'Dismiss false positive virus detection', 'antivirus' ) ),
 			)
