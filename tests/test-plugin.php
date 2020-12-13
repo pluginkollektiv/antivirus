@@ -40,7 +40,7 @@ class AntiVirus_Test_Plugin extends AntiVirus_TestCase {
 	 */
 	public function test_construction_normal() {
 		WP_Mock::userFunction( 'is_admin' )->andReturnFalse();
-		WP_Mock::expectActionNotAdded( 'antivirus_daily_cronjob', array( AntiVirus::class, 'do_daily_cronjob' ) );
+		WP_Mock::expectActionAdded( 'antivirus_daily_cronjob', array( AntiVirus::class, 'do_daily_cronjob' ) );
 		WP_Mock::expectActionNotAdded( 'wp_ajax_get_ajax_response', array( AntiVirus::class, 'get_ajax_response' ) );
 		WP_Mock::expectActionNotAdded( 'admin_menu', array( AntiVirus::class, 'add_sidebar_menu' ) );
 		WP_Mock::expectActionNotAdded( 'admin_notices', array( AntiVirus::class, 'show_dashboard_notice' ) );
@@ -55,7 +55,7 @@ class AntiVirus_Test_Plugin extends AntiVirus_TestCase {
 	 */
 	public function test_construction_admin() {
 		WP_Mock::userFunction( 'is_admin' )->andReturnTrue();
-		WP_Mock::expectActionNotAdded( 'antivirus_daily_cronjob', array( AntiVirus::class, 'do_daily_cronjob' ) );
+		WP_Mock::expectActionAdded( 'antivirus_daily_cronjob', array( AntiVirus::class, 'do_daily_cronjob' ) );
 		WP_Mock::expectActionNotAdded( 'wp_ajax_get_ajax_response', array( AntiVirus::class, 'get_ajax_response' ) );
 		WP_Mock::expectActionAdded( 'admin_menu', array( AntiVirus::class, 'add_sidebar_menu' ) );
 		WP_Mock::expectActionAdded( 'admin_notices', array( AntiVirus::class, 'show_dashboard_notice' ) );
@@ -72,7 +72,7 @@ class AntiVirus_Test_Plugin extends AntiVirus_TestCase {
 	public function test_construction_ajax() {
 		WP_Mock::userFunction( 'is_admin' )->andReturnTrue();
 		define( 'DOING_AJAX', true );
-		WP_Mock::expectActionNotAdded( 'antivirus_daily_cronjob', array( AntiVirus::class, 'do_daily_cronjob' ) );
+		WP_Mock::expectActionAdded( 'antivirus_daily_cronjob', array( AntiVirus::class, 'do_daily_cronjob' ) );
 		WP_Mock::expectActionAdded( 'wp_ajax_get_ajax_response', array( AntiVirus::class, 'get_ajax_response' ) );
 		WP_Mock::expectActionNotAdded( 'admin_menu', array( AntiVirus::class, 'add_sidebar_menu' ) );
 		WP_Mock::expectActionNotAdded( 'admin_notices', array( AntiVirus::class, 'show_dashboard_notice' ) );
