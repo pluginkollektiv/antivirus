@@ -6,7 +6,11 @@ php:
   - '8.0'
   - nightly
 
-matrix:
+env:
+  global:
+    - XDEBUG_MODE=coverage
+
+jobs:
     allow_failures:
       - php: nightly
 
