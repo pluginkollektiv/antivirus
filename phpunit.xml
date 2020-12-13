@@ -13,6 +13,9 @@
 			<file>./antivirus.php</file>
 			<directory suffix=".php">./inc/</directory>
 		</include>
+		<report>
+			<clover outputFile="clover.xml"/>
+		</report>
 	</coverage>
 
 	<testsuites>
