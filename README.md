@@ -114,3 +114,4 @@ This is a maintenance release, fixing our Google Safe Browsing lookup and some m
 
 ## Screenshots ##
 1. WordPress AntiVirus settings
+2. Theme scan results
