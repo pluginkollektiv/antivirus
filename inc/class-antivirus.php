@@ -307,7 +307,7 @@ class AntiVirus {
 				"%s\r\n\r\n\r\n%s\r\n%s\r\n",
 				$body,
 				esc_html__( 'Notify message by AntiVirus for WordPress', 'antivirus' ),
-				esc_html__( 'http://wpantivirus.com', 'antivirus' )
+				esc_html__( 'https://antivirus.pluginkollektiv.org', 'antivirus' )
 			)
 		);
 	}
@@ -802,8 +802,8 @@ class AntiVirus {
 							<?php
 							printf(
 								'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
-								'https://github.com/pluginkollektiv/antivirus/wiki',
-								esc_html__( 'Manual', 'antivirus' )
+								'https://antivirus.pluginkollektiv.org/documentation/',
+								esc_html__( 'Documentation', 'antivirus' )
 							);
 							?>
 							&bull;

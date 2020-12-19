@@ -44,7 +44,7 @@ class AntiVirus_SafeBrowsing extends AntiVirus {
 					array(
 						'client'     => array(
 							'clientId'      => 'wpantivirus',
-							'clientVersion' => '1.3.10',
+							'clientVersion' => '1.4.0',
 						),
 						'threatInfo' => array(
 							'threatTypes'      => array(
