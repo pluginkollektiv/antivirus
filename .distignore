@@ -2,11 +2,14 @@
 /.git
 /.github
 /.wordpress-org
+/bin
 /node_modules
+/tests
 /vendor
 
 # Files
 /.distignore
+/.editorconfig
 /.eslintrc.json
 /.gitattributes
 /.gitignore
