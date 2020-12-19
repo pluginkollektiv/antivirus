@@ -713,7 +713,7 @@ class AntiVirus {
 									echo wp_kses(
 										/* translators: First placeholder (%s) starting link tag to transparency report, second placeholder closing link tag */
 										sprintf( __( 'Diagnosis and notification in suspicion case. For more details read %1$s the transparency report %2$s.', 'antivirus' ), $start_tag, $end_tag ),
-										array( 'a' => array( 'href' ) )
+										array( 'a' => array( 'href' => array() ) )
 									);
 									?>
 								</p>
