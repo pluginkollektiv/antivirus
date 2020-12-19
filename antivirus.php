@@ -4,7 +4,7 @@
  * Description: Security plugin to protect your blog or website against exploits and spam injections.
  * Author:      pluginkollektiv
  * Author URI:  https://pluginkollektiv.org
- * Plugin URI:  https://antivirus.pluginkollektiv.org/
+ * Plugin URI:  https://antivirus.pluginkollektiv.org
  * Text Domain: antivirus
  * License:     GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
