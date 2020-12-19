@@ -63,7 +63,7 @@ spl_autoload_register( 'antivirus_autoload' );
 
 
 // Initialize the plugin.
-add_action( 'plugins_loaded', array( 'AntiVirus', 'instance' ), 99 );
+add_action( 'plugins_loaded', array( 'AntiVirus', 'init' ), 99 );
 
 /* Hooks */
 register_activation_hook( __FILE__, array( 'AntiVirus', 'activation' ) );
