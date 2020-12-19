@@ -1,9 +1,7 @@
-# General
-.DS_Store
-composer.lock
-package-lock.json
-
-# Dependencies (e.g. Composer, npm, etc.)
-vendor
-!vendor/.gitkeep
-node_modules
+.idea/
+css/*.min.css
+js/*.min.js
+vendor/
+node_modules/
+.phpunit.result.cache
+clover.xml

@@ -43,7 +43,6 @@ class AntiVirus_ChecksumVerifier extends AntiVirus {
 
 			// Write to log.
 			if ( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) {
-				// @codingStandardsIgnoreLine Ignore this call for now...
 				error_log(
 					sprintf(
 						'%s: %s',

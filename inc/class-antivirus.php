@@ -22,19 +22,20 @@ class AntiVirus {
 
 	/**
 	 * Pseudo constructor.
+	 *
+	 * @deprecated Since 1.4, use init() instead.
+	 * @see AntiVirus::init()
 	 */
 	public static function instance() {
-		new self();
+		self::init();
 	}
 
 	/**
-	 * Constructor.
+	 * Initialize the plugin.
 	 *
-	 * Should not be called directly,
-	 *
-	 * @see AntiVirus::instance()
+	 * @since 1.4
 	 */
-	public function __construct() {
+	public static function init() {
 		// Don't run during autosave or XML-RPC request.
 		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ( defined( 'XMLRPC_REQUEST' ) && XMLRPC_REQUEST ) ) {
 			return;
@@ -43,10 +44,8 @@ class AntiVirus {
 		// Save the plugin basename.
 		self::$base = plugin_basename( ANTIVIRUS_FILE );
 
-		// Run the daily cronjob.
-		if ( defined( 'DOING_CRON' ) ) {
-			add_action( 'antivirus_daily_cronjob', array( __CLASS__, 'do_daily_cronjob' ) );
-		}
+		// Register the daily cronjob.
+		add_action( 'antivirus_daily_cronjob', array( __CLASS__, 'do_daily_cronjob' ) );
 
 		if ( is_admin() ) {
 			/* AJAX */
@@ -61,6 +60,19 @@ class AntiVirus {
 				add_action( 'plugin_action_links_' . self::$base, array( __CLASS__, 'init_action_links' ) );
 			}
 		}
+	}
+
+	/**
+	 * Constructor.
+	 *
+	 * Should not be called directly,
+	 *
+	 * @deprecated Since 1.4, use init() instead.
+	 * @see AntiVirus::init()
+	 */
+	public function __construct() {
+		// Nothing to construct, just run the initialization for backwards compatibility.
+		self::init();
 	}
 
 	/**
@@ -175,7 +187,7 @@ class AntiVirus {
 	 *
 	 * @return string The option value.
 	 */
-	private static function _get_option( $field ) {
+	protected static function _get_option( $field ) {
 		$options = self::_get_options();
 
 		return ( empty( $options[ $field ] ) ? '' : $options[ $field ] );
@@ -295,7 +307,7 @@ class AntiVirus {
 				"%s\r\n\r\n\r\n%s\r\n%s\r\n",
 				$body,
 				esc_html__( 'Notify message by AntiVirus for WordPress', 'antivirus' ),
-				esc_html__( 'http://wpantivirus.com', 'antivirus' )
+				esc_html__( 'https://antivirus.pluginkollektiv.org', 'antivirus' )
 			)
 		);
 	}
@@ -340,9 +352,7 @@ class AntiVirus {
 			'av_settings',
 			array(
 				'nonce' => wp_create_nonce( 'av_ajax_nonce' ),
-				'theme' => esc_js( urlencode( self::_get_theme_name() ) ),
 				'msg_1' => esc_js( __( 'Dismiss', 'antivirus' ) ),
-				'msg_2' => esc_js( __( 'View line', 'antivirus' ) ),
 				'msg_3' => esc_js( __( 'Scan finished', 'antivirus' ) ),
 				'msg_4' => esc_js( __( 'Dismiss false positive virus detection', 'antivirus' ) ),
 			)
@@ -715,7 +725,7 @@ class AntiVirus {
 									echo wp_kses(
 										/* translators: First placeholder (%s) starting link tag to transparency report, second placeholder closing link tag */
 										sprintf( __( 'Diagnosis and notification in suspicion case. For more details read %1$s the transparency report %2$s.', 'antivirus' ), $start_tag, $end_tag ),
-										array( 'a' => array( 'href' ) )
+										array( 'a' => array( 'href' => array() ) )
 									);
 									?>
 								</p>
@@ -727,7 +737,7 @@ class AntiVirus {
 								</label>
 								<br/>
 								<input type="text" name="av_safe_browsing_key" id="av_safe_browsing_key"
-									   value="<?php esc_attr( self::_get_option( 'safe_browsing_key' ) ); ?>" />
+									   value="<?php echo esc_attr( self::_get_option( 'safe_browsing_key' ) ); ?>" />
 
 								<p class="description">
 									<?php
@@ -757,10 +767,9 @@ class AntiVirus {
 							<fieldset>
 								<label for="av_notify_email"><?php esc_html_e( 'Email address for notifications', 'antivirus' ); ?></label>
 								<input type="text" name="av_notify_email" id="av_notify_email"
-									   value="<?php esc_attr( self::_get_option( 'notify_email' ) ); ?>"
+									   value="<?php echo esc_attr( self::_get_option( 'notify_email' ) ); ?>"
 									   class="regular-text"
 									   placeholder="<?php esc_attr_e( 'Email address for notifications', 'antivirus' ); ?>" />
-
 
 								<p class="description">
 									<?php esc_html_e( 'If the field is empty, the blog admin will be notified', 'antivirus' ); ?>
@@ -793,8 +802,8 @@ class AntiVirus {
 							<?php
 							printf(
 								'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
-								'https://github.com/pluginkollektiv/antivirus/wiki',
-								esc_html__( 'Manual', 'antivirus' )
+								'https://antivirus.pluginkollektiv.org/documentation/',
+								esc_html__( 'Documentation', 'antivirus' )
 							);
 							?>
 							&bull;

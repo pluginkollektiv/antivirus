@@ -2,9 +2,7 @@ jQuery( document ).ready(
 	function( $ ) {
 		// Initialize.
 		var avNonce = av_settings.nonce;
-		var avTheme = av_settings.theme;
 		var avMsg1 = av_settings.msg_1;
-		var avMsg2 = av_settings.msg_2;
 		var avMsg3 = av_settings.msg_3;
 		var avMsg4 = av_settings.msg_4;
 		var avFiles = [];
