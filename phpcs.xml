@@ -8,6 +8,7 @@
     <!-- Files to sniff -->
     <file>antivirus.php</file>
     <file>inc</file>
+	<file>tests</file>
 
     <!-- Extend from WPCS ruleset -->
     <rule ref="WordPress"/>
@@ -19,7 +20,14 @@
 		</properties>
 	</rule>
 
+	<!-- Add some exceptions for the tests -->
+	<rule ref="WordPress.Files.FileName.InvalidClassFileName">
+		<exclude-pattern>tests</exclude-pattern>
+	</rule>
+
     <!-- PHP compatibility level -->
     <config name="testVersion" value="5.2-"/>
-    <rule ref="PHPCompatibility"/>
+    <rule ref="PHPCompatibility">
+		<exclude-pattern>tests</exclude-pattern>
+	</rule>
 </ruleset>

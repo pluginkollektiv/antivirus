@@ -27,24 +27,15 @@ class AntiVirus_Test_Plugin extends AntiVirus_TestCase {
 	}
 
 	/**
-	 * Tear down test.
-	 *
-	 * @inheritdoc
-	 */
-	public function tearDown(): void {
-		parent::tearDown();
-	}
-
-	/**
 	 * Test plugin construction for normal visitors (no cron, no admin).
 	 */
-	public function test_construction_normal() {
+	public function test_construction_normal(): void {
 		WP_Mock::userFunction( 'is_admin' )->andReturnFalse();
 		WP_Mock::expectActionAdded( 'antivirus_daily_cronjob', array( AntiVirus::class, 'do_daily_cronjob' ) );
 		WP_Mock::expectActionNotAdded( 'wp_ajax_get_ajax_response', array( AntiVirus::class, 'get_ajax_response' ) );
 		WP_Mock::expectActionNotAdded( 'admin_menu', array( AntiVirus::class, 'add_sidebar_menu' ) );
 		WP_Mock::expectActionNotAdded( 'admin_notices', array( AntiVirus::class, 'show_dashboard_notice' ) );
-		WP_Mock::expectActionNotAdded( 'plugin_row_meta', array( AntiVirus::class, 'init_row_meta' ), 10, 2 );
+		WP_Mock::expectActionNotAdded( 'plugin_row_meta', array( AntiVirus::class, 'init_row_meta' ) );
 		WP_Mock::expectActionNotAdded( 'plugin_action_links_antivirus.php', array( AntiVirus::class, 'init_action_links' ) );
 		new AntiVirus();
 		self::assertTrue( true );
@@ -53,7 +44,7 @@ class AntiVirus_Test_Plugin extends AntiVirus_TestCase {
 	/**
 	 * Test plugin construction for admin visitors.
 	 */
-	public function test_construction_admin() {
+	public function test_construction_admin(): void {
 		WP_Mock::userFunction( 'is_admin' )->andReturnTrue();
 		WP_Mock::expectActionAdded( 'antivirus_daily_cronjob', array( AntiVirus::class, 'do_daily_cronjob' ) );
 		WP_Mock::expectActionNotAdded( 'wp_ajax_get_ajax_response', array( AntiVirus::class, 'get_ajax_response' ) );
@@ -69,7 +60,7 @@ class AntiVirus_Test_Plugin extends AntiVirus_TestCase {
 	/**
 	 * Test plugin construction for AJAX calls.
 	 */
-	public function test_construction_ajax() {
+	public function test_construction_ajax(): void {
 		WP_Mock::userFunction( 'is_admin' )->andReturnTrue();
 		define( 'DOING_AJAX', true );
 		WP_Mock::expectActionAdded( 'antivirus_daily_cronjob', array( AntiVirus::class, 'do_daily_cronjob' ) );
@@ -77,7 +68,7 @@ class AntiVirus_Test_Plugin extends AntiVirus_TestCase {
 		WP_Mock::expectActionNotAdded( 'admin_menu', array( AntiVirus::class, 'add_sidebar_menu' ) );
 		WP_Mock::expectActionNotAdded( 'admin_notices', array( AntiVirus::class, 'show_dashboard_notice' ) );
 		WP_Mock::expectActionNotAdded( 'deactivate_antivirus.php', array( AntiVirus::class, 'clear_scheduled_hook' ) );
-		WP_Mock::expectActionNotAdded( 'plugin_row_meta', array( AntiVirus::class, 'init_row_meta' ), 10, 2 );
+		WP_Mock::expectActionNotAdded( 'plugin_row_meta', array( AntiVirus::class, 'init_row_meta' ) );
 		WP_Mock::expectActionNotAdded( 'plugin_action_links_antivirus.php', array( AntiVirus::class, 'init_action_links' ) );
 		new AntiVirus();
 		self::assertTrue( true );
@@ -86,7 +77,7 @@ class AntiVirus_Test_Plugin extends AntiVirus_TestCase {
 	/**
 	 * Test daily cron execution.
 	 */
-	public function test_do_daily_cronjob() {
+	public function test_do_daily_cronjob(): void {
 		$mock_ci = Mockery::mock( 'overload:AntiVirus_CheckInternals' );
 		$mock_sb = Mockery::mock( 'overload:AntiVirus_SafeBrowsing' );
 		$mock_cv = Mockery::mock( 'overload:AntiVirus_ChecksumVerifier' );

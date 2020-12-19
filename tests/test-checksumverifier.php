@@ -24,18 +24,9 @@ class AntiVirus_ChecksumVerifier_Test extends AntiVirus_TestCase {
 	}
 
 	/**
-	 * Tear down test.
-	 *
-	 * @inheritdoc
-	 */
-	public function tearDown(): void {
-		parent::tearDown();
-	}
-
-	/**
 	 * Test SafeBrowsing check.
 	 */
-	public function test() {
+	public function test(): void {
 		$testfile1 = __DIR__ . '/testfile1';
 		$testfile2 = __DIR__ . '/testfile2';
 		$testfile3 = __DIR__ . '/testfile3';
@@ -152,6 +143,7 @@ class AntiVirus_ChecksumVerifier_Test extends AntiVirus_TestCase {
 		 * Case 4: Empty cache, retrieve valid API response. One match, one non-existing file.
 		 */
 		AntiVirus_ChecksumVerifier::verify_files();
+
 		self::assertNull( $mail_recipient, 'no mail should be sent for non-existing file' );
 
 		/*

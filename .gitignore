@@ -3,4 +3,5 @@ css/*.min.css
 js/*.min.js
 vendor/
 node_modules/
+.phpunit.result.cache
 clover.xml

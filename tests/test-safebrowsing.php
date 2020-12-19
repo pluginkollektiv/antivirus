@@ -24,18 +24,9 @@ class AntiVirus_Safebrowsing_Test extends AntiVirus_TestCase {
 	}
 
 	/**
-	 * Tear down test.
-	 *
-	 * @inheritdoc
-	 */
-	public function tearDown(): void {
-		parent::tearDown();
-	}
-
-	/**
 	 * Test SafeBrowsing check.
 	 */
-	public function test() {
+	public function test(): void {
 		// Emulate blog URL and non-default locale.
 		WP_Mock::userFunction( 'get_bloginfo' )
 				->with( 'url' )
@@ -83,10 +74,12 @@ class AntiVirus_Safebrowsing_Test extends AntiVirus_TestCase {
 		self::assertIsArray( $request_data, 'unexpected request' );
 		$request_body = json_decode( $request_data['body'] );
 
-		self::assertEquals( 1, count( $request_body->threatInfo->threatEntries ), 'unexpected number of requested threat entries' );
+		// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+		$entries = $request_body->threatInfo->threatEntries;
+		self::assertCount( 1, $entries, 'unexpected number of requested threat entries' );
 		self::assertEquals(
 			urlencode( 'https://antivirus.pluginkollektiv.org/test/' ),
-			$request_body->threatInfo->threatEntries[0]->url,
+			$entries[0]->url,
 			'unexpected blog URL in requested threat entries'
 		);
 
