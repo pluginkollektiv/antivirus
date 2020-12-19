@@ -7,10 +7,15 @@
 
 /**
  * Class AntiVirus_TestCase.
+ *
+ * Setup for unit test cases.
  */
 abstract class AntiVirus_TestCase extends WP_Mock\Tools\TestCase {
+
 	/**
-	 * @var array Plugin options.
+	 * Plugin options.
+	 *
+	 * @var array
 	 */
 	private $options = array(
 		'cronjob_enable'    => 0,
@@ -38,7 +43,7 @@ abstract class AntiVirus_TestCase extends WP_Mock\Tools\TestCase {
 		);
 		WP_Mock::userFunction( 'is_email' )->withAnyArgs()->andReturnUsing(
 			function ( $e ) {
-				return boolval( filter_var( $e, FILTER_VALIDATE_EMAIL ) );
+				return (bool) filter_var( $e, FILTER_VALIDATE_EMAIL );
 			}
 		);
 		WP_Mock::userFunction( 'get_bloginfo' )->with( 'name' )->andReturn( 'AntiVirus Test Blog' );
@@ -48,23 +53,23 @@ abstract class AntiVirus_TestCase extends WP_Mock\Tools\TestCase {
 			->withAnyArgs()
 			->andReturnUsing(
 				function ( $args, $url ) {
-					if ( false === strpos( $url, '?' )) {
+					if ( false === strpos( $url, '?' ) ) {
 						$url .= '?';
 					} else {
 						$url .= '&';
 					}
 
 					return $url .
-					       implode(
-						       '&',
-						       array_map(
-							       function( $k, $v ) {
-								       return urlencode( $k ) . '=' . urlencode( $v );
-							       },
-							       array_keys( $args ),
-							       $args
-						       )
-					       );
+						implode(
+							'&',
+							array_map(
+								function( $k, $v ) {
+									return urlencode( $k ) . '=' . urlencode( $v );
+								},
+								array_keys( $args ),
+								$args
+							)
+						);
 				}
 			);
 	}
@@ -83,7 +88,7 @@ abstract class AntiVirus_TestCase extends WP_Mock\Tools\TestCase {
 	 *
 	 * @param array $overrides Associative array of overridden options.
 	 */
-	protected function update_options( $overrides ) {
+	protected function update_options( $overrides ): void {
 		foreach ( $this->options as $k => &$v ) {
 			if ( isset( $overrides[ $k ] ) ) {
 				$v = $overrides[ $k ];
