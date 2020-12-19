@@ -37,7 +37,7 @@ class AntiVirus_Test_Plugin extends AntiVirus_TestCase {
 		WP_Mock::expectActionNotAdded( 'admin_notices', array( AntiVirus::class, 'show_dashboard_notice' ) );
 		WP_Mock::expectActionNotAdded( 'plugin_row_meta', array( AntiVirus::class, 'init_row_meta' ) );
 		WP_Mock::expectActionNotAdded( 'plugin_action_links_antivirus.php', array( AntiVirus::class, 'init_action_links' ) );
-		new AntiVirus();
+		AntiVirus::init();
 		self::assertTrue( true );
 	}
 
@@ -53,7 +53,7 @@ class AntiVirus_Test_Plugin extends AntiVirus_TestCase {
 		WP_Mock::expectActionAdded( 'deactivate_antivirus.php', array( AntiVirus::class, 'clear_scheduled_hook' ) );
 		WP_Mock::expectActionAdded( 'plugin_row_meta', array( AntiVirus::class, 'init_row_meta' ), 10, 2 );
 		WP_Mock::expectActionAdded( 'plugin_action_links_antivirus.php', array( AntiVirus::class, 'init_action_links' ) );
-		new AntiVirus();
+		AntiVirus::init();
 		self::assertTrue( true );
 	}
 
@@ -70,7 +70,7 @@ class AntiVirus_Test_Plugin extends AntiVirus_TestCase {
 		WP_Mock::expectActionNotAdded( 'deactivate_antivirus.php', array( AntiVirus::class, 'clear_scheduled_hook' ) );
 		WP_Mock::expectActionNotAdded( 'plugin_row_meta', array( AntiVirus::class, 'init_row_meta' ) );
 		WP_Mock::expectActionNotAdded( 'plugin_action_links_antivirus.php', array( AntiVirus::class, 'init_action_links' ) );
-		new AntiVirus();
+		AntiVirus::init();
 		self::assertTrue( true );
 	}
 

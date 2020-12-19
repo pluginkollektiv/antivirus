@@ -22,19 +22,20 @@ class AntiVirus {
 
 	/**
 	 * Pseudo constructor.
+	 *
+	 * @deprecated Since 1.4, use init() instead.
+	 * @see AntiVirus::init()
 	 */
 	public static function instance() {
-		new self();
+		self::init();
 	}
 
 	/**
-	 * Constructor.
+	 * Initialize the plugin.
 	 *
-	 * Should not be called directly,
-	 *
-	 * @see AntiVirus::instance()
+	 * @since 1.4
 	 */
-	public function __construct() {
+	public static function init() {
 		// Don't run during autosave or XML-RPC request.
 		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ( defined( 'XMLRPC_REQUEST' ) && XMLRPC_REQUEST ) ) {
 			return;
@@ -59,6 +60,19 @@ class AntiVirus {
 				add_action( 'plugin_action_links_' . self::$base, array( __CLASS__, 'init_action_links' ) );
 			}
 		}
+	}
+
+	/**
+	 * Constructor.
+	 *
+	 * Should not be called directly,
+	 *
+	 * @deprecated Since 1.4, use init() instead.
+	 * @see AntiVirus::init()
+	 */
+	public function __construct() {
+		// Nothing to construct, just run the initialization for backwards compatibility.
+		self::init();
 	}
 
 	/**
