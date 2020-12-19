@@ -43,10 +43,8 @@ class AntiVirus {
 		// Save the plugin basename.
 		self::$base = plugin_basename( ANTIVIRUS_FILE );
 
-		// Run the daily cronjob.
-		if ( defined( 'DOING_CRON' ) ) {
-			add_action( 'antivirus_daily_cronjob', array( __CLASS__, 'do_daily_cronjob' ) );
-		}
+		// Register the daily cronjob.
+		add_action( 'antivirus_daily_cronjob', array( __CLASS__, 'do_daily_cronjob' ) );
 
 		if ( is_admin() ) {
 			/* AJAX */
