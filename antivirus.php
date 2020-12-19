@@ -4,11 +4,11 @@
  * Description: Security plugin to protect your blog or website against exploits and spam injections.
  * Author:      pluginkollektiv
  * Author URI:  https://pluginkollektiv.org
- * Plugin URI:  https://wordpress.org/plugins/antivirus/
+ * Plugin URI:  https://antivirus.pluginkollektiv.org/
  * Text Domain: antivirus
  * License:     GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
- * Version:     1.3.10
+ * Version:     1.4.0
  *
  * [](http://coderisk.com/wp/plugin/antivirus/RIPS-x1EDAuZC-C)
  *

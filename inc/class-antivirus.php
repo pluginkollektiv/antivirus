@@ -788,8 +788,8 @@ class AntiVirus {
 							<?php
 							printf(
 								'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
-								'https://github.com/pluginkollektiv/antivirus/wiki',
-								esc_html__( 'Manual', 'antivirus' )
+								'https://antivirus.pluginkollektiv.org/documentation/',
+								esc_html__( 'Documentation', 'antivirus' )
 							);
 							?>
 							&bull;

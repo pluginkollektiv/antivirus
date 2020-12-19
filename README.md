@@ -4,8 +4,8 @@
 * Donate link:       https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=TD4AMD2D8EMZW
 * Requires at least: 3.8
 * Requires PHP:      5.2
-* Tested up to:      5.4
-* Stable tag:        1.3.10
+* Tested up to:      5.6
+* Stable tag:        1.4.0
 * License:           GPLv2 or later
 * License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,12 +52,17 @@ In case your WordPress site has been hacked, *AntiVirus* will help you to become
 ### Will AntiVirus protect my site from being hacked? ###
 Not literally "protect from". The plugin’s purpose is to *detect* any "hack" that has already happened and enable you to take immediate action upon it.
 
-A complete documentation is available in the [GitHub repository Wiki](https://github.com/pluginkollektiv/antivirus/wiki).
+A complete documentation is available on the [AntiVirus website](https://antivirus.pluginkollektiv.org/documentation/).
 
 ## Changelog ##
 
-### 1.3.10 ###
+### 1.4.0 ###
+* Option to provide a custom key for the Google Safe Browsing API
+* Scan files of parent theme if a child theme is active
+* Verify checksums of WP core files (integrated functionality from _Checksum Verifier_ plugin)
+* Ability to enable _Safe Browsing_ and _Checksum Verifier_ as cronjob without Theme scan
 
+### 1.3.10 ###
 * Updated PayPal link for donations
 * Improve coding standards
 * Translation fixes, improvements and cleanups
@@ -74,43 +79,12 @@ A complete documentation is available in the [GitHub repository Wiki](https://gi
 * updated expired link URLs in plugin and languages files
 * updated [plugin authors](https://gist.github.com/glueckpress/f058c0ab973d45a72720)
 
-### 1.3.8 ###
-* Detection and warning for the [MailPoet Vulnerability](http://blog.sucuri.net/2014/07/mailpoet-vulnerability-exploited-in-the-wild-breaking-thousands-of-wordpress-sites.html)
-
-### 1.3.7 ###
-* Update the Google Safe Browsing Lookup API to v3.1
-
-### 1.3.6 ###
-* Code revision and data validation
-
-### 1.3.5 ###
-* Optimizations for WordPress 3.8
-
-### 1.3.4 ###
-* [Google Safe Browsing](http://en.wikipedia.org/wiki/Google_Safe_Browsing) for malware and phishing monitoring with e-mail notification. [Additional information on Google+](https://plus.google.com/110569673423509816572/posts/H72FFwvna1i) (only german)
-
-### 1.3.3 ###
-* Add inspection for iFrames
-* Retina support for teaser and screenshot
-
-### 1.3.2 ###
-* Remove the check for include and require commands (#wpforce)
-
-### 1.3.1 ###
-* Compatibility with WordPress 3.4
-* High-resolution plugin icon for retina displays
-* Remove icon from the admin sidebar
-* System requirements: From PHP 5.0 to PHP 5.1
-
-### 1.3 ###
-* Xmas Edition
-
 For the complete changelog, check out our [GitHub repository](https://github.com/pluginkollektiv/antivirus).
 
 ## Upgrade Notice ##
 
-### 1.3.10 ###
-This is a maintenance release, fixing our Google Safe Browsing lookup and some minor issues.
+### 1.4.0 ###
+This is a feature release which integrates the functionality from _Checksum Verifier_ plugin.
 
 ## Screenshots ##
 1. WordPress AntiVirus settings

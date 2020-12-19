@@ -1,6 +1,6 @@
 # Changelog
 
-### unreleased ###
+### 1.4.0 ###
 * **English**
 	 * Option to provide a custom key for the Google Safe Browsing API
 	 * Scan files of parent theme if a child theme is active
@@ -39,13 +39,13 @@
 	 * added German formal translation
 	 * updated, translated + formatted README.md
 	 * updated expired link URLs in plugin and languages files
-	 * updated [plugin authors](https://gist.github.com/glueckpress/f058c0ab973d45a72720)
+	 * updated [plugin authors](https://pluginkollektiv.org/hello-world/)
 * **Deutsch**
 	 * Eine POT-Datei erstellt
 	 * formale deutsche Übersetzung (Sie) hinzugefügt
 	 * README.md aktualisiert, übersetzt und formatiert
 	 * Abgelaufene Link-Adressen in dem Plug-in und in den Sprachdateien aktualisiert
-	 * [Plugin Author](https://gist.github.com/glueckpress/f058c0ab973d45a72720) aktualisiert
+	 * [Plugin Author](https://pluginkollektiv.org/de/hallo-welt/) aktualisiert
 
 ### 1.3.8 ###
 * **English**
@@ -73,9 +73,11 @@
 
 ### 1.3.4 ###
 * **English**
-	 * [Google Safe Browsing](http://en.wikipedia.org/wiki/Google_Safe_Browsing) for malware and phishing monitoring with e-mail notification. [Additional information on Google+](https://plus.google.com/110569673423509816572/posts/H72FFwvna1i) (only German)
+	 * [Google Safe Browsing](http://en.wikipedia.org/wiki/Google_Safe_Browsing) for malware and phishing monitoring with e-mail notification.
+	   [Additional information](https://antivirus.pluginkollektiv.org/2013/05/08/new-features-in-antivirus-for-wordpress/)
 * **Deutsch**
-	 * Benachrichtigung per E-Mail, sobald [Google Safe Browsing](http://en.wikipedia.org/wiki/Google_Safe_Browsing) Malware im Blog erkennt. [Mehr auf Google+](https://plus.google.com/110569673423509816572/posts/H72FFwvna1i)
+	 * Benachrichtigung per E-Mail, sobald [Google Safe Browsing](http://en.wikipedia.org/wiki/Google_Safe_Browsing) Malware im Blog erkennt.
+	   [Mehr](https://antivirus.pluginkollektiv.org/de/2013/05/08/neue-funktion-im-antivirus-fuer-wordpress/)
 
 ### 1.3.3 ###
 * **English**
@@ -169,10 +171,10 @@
 
 ### 0.5 ###
 * **English**
-   * Add security scan for the current [WordPress permalink back door](http://mashable.com/2009/09/05/wordpress-attack/ "WordPress permalink back door")
+   * Add security scan for the current [WordPress permalink back door](http://mashable.com/2009/09/05/wordpress-attack/)
    * Software architecture changes
 * **Deutsch**
-   * Sicherheits-Überprüfung für die aktuelle [Wordpress Permalink Hintertür](http://mashable.com/2009/09/05/wordpress-attack/ "WordPress Permalink Hintertür") hinzugefügt
+   * Sicherheits-Überprüfung für die aktuelle [Wordpress Permalink Hintertür](http://mashable.com/2009/09/05/wordpress-attack/) hinzugefügt
    * Software-Architektur Änderungen
 
 ### 0.4 ###
