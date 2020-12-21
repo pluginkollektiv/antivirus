@@ -40,12 +40,6 @@ In case your WordPress site has been hacked, *AntiVirus* will help you to become
 * Author: [Sergej Müller](https://sergejmueller.github.io/)
 * Maintainers: [pluginkollektiv](http://pluginkollektiv.org/)
 
-## Installation ##
-* If you don’t know how to install a plugin for WordPress, [here’s how](https://codex.wordpress.org/Managing_Plugins#Installing_Plugins).
-
-### Requirements ###
-* PHP 5.2.4 or greater
-* WordPress 3.8 or greater
 
 ## Frequently Asked Questions ##
 
