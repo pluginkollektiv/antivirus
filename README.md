@@ -2,7 +2,7 @@
 * Contributors:      pluginkollektiv
 * Tags:              antivirus, malware, scanner, phishing, safe browsing, vulnerability
 * Donate link:       https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=TD4AMD2D8EMZW
-* Requires at least: 3.8
+* Requires at least: 4.6
 * Requires PHP:      5.2
 * Tested up to:      5.6
 * Stable tag:        1.4.0
@@ -40,12 +40,6 @@ In case your WordPress site has been hacked, *AntiVirus* will help you to become
 * Author: [Sergej Müller](https://sergejmueller.github.io/)
 * Maintainers: [pluginkollektiv](http://pluginkollektiv.org/)
 
-## Installation ##
-* If you don’t know how to install a plugin for WordPress, [here’s how](https://codex.wordpress.org/Managing_Plugins#Installing_Plugins).
-
-### Requirements ###
-* PHP 5.2.4 or greater
-* WordPress 3.8 or greater
 
 ## Frequently Asked Questions ##
 

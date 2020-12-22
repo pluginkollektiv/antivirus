@@ -11,6 +11,7 @@
 	<file>tests</file>
 
     <!-- Extend from WPCS ruleset -->
+	<config name="minimum_supported_wp_version" value="4.6"/>
     <rule ref="WordPress"/>
 
 	<!-- Verify i18n text domain -->
