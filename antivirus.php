@@ -10,8 +10,6 @@
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * Version:     1.4.0
  *
- * [](http://coderisk.com/wp/plugin/antivirus/RIPS-x1EDAuZC-C)
- *
  * @package AntiVirus
  */
 
