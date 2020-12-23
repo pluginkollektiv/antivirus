@@ -36,7 +36,7 @@ class AntiVirus_ChecksumVerifier extends AntiVirus {
 				esc_html__( 'Checksum Verifier Alert', 'antivirus' ),
 				sprintf(
 					"%s:\r\n\r\n- %s",
-					esc_html__( 'Official checksums do not match for the following files', 'antivirus' ),
+					esc_html__( 'Checksums do not match for the following files', 'antivirus' ),
 					implode( "\r\n- ", $matches )
 				)
 			);
