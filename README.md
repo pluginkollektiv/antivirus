@@ -2,7 +2,7 @@
 * Contributors:      pluginkollektiv
 * Tags:              antivirus, malware, scanner, phishing, safe browsing, vulnerability
 * Donate link:       https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=TD4AMD2D8EMZW
-* Requires at least: 3.8
+* Requires at least: 4.6
 * Requires PHP:      5.2
 * Tested up to:      5.6
 * Stable tag:        1.4.0
@@ -12,19 +12,17 @@
 Security plugin to protect your blog or website against exploits and spam injections.
 
 ## Description ##
-*AntiVirus for WordPress* is a easy-to-use, safe tool to harden your WordPress site against exploits, malware and spam injections.
-You can configure *AntiVirus* to perform an automated daily scan of your theme files. If the plugin happens to detect any suspicious code injections, it will send out a notification to a previously configured e-mail address.
+*AntiVirus* is an easy-to-use, safe tool to harden your WordPress site against exploits, malware and spam injections.
+You can configure *AntiVirus* to perform an automated daily scan of your theme files. If the plugin detects any suspicious code injections, it will send out a notification to a previously configured e-mail address.
 
 In case your WordPress site has been hacked, *AntiVirus* will help you to become aware of the problem very quickly in order for you to take immediate action.
 
 ### Features ###
-* Virus alert in the admin bar
-* Cleaning up after plugin removal
-* Daily scan with email notifications
-* Theme template checks
-* Whitelist solution: Mark suspected cases as "no virus"
-* Manual check of template files with alerts on suspected cases
+* Scan for suspicious code in the theme files (daily scan with email notifications and manual scan) with an option to mark detected cases as false positive
+* Checksum verification for WordPress Core files
 * Optional: Google Safe Browsing for malware and phishing monitoring.
+
+A complete documentation is available on the [AntiVirus website](https://antivirus.pluginkollektiv.org/documentation/).
 
 ### Support ###
 * Community support via the [support forums on wordpress.org](https://wordpress.org/support/plugin/antivirus)
@@ -38,21 +36,8 @@ In case your WordPress site has been hacked, *AntiVirus* will help you to become
 
 ### Credits ###
 * Author: [Sergej Müller](https://sergejmueller.github.io/)
-* Maintainers: [pluginkollektiv](http://pluginkollektiv.org/)
+* Maintainers: [pluginkollektiv](https://pluginkollektiv.org)
 
-## Installation ##
-* If you don’t know how to install a plugin for WordPress, [here’s how](https://codex.wordpress.org/Managing_Plugins#Installing_Plugins).
-
-### Requirements ###
-* PHP 5.2.4 or greater
-* WordPress 3.8 or greater
-
-## Frequently Asked Questions ##
-
-### Will AntiVirus protect my site from being hacked? ###
-Not literally "protect from". The plugin’s purpose is to *detect* any "hack" that has already happened and enable you to take immediate action upon it.
-
-A complete documentation is available on the [AntiVirus website](https://antivirus.pluginkollektiv.org/documentation/).
 
 ## Changelog ##
 
