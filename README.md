@@ -21,7 +21,6 @@ In case your WordPress site has been hacked, *AntiVirus* will help you to become
 * Scan for suspicious code in the theme files (daily scan with email notifications and manual scan) with an option to mark detected cases as false positive
 * Checksum verification for WordPress Core files
 * Optional: Google Safe Browsing for malware and phishing monitoring.
-* Cleaning up after plugin removal
 
 A complete documentation is available on the [AntiVirus website](https://antivirus.pluginkollektiv.org/documentation/).
 
