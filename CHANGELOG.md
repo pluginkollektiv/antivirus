@@ -1,5 +1,15 @@
 # Changelog
 
+### unreleased ###
+
+* **English**
+	* Some spelling and translation corrections
+	* Fixed theme file collection for child themes with duplicate names
+* **Deutsch**
+	* Einige Rechtschreib- und Übersetzungsfehler korrigiert
+	* Sammlung von Theme Dateien für Child Themes mit doppelten Dateinamen korrigiert
+
+
 ### 1.4.0 ###
 * **English**
 	 * Option to provide a custom key for the Google Safe Browsing API

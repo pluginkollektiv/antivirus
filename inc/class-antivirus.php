@@ -393,7 +393,7 @@ class AntiVirus {
 		// Extract data.
 		$name  = $theme->get( 'Name' );
 		$slug  = $theme->get_stylesheet();
-		$files = $theme->get_files( 'php', 1 );
+		$files = array_values( $theme->get_files( 'php', 1 ) );
 
 		// Append parent's data, if we got a child theme.
 		$parent = self::_get_theme_data( $theme->parent() );
