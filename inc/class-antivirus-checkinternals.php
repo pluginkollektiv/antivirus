@@ -165,7 +165,7 @@ class AntiVirus_CheckInternals extends AntiVirus {
 	 *
 	 * @return array|bool An array of matched lines or false on failure.
 	 */
-	private static function _check_file_line( $line = '', $num ) {
+	private static function _check_file_line( $line, $num ) {
 		// Trim value.
 		$line = trim( (string) $line );
 
