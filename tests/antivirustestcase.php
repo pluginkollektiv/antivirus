@@ -35,6 +35,7 @@ abstract class AntiVirus_TestCase extends WP_Mock\Tools\TestCase {
 	public function setUp(): void {
 		WP_Mock::setUp();
 
+		WP_Mock::passthruFunction( 'load_plugin_textdomain' );
 		WP_Mock::passthruFunction( 'wp_parse_args' );
 		WP_Mock::userFunction( 'get_option' )->with( 'antivirus' )->andReturnUsing(
 			function () {
