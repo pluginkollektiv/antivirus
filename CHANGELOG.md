@@ -6,10 +6,12 @@
 	* Fixed file name sanitization in manual theme scan
 	* Some spelling and translation corrections
 	* Fixed theme file collection for child themes with duplicate names
+	* Consider all levels in theme file check instead of one only
 * **Deutsch**
 	* Einige Rechtschreib- und Übersetzungsfehler korrigiert
 	* Sammlung von Theme Dateien für Child Themes mit doppelten Dateinamen korrigiert
-	* Bereinigung von Dateinamen beim manuellen Theme Scan korrigiert
+	* Bereinigung von Dateinamen beim manuellen Theme-Scan korrigiert
+	* Berücksichtigung aller Level im Theme-Scan
 
 
 ### 1.4.0 ###
