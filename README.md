@@ -5,7 +5,7 @@
 * Requires at least: 4.1
 * Requires PHP:      5.2
 * Tested up to:      5.6
-* Stable tag:        1.4.0
+* Stable tag:        1.4.1
 * License:           GPLv2 or later
 * License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,11 +41,19 @@ A complete documentation is available on the [AntiVirus website](https://antivir
 
 ## Changelog ##
 
+### 1.4.1 ###
+* Fix some spelling mistakes and correct translations (#85)
+* Fix file name sanitization in manual theme scan causing errors to be not shown in the admin area (#88, #89)
+* Fix theme file collection for child themes with duplicate names (#86)
+* Consider all levels in theme file check instead of one only (#87, #90)
+* Support translations in old WordPress versions (#91)
+
 ### 1.4.0 ###
-* Option to provide a custom key for the Google Safe Browsing API
-* Scan files of parent theme if a child theme is active
-* Verify checksums of WP core files (integrated functionality from _Checksum Verifier_ plugin)
-* Ability to enable _Safe Browsing_ and _Checksum Verifier_ as cronjob without Theme scan
+* Option to provide a custom key for the Google Safe Browsing API (#69)
+* Scan files of parent theme if a child theme is active (#1, #62)
+* Verify checksums of WP core files (integrated functionality from _Checksum Verifier_ plugin (#5, #56)
+* Allow to enable _Safe Browsing_ and _Checksum Verifier_ as cronjob without theme scan (#66)
+* Update code style check and add build script (#68)
 
 ### 1.3.10 ###
 * Updated PayPal link for donations
