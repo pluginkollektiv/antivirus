@@ -1,5 +1,13 @@
 # Changelog
 
+### unreleased ###
+
+* **English**
+	* Fixed file name sanitization in manual theme scan
+* **Deutsch**
+	* Bereinigung von Dateinamen beim manuellen Theme Scan korrigiert
+
+
 ### 1.4.0 ###
 * **English**
 	 * Option to provide a custom key for the Google Safe Browsing API
