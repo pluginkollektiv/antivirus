@@ -44,6 +44,9 @@ class AntiVirus {
 		// Save the plugin basename.
 		self::$base = plugin_basename( ANTIVIRUS_FILE );
 
+		// Load translations. Required due to support for WP versions before 4.6.
+		load_plugin_textdomain( 'antivirus' );
+
 		// Register the daily cronjob.
 		add_action( 'antivirus_daily_cronjob', array( __CLASS__, 'do_daily_cronjob' ) );
 

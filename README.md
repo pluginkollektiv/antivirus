@@ -2,7 +2,7 @@
 * Contributors:      pluginkollektiv
 * Tags:              antivirus, malware, scanner, phishing, safe browsing, vulnerability
 * Donate link:       https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=TD4AMD2D8EMZW
-* Requires at least: 4.6
+* Requires at least: 4.1
 * Requires PHP:      5.2
 * Tested up to:      5.6
 * Stable tag:        1.4.0
