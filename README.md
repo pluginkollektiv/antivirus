@@ -2,29 +2,27 @@
 * Contributors:      pluginkollektiv
 * Tags:              antivirus, malware, scanner, phishing, safe browsing, vulnerability
 * Donate link:       https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=TD4AMD2D8EMZW
-* Requires at least: 4.6
+* Requires at least: 4.1
 * Requires PHP:      5.2
 * Tested up to:      5.6
-* Stable tag:        1.4.0
+* Stable tag:        1.4.1
 * License:           GPLv2 or later
 * License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
 Security plugin to protect your blog or website against exploits and spam injections.
 
 ## Description ##
-*AntiVirus for WordPress* is a easy-to-use, safe tool to harden your WordPress site against exploits, malware and spam injections.
-You can configure *AntiVirus* to perform an automated daily scan of your theme files. If the plugin happens to detect any suspicious code injections, it will send out a notification to a previously configured e-mail address.
+*AntiVirus* is an easy-to-use, safe tool to harden your WordPress site against exploits, malware and spam injections.
+You can configure *AntiVirus* to perform an automated daily scan of your theme files. If the plugin detects any suspicious code injections, it will send out a notification to a previously configured e-mail address.
 
 In case your WordPress site has been hacked, *AntiVirus* will help you to become aware of the problem very quickly in order for you to take immediate action.
 
 ### Features ###
-* Virus alert in the admin bar
-* Cleaning up after plugin removal
-* Daily scan with email notifications
-* Theme template checks
-* Whitelist solution: Mark suspected cases as "no virus"
-* Manual check of template files with alerts on suspected cases
+* Scan for suspicious code in the theme files (daily scan with email notifications and manual scan) with an option to mark detected cases as false positive
+* Checksum verification for WordPress Core files
 * Optional: Google Safe Browsing for malware and phishing monitoring.
+
+A complete documentation is available on the [AntiVirus website](https://antivirus.pluginkollektiv.org/documentation/).
 
 ### Support ###
 * Community support via the [support forums on wordpress.org](https://wordpress.org/support/plugin/antivirus)
@@ -38,23 +36,24 @@ In case your WordPress site has been hacked, *AntiVirus* will help you to become
 
 ### Credits ###
 * Author: [Sergej Müller](https://sergejmueller.github.io/)
-* Maintainers: [pluginkollektiv](http://pluginkollektiv.org/)
+* Maintainers: [pluginkollektiv](https://pluginkollektiv.org)
 
-
-## Frequently Asked Questions ##
-
-### Will AntiVirus protect my site from being hacked? ###
-Not literally "protect from". The plugin’s purpose is to *detect* any "hack" that has already happened and enable you to take immediate action upon it.
-
-A complete documentation is available on the [AntiVirus website](https://antivirus.pluginkollektiv.org/documentation/).
 
 ## Changelog ##
 
+### 1.4.1 ###
+* Fix some spelling mistakes and correct translations (#85)
+* Fix file name sanitization in manual theme scan causing errors to be not shown in the admin area (#88, #89)
+* Fix theme file collection for child themes with duplicate names (#86)
+* Consider all levels in theme file check instead of one only (#87, #90)
+* Support translations in old WordPress versions (#91)
+
 ### 1.4.0 ###
-* Option to provide a custom key for the Google Safe Browsing API
-* Scan files of parent theme if a child theme is active
-* Verify checksums of WP core files (integrated functionality from _Checksum Verifier_ plugin)
-* Ability to enable _Safe Browsing_ and _Checksum Verifier_ as cronjob without Theme scan
+* Option to provide a custom key for the Google Safe Browsing API (#69)
+* Scan files of parent theme if a child theme is active (#1, #62)
+* Verify checksums of WP core files (integrated functionality from _Checksum Verifier_ plugin (#5, #56)
+* Allow to enable _Safe Browsing_ and _Checksum Verifier_ as cronjob without theme scan (#66)
+* Update code style check and add build script (#68)
 
 ### 1.3.10 ###
 * Updated PayPal link for donations

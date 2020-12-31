@@ -44,7 +44,7 @@ class AntiVirus_SafeBrowsing extends AntiVirus {
 					array(
 						'client'     => array(
 							'clientId'      => 'wpantivirus',
-							'clientVersion' => '1.4.0',
+							'clientVersion' => '1.4.1',
 						),
 						'threatInfo' => array(
 							'threatTypes'      => array(
@@ -92,8 +92,8 @@ class AntiVirus_SafeBrowsing extends AntiVirus {
 			// Invalid request (most likely invalid key) or expired/exceeded key.
 			$mail_body = sprintf(
 				"%s\r\n\r\n%s",
-				esc_html__( 'Checking yout site against the Google Safe Browsing API has failed.', 'antivirus' ),
-				esc_html__( 'This does not mean that your site has been infected, but that the status could not be determinined.', 'antivirus' )
+				esc_html__( 'Checking your site against the Google Safe Browsing API has failed.', 'antivirus' ),
+				esc_html__( 'This does not mean that your site has been infected, but that the status could not be determined.', 'antivirus' )
 			);
 
 			// Add (sanitized) error message, if available.
@@ -109,12 +109,12 @@ class AntiVirus_SafeBrowsing extends AntiVirus {
 			if ( $custom_key ) {
 				$mail_body .= sprintf(
 					"\r\n%s",
-					esc_html__( 'Please check if your API key is correct and its limit not exceeded. If everything is correct and the error persists for the next requests, please contact the Plugin support.', 'antivirus' )
+					esc_html__( 'Please check if your API key is correct and its limit not exceeded. If everything is correct and the error persists for the next requests, please contact the plugin support.', 'antivirus' )
 				);
 			} else {
 				$mail_body .= sprintf(
 					"\r\n%s",
-					esc_html__( 'This might be due to an exceeded rate limit on the shared API key. To ensure this does not happen please consider providing your own key using the Plugin settings page.', 'antivirus' )
+					esc_html__( 'This might be due to an exceeded rate limit on the shared API key. To ensure this does not happen please provide your own key using the settings page.', 'antivirus' )
 				);
 			}
 

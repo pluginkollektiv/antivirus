@@ -1,17 +1,18 @@
 # Changelog
 
-### 1.4.0 ###
-* **English**
-	 * Option to provide a custom key for the Google Safe Browsing API
-	 * Scan files of parent theme if a child theme is active
-	 * Verify checksums of WP core files (integrated functionality from _Checksum Verifier_ plugin)
-	 * Ability to enable _Safe Browsing_ and _Checksum Verifier_ as cronjob without Theme scan
-* **Deutsch**
-	* Möglichkeit einen eigenen Schlüssel für die Google Safe Browsing API zu verwenden
-	* Dateien des übergeordneten Themes scannen, falls ein Child-Theme aktiv ist
-	* Verifiziere Prüfsummen der WP Core Dateien (Funktionalität des _Checksum Verifier_ Plugins integriert)
-	* Möglichkeit _Safe Browsing_ und _Checksum Verifier_ als Cronjob ohne Theme-Scan zu aktivieren
+### 1.4.1 ###
+* Fix some spelling mistakes and correct translations (#85)
+* Fix file name sanitization in manual theme scan causing errors to be not shown in the admin area (#88, #89)
+* Fix theme file collection for child themes with duplicate names (#86)
+* Consider all levels in theme file check instead of one only (#87, #90)
+* Support translations in old WordPress versions (#91)
 
+### 1.4.0 ###
+* Option to provide a custom key for the Google Safe Browsing API (#69)
+* Scan files of parent theme if a child theme is active (#1, #62)
+* Verify checksums of WP core files (integrated functionality from _Checksum Verifier_ plugin (#5, #56)
+* Allow to enable _Safe Browsing_ and _Checksum Verifier_ as cronjob without theme scan (#66)
+* Update code style check and add build script (#68)
 
 ### 1.3.10 ###
 * **English**

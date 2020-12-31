@@ -8,9 +8,7 @@
  * Text Domain: antivirus
  * License:     GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
- * Version:     1.4.0
- *
- * [](http://coderisk.com/wp/plugin/antivirus/RIPS-x1EDAuZC-C)
+ * Version:     1.4.1
  *
  * @package AntiVirus
  */

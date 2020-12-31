@@ -44,6 +44,9 @@ class AntiVirus {
 		// Save the plugin basename.
 		self::$base = plugin_basename( ANTIVIRUS_FILE );
 
+		// Load translations. Required due to support for WP versions before 4.6.
+		load_plugin_textdomain( 'antivirus' );
+
 		// Register the daily cronjob.
 		add_action( 'antivirus_daily_cronjob', array( __CLASS__, 'do_daily_cronjob' ) );
 
@@ -393,7 +396,7 @@ class AntiVirus {
 		// Extract data.
 		$name  = $theme->get( 'Name' );
 		$slug  = $theme->get_stylesheet();
-		$files = $theme->get_files( 'php', 1 );
+		$files = array_values( $theme->get_files( 'php', -1 ) );
 
 		// Append parent's data, if we got a child theme.
 		$parent = self::_get_theme_data( $theme->parent() );
@@ -520,7 +523,7 @@ class AntiVirus {
 
 			case 'check_theme_file':
 				if ( ! empty( $_POST['_theme_file'] ) ) {
-					$theme_file = sanitize_file_name( wp_unslash( $_POST['_theme_file'] ) );
+					$theme_file = filter_var( wp_unslash( $_POST['_theme_file'] ), FILTER_SANITIZE_STRING );
 					$lines = AntiVirus_CheckInternals::check_theme_file( $theme_file );
 					if ( $lines ) {
 						foreach ( $lines as $num => $line ) {
@@ -719,12 +722,12 @@ class AntiVirus {
 
 								<p class="description">
 									<?php
-									/* translators: Link for transparency report in english */
+									/* translators: Link for transparency report */
 									$start_tag = sprintf( '<a href="%s">', esc_attr__( 'https://transparencyreport.google.com/safe-browsing/search?hl=en', 'antivirus' ) );
 									$end_tag = '</a>';
 									echo wp_kses(
-										/* translators: First placeholder (%s) starting link tag to transparency report, second placeholder closing link tag */
-										sprintf( __( 'Diagnosis and notification in suspicion case. For more details read %1$s the transparency report %2$s.', 'antivirus' ), $start_tag, $end_tag ),
+										/* translators: First placeholder (%1$s) starting link tag to transparency report, second placeholder (%2$s) closing link tag */
+										sprintf( __( 'Diagnosis and notification in suspicion case. For more details read %1$sthe transparency report%2$s.', 'antivirus' ), $start_tag, $end_tag ),
 										array( 'a' => array( 'href' => array() ) )
 									);
 									?>
@@ -752,13 +755,11 @@ class AntiVirus {
 								<label for="av_checksum_verifier">
 									<input type="checkbox" name="av_checksum_verifier" id="av_checksum_verifier"
 										   value="1" <?php checked( self::_get_option( 'checksum_verifier' ), 1 ); ?> />
-									<?php esc_html_e( 'Checksum verification of WP core files', 'antivirus' ); ?>
+									<?php esc_html_e( 'Checksum verification of WordPress core files', 'antivirus' ); ?>
 								</label>
 
 								<p class="description">
-									<?php
-									esc_html_e( 'Matches checksums of all WordPress core files against the values provided by the official API.', 'antivirus' );
-									?>
+									<?php esc_html_e( 'Matches checksums of all WordPress core files against the values provided by the official API.', 'antivirus' ); ?>
 								</p>
 							</fieldset>
 
@@ -772,7 +773,7 @@ class AntiVirus {
 									   placeholder="<?php esc_attr_e( 'Email address for notifications', 'antivirus' ); ?>" />
 
 								<p class="description">
-									<?php esc_html_e( 'If the field is empty, the blog admin will be notified', 'antivirus' ); ?>
+									<?php esc_html_e( 'If the field is empty, the blog admin will be notified.', 'antivirus' ); ?>
 								</p>
 							</fieldset>
 						</td>
@@ -788,14 +789,6 @@ class AntiVirus {
 								'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
 								'https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=TD4AMD2D8EMZW',
 								esc_html__( 'Donate', 'antivirus' )
-							);
-							?>
-							&bull;
-							<?php
-							printf(
-								'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
-								esc_attr__( 'https://wordpress.org/plugins/antivirus/faq/', 'antivirus' ),
-								esc_html__( 'FAQ', 'antivirus' )
 							);
 							?>
 							&bull;
