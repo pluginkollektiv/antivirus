@@ -2,6 +2,7 @@
 
 ### unreleased
 * Rework base64 detection pattern (#95)
+* Fix output sanitization for matches that contain slashes (#95)
 
 ### 1.4.1 ###
 * Fix some spelling mistakes and correct translations (#85)

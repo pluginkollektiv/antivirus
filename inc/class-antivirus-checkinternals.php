@@ -291,7 +291,7 @@ class AntiVirus_CheckInternals extends AntiVirus {
 		}
 
 		// Return tag if it's higher than the maximum.
-		if ( strlen( $tag ) > $max ) {
+		if ( strlen( $tag ) >= $max ) {
 			return $tag;
 		}
 
@@ -299,7 +299,7 @@ class AntiVirus_CheckInternals extends AntiVirus {
 		$left = round( ( $max - strlen( $tag ) ) / 2 );
 
 		// Quote regular expression characters.
-		$tag = preg_quote( $tag );
+		$tag = preg_quote( $tag, '/' );
 
 		// Shorten string on the right side.
 		$output = preg_replace(
