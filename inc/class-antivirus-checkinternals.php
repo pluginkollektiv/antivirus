@@ -189,9 +189,9 @@ class AntiVirus_CheckInternals extends AntiVirus {
 			$results = $matches[1];
 		}
 
-		// Search for base64 encoded strings.
+		// Search for base64 encoded strings, non-empty and only ending with "=".
 		preg_match_all(
-			'/[\'\"\$\\ \/]*?([a-zA-Z0-9]{' . strlen( base64_encode( 'sergej + swetlana = love.' ) ) . ',})/', /* get length of my life ;) */
+			'/[\'\"\$\\ \/]*?((?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=))/',
 			$line,
 			$matches
 		);

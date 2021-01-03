@@ -1,0 +1,8 @@
+// Previously false-positives for base64 check.
+$aThirtySixCharactersLongVariableName = 0;
+echo 'Oberdonaudampfschiffahrtsgesellschaft';
+
+// Previously undetected base64 strings.
+$base64 = "IQ==";	// "!"
+$base64 = 'cGx1Z2lua28vL2VrdGl2Cg==';	// "pluginko//ektiv"
+$base64 = 'MSAc9+vXHm1qkYNhtk/PJA=';	// random stuff

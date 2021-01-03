@@ -66,6 +66,29 @@ class AntiVirus_Checkinternals_Test extends AntiVirus_TestCase {
 		self::assertFalse( AntiVirus_CheckInternals::_check_theme_files(), 'failed checking empty files' );
 		self::assertEquals( 4, count( $checked_files ), 'unexpected number of checked files for child theme' );
 
-		// TODO: add some real content checks.
+		// Test of malicious patterns are detected.
+		$theme->set( 'parent', false );
+		$theme->set( 'files', array( '/themes/theme1/maliciousfile' ) );
+
+		$results = AntiVirus_CheckInternals::_check_theme_files();
+		self::assertIsArray( $results, 'malicous file passed check' );
+		self::assertArrayHasKey( '/themes/theme1/maliciousfile', $results, 'malicious file not in result array' );
+		$results = $results['/themes/theme1/maliciousfile'];
+		self::assertEquals( 3, count( $results ), 'unexpected number of matches in malicious file' );
+		self::assertEquals(
+			array( '$base64 = "@span@IQ==@/span@";	// "!"' ),
+			$results[5],
+			'unexpected match for line 6'
+		);
+		self::assertEquals(
+			array( '$base64 = \'@span@cGx1Z2lua28vL2VrdGl2Cg==@/span@\';	// "pluginko//ektiv"' ),
+			$results[6],
+			'unexpected match for line 7'
+		);
+		self::assertEquals(
+			array( '$base64 = \'MSA@span@c9+vXHm1qkYNhtk/PJA=@/span@\';	// random stuff' ),
+			$results[7],
+			'unexpected match for line 8'
+		);
 	}
 }
