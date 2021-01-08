@@ -233,8 +233,11 @@ class AntiVirus_CheckInternals extends AntiVirus {
 		);
 
 		// Check option.
-		if ( $matches && $matches[1] && self::_check_file_line( get_option( $matches[1] ), $num ) ) {
-			array_push( $results, 'get_option' );
+		if ( $matches && $matches[1] ) {
+			$opt_value = get_option( $matches[1] );
+			if ( is_string( $opt_value ) && self::_check_file_line( strval( $opt_value ), $num ) ) {
+				array_push( $results, 'get_option' );
+			}
 		}
 
 		if ( $results ) {

@@ -1,0 +1,7 @@
+$o = get_option( 'evil_string' );
+$o = get_option( 'noevil_string' );
+$o = get_option( 'noevil_int' );
+$o = get_option( 'noevil_array' );
+$o = get_option( 'noevil_object' );
+$o = get_option( 'evil_recursive_string' );
+$o = get_option( 'noevil_recursive_string' );

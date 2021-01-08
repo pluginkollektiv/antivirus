@@ -66,6 +66,52 @@ class AntiVirus_Checkinternals_Test extends AntiVirus_TestCase {
 		self::assertFalse( AntiVirus_CheckInternals::_check_theme_files(), 'failed checking empty files' );
 		self::assertEquals( 4, count( $checked_files ), 'unexpected number of checked files for child theme' );
 
-		// TODO: add some real content checks.
+		// Test of malicious options.
+		$theme->set( 'parent', false );
+		$theme->set( 'files', array( '/themes/theme1/maliciousoptions' ) );
+
+		WP_Mock::userFunction( 'get_option' )
+				->andReturnUsing(
+					function ( $opt ) {
+						switch ( $opt ) {
+							case 'evil_string':
+								return 'eval( \'die( "i am evil" );\' );';
+							case 'evil_recursive_string':
+								// This value is not malicious by itself, but the recursive call is.
+								return "get_option( 'evil_string' )";
+							case 'noevil_recursive_string':
+								return "get_option( 'noevil_string' )";
+							case 'noevil_string':
+								return 'just text';
+							case 'noevil_int':
+								return 42;
+							case 'noevil_array':
+								return array( 'foo' => 'bar' );
+							case 'noevil_object':
+								return new stdClass();
+							case 'endless recursion':
+								// This is really bad...
+								return "get_option( 'endless recursion' )";
+							default:
+								return null;
+						}
+					}
+				);
+
+		$results = AntiVirus_CheckInternals::_check_theme_files();
+		self::assertIsArray( $results, 'malicious file passed check' );
+		self::assertArrayHasKey( '/themes/theme1/maliciousoptions', $results, 'malicious file not in result array' );
+		$results = $results['/themes/theme1/maliciousoptions'];
+		self::assertEquals( 2, count( $results ), 'unexpected number of matches in malicious file' );
+		self::assertEquals(
+			array( '$o = @span@get_option@/span@( \'evil_string\' );' ),
+			$results[0],
+			'unexpected match for line 1'
+		);
+		self::assertEquals(
+			array( '$o = @span@get_option@/span@( \'evil_recursive_string\' );' ),
+			$results[5],
+			'unexpected match for line 6'
+		);
 	}
 }

@@ -1,5 +1,8 @@
 # Changelog
 
+### unreleased
+* Only recurse string values for options check (#96)
+
 ### 1.4.1 ###
 * Fix some spelling mistakes and correct translations (#85)
 * Fix file name sanitization in manual theme scan causing errors to be not shown in the admin area (#88, #89)
