@@ -225,18 +225,6 @@ class AntiVirus_CheckInternals extends AntiVirus {
 			$results = array_merge( $results, $matches[0] );
 		}
 
-		// Look for `get_option` calls.
-		preg_match(
-			'/get_option\s*\(\s*[\'"](.*?)[\'"]\s*\)/',
-			$line,
-			$matches
-		);
-
-		// Check option.
-		if ( $matches && $matches[1] && self::_check_file_line( get_option( $matches[1] ), $num ) ) {
-			array_push( $results, 'get_option' );
-		}
-
 		if ( $results ) {
 			// Remove duplicates.
 			$results = array_unique( $results );
