@@ -189,18 +189,6 @@ class AntiVirus_CheckInternals extends AntiVirus {
 			$results = $matches[1];
 		}
 
-		// Search for base64 encoded strings.
-		preg_match_all(
-			'/[\'\"\$\\ \/]*?([a-zA-Z0-9]{' . strlen( base64_encode( 'sergej + swetlana = love.' ) ) . ',})/', /* get length of my life ;) */
-			$line,
-			$matches
-		);
-
-		// Save matches.
-		if ( $matches[1] ) {
-			$results = array_merge( $results, $matches[1] );
-		}
-
 		// Look for frames.
 		preg_match_all(
 			'/<\s*?(i?frame)/',
@@ -223,18 +211,6 @@ class AntiVirus_CheckInternals extends AntiVirus {
 		// Save matches.
 		if ( $matches[0] ) {
 			$results = array_merge( $results, $matches[0] );
-		}
-
-		// Look for `get_option` calls.
-		preg_match(
-			'/get_option\s*\(\s*[\'"](.*?)[\'"]\s*\)/',
-			$line,
-			$matches
-		);
-
-		// Check option.
-		if ( $matches && $matches[1] && self::_check_file_line( get_option( $matches[1] ), $num ) ) {
-			array_push( $results, 'get_option' );
 		}
 
 		if ( $results ) {
@@ -299,7 +275,7 @@ class AntiVirus_CheckInternals extends AntiVirus {
 		$left = round( ( $max - strlen( $tag ) ) / 2 );
 
 		// Quote regular expression characters.
-		$tag = preg_quote( $tag );
+		$tag = preg_quote( $tag, '/' );
 
 		// Shorten string on the right side.
 		$output = preg_replace(
