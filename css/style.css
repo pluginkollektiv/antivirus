@@ -11,9 +11,9 @@
 
 #av_manual_scan .alert {
 	float: left;
-	color: #008000;
+	color: #008a20;
 	margin: 0 10px;
-	border: 1px solid #008000;
+	border: 1px solid #007017;
 	display: none;
 	height: 26px;
 	line-height: 26px;
@@ -32,10 +32,10 @@
 
 #av_main .inside .output div {
 	float: left;
-	color: #fff;
+	color: #000;
 	margin: 12px 6px 0;
 	padding: 8px 12px 10px;
-	background: #ffa500;
+	background: #dba617;
 	border-radius: 3px;
 
 	transition: background-color 0.5s linear;
@@ -46,18 +46,20 @@
 }
 
 #av_main .inside .output div.done {
-	background: #008000;
+	background: #008a20;
+	color: #fff;
 }
 
 #av_main .inside .output div.danger {
 	width: 97%;
-	background: #f00;
+	background: #d63638;
+	color: #fff;
 }
 
 #av_main .inside .output div p {
 	padding: 10px;
 	overflow: hidden;
-	background: #f9f9f9;
+	background: #f6f7f7;
 	white-space: nowrap;
 	border-radius: 3px;
 }
@@ -76,7 +78,7 @@
 
 #av_main .inside .output div p code span {
 	padding: 2px;
-	background: #ff0;
+	background: #f2d675;
 }
 
 /* @end group */

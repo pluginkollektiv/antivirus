@@ -2,6 +2,7 @@
 
 ### unreleased
 * Drop recursive check on option that failed in several scenarios
+* Use WP 5.7 color palette for the UI
 
 ### 1.4.1 ###
 * Fix some spelling mistakes and correct translations (#85)
