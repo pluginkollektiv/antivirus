@@ -81,8 +81,8 @@ For the complete changelog, check out our [GitHub repository](https://github.com
 
 ## Upgrade Notice ##
 
-### 1.4.0 ###
-This is a feature release which integrates the functionality from _Checksum Verifier_ plugin.
+### 1.4.2 ###
+This is a bugfix release removing two checks of the theme scan causing false positives.
 
 ## Screenshots ##
 1. WordPress AntiVirus settings
