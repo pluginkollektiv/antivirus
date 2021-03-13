@@ -4,8 +4,8 @@
 * Donate link:       https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=TD4AMD2D8EMZW
 * Requires at least: 4.1
 * Requires PHP:      5.2
-* Tested up to:      5.6
-* Stable tag:        1.4.1
+* Tested up to:      5.7
+* Stable tag:        1.4.2
 * License:           GPLv2 or later
 * License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,6 +41,11 @@ A complete documentation is available on the [AntiVirus website](https://antivir
 
 ## Changelog ##
 
+### 1.4.2 ###
+* Drop recursive check on option that failed in several scenarios
+* Drop check for base64 encoded strings which did not work properly in al cases
+* Use WP 5.7 color palette for the UI
+
 ### 1.4.1 ###
 * Fix some spelling mistakes and correct translations (#85)
 * Fix file name sanitization in manual theme scan causing errors to be not shown in the admin area (#88, #89)
@@ -70,7 +75,7 @@ A complete documentation is available on the [AntiVirus website](https://antivir
 * added German formal translation
 * updated, translated + formatted README.md
 * updated expired link URLs in plugin and languages files
-* updated [plugin authors](https://gist.github.com/glueckpress/f058c0ab973d45a72720)
+* updated [plugin authors](https://pluginkollektiv.org/de/hallo-welt/)
 
 For the complete changelog, check out our [GitHub repository](https://github.com/pluginkollektiv/antivirus).
 
