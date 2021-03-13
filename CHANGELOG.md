@@ -1,9 +1,9 @@
 # Changelog
 
-### unreleased
-* Drop recursive check on option that failed in several scenarios
-* Drop check for base64 encoded strings which did not work properly in al cases
-* Use WP 5.7 color palette for the UI
+### 1.4.2 ###
+* Drop recursive check on option that failed in several scenarios (#96) (#97)
+* Drop check for base64 encoded strings which did not work properly in al cases (#100)
+* Use WP 5.7 color palette for the UI (#99)
 
 ### 1.4.1 ###
 * Fix some spelling mistakes and correct translations (#85)
