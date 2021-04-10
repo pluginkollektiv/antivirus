@@ -146,6 +146,12 @@ class AntiVirus {
 		if ( self::_cron_enabled( self::_get_options() ) ) {
 			self::_add_scheduled_hook();
 		}
+
+		// Add admin notice, if Safe Browsing is enabled without custom API key.
+		$sb_key = self::_get_option( 'safe_browsing_key' );
+		if ( self::_get_option( 'safe_browsing' ) && empty( $sb_key ) ) {
+			set_transient( 'antivirus-activation-notice', true, 60 );
+		}
 	}
 
 	/**
@@ -586,6 +592,12 @@ class AntiVirus {
 	 * Show notice on the dashboard.
 	 */
 	public static function show_dashboard_notice() {
+		// Show warning if Safe Browsing warning as triggered.
+		if ( get_transient( 'antivirus-activation-notice' ) ) {
+			self::show_safebrowsing_notice();
+			delete_transient( 'antivirus-activation-notice' );
+		}
+
 		// Only show notice if there's an alert.
 		if ( ! self::_get_option( 'cronjob_alert' ) ) {
 			return;
@@ -653,7 +665,14 @@ class AntiVirus {
 					</strong>
 				</p>
 			</div>
-		<?php } ?>
+			<?php
+		}
+
+		$sb_key = self::_get_option( 'safe_browsing_key' );
+		if ( self::_get_option( 'safe_browsing' ) && empty( $sb_key ) ) {
+			self::show_safebrowsing_notice();
+		}
+		?>
 
 		<div class="wrap" id="av_main">
 			<h1>
@@ -813,5 +832,28 @@ class AntiVirus {
 			</form>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Show admin notice for Safe Browsing use without API key.
+	 *
+	 * @since 1.4.3
+	 */
+	private static function show_safebrowsing_notice() {
+		printf(
+			'<div class="notice notice-warning"><p><strong>%1$s</strong></p><p>%2$s</p><p>%3$s %4$s</p></div>',
+			esc_html( 'No Safe Browsing API key provided', 'antivirus' ),
+			esc_html( 'Google Safe Browsing check is enabled without a custom API key. The built-in key is no longer supported and will be be removed with the next release of AntiVirus.', 'antivirus' ),
+			esc_html( 'If you want to continue using this feature, please provide an API key.', 'antivirus' ),
+			wp_kses(
+				sprintf(
+					/* translators: First placeholder (%1$s) starting link tag to the documentation page, second placeholder (%2$s) closing link tag */
+					__( 'See official %1$sdocumentation%2$s.', 'antivirus' ),
+					'<a href="https://cloud.google.com/docs/authentication/api-keys">',
+					'</a>'
+				),
+				array( 'a' => array( 'href' => array() ) )
+			)
+		);
 	}
 }

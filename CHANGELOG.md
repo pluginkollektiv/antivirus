@@ -1,5 +1,8 @@
 # Changelog
 
+### unreleased ###
+* Show warning if Safe Browsing check is enabled without custom API key (#105)
+
 ### 1.4.2 ###
 * Drop recursive check on option that failed in several scenarios (#96) (#97)
 * Drop check for base64 encoded strings which did not work properly in al cases (#100)
