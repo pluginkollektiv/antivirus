@@ -2,9 +2,6 @@ jQuery( document ).ready(
 	function( $ ) {
 		// Initialize.
 		var avNonce = av_settings.nonce;
-		var avMsg1 = av_settings.msg_1;
-		var avMsg3 = av_settings.msg_3;
-		var avMsg4 = av_settings.msg_4;
 		var avFiles = [];
 		var avFilesLoaded;
 
@@ -31,7 +28,7 @@ jQuery( document ).ready(
 				},
 				function( input ) {
 					// Initialize value.
-					var item = $( '#av_template_' + id );
+					var row = $( '#av-scan-result-' + id );
 					var i;
 					var lines;
 					var line;
@@ -45,7 +42,8 @@ jQuery( document ).ready(
 						}
 
 						// Set highlighting color.
-						item.addClass( 'danger' );
+						row.addClass( 'av-status-warning' ).removeClass( 'av-status-pending' );
+						row.find( 'td.av-status-column' ).text( av_settings.texts.warning );
 
 						// Initialize lines of current file.
 						lines = input.data;
@@ -55,16 +53,17 @@ jQuery( document ).ready(
 							md5 = lines[i + 2];
 							line = lines[i + 1].replace( /@span@/g, '<span>' ).replace( /@\/span@/g, '</span>' );
 
-							item.append( '<p><a href="#" id="' + md5 + '" class="button" title="' + avMsg4 + '">' + avMsg1 + '</a> <code>' + line + '</code></p>' );
+							row.find( 'td.av-file-column' )
+								.append( '<p><code>' + line + '</code> <a href="#" id="av-dismiss-' + md5 + '" class="button" title="' + av_settings.texts.dismiss + '">' + av_settings.labels.dismiss + '</a></p>' );
 
-							$( '#' + md5 ).click(
+							$( '#av-dismiss-' + md5 ).click(
 								function() {
 									$.post(
 										ajaxurl,
 										{
 											action: 'get_ajax_response',
 											_ajax_nonce: avNonce,
-											_file_md5: $( this ).attr( 'id' ),
+											_file_md5: $( this ).attr( 'id' ).substr( 11 ),
 											_action_request: 'update_white_list',
 										},
 										function( res ) {
@@ -80,12 +79,13 @@ jQuery( document ).ready(
 												return;
 											}
 
-											parent = $( '#' + res.data[0] ).parent();
+											// Get table column above the dismiss button.
+											parent = $( '#av-dismiss-' + res.data[0] ).parent().parent();
 
-											if ( parent.parent().children().length <= 1 ) {
-												parent.parent().hide( 'slow' ).remove();
-											}
-											parent.hide( 'slow' ).remove();
+											// Hide code details and mark row as "OK".
+											parent.find( 'p' ).hide( 'slow' ).remove();
+											parent.parent().addClass( 'av-status-ok' ).removeClass( 'av-status-warning' );
+											parent.parent().find( 'td.av-status-column' ).text( av_settings.texts.ok );
 										}
 									);
 
@@ -94,7 +94,8 @@ jQuery( document ).ready(
 							);
 						}
 					} else {
-						item.addClass( 'done' );
+						row.addClass( 'av-status-ok' ).removeClass( 'av-status-pending' );
+						row.find( 'td.av-status-column' ).text( av_settings.texts.ok );
 					}
 
 					// Increment counter.
@@ -102,12 +103,9 @@ jQuery( document ).ready(
 
 					// Output notification.
 					if ( avFilesLoaded >= avFiles.length ) {
-						$( '#av_manual_scan .alert' ).text( avMsg3 ).fadeIn().fadeOut().fadeIn().fadeOut().fadeIn().animate( { opacity: 1.0 }, 500 ).fadeOut(
-							'slow',
-							function() {
-								$( this ).empty();
-							}
-						);
+						$( '#av-scan-process' ).html( '<span class="av-scan-complete">' + av_settings.labels.complete + '</span>' )
+							.fadeOut().fadeIn().fadeOut().fadeIn().fadeOut().fadeIn()
+							.animate( { opacity: 1.0 }, 500 );
 					} else {
 						checkThemeFile( id + 1 );
 					}
@@ -116,7 +114,7 @@ jQuery( document ).ready(
 		}
 
 		// Check templates.
-		$( '#av_manual_scan a.button' ).click(
+		$( '#av-scan-trigger' ).click(
 			function() {
 				// Request.
 				$.post(
@@ -128,7 +126,13 @@ jQuery( document ).ready(
 					},
 					function( input ) {
 						// Initialize output value.
-						var output = '';
+						var output = '<table class="wp-list-table widefat fixed striped table-view-list av-scan-results">' +
+							'<thead><tr class="av-status-pending">' +
+							'<td class="av-toggle-column"></td>' +
+							'<th class="av-file-column">Theme File</th>' +
+							'<th class="av-status-column">Check Status</th>' +
+							'</tr></thead>' +
+							'<tbody>';
 
 						// No data received?
 						if ( ! input ) {
@@ -145,16 +149,26 @@ jQuery( document ).ready(
 						avFilesLoaded = 0;
 
 						// Visualize files.
-						jQuery.each(
+						$.each(
 							avFiles,
 							function( i, val ) {
-								output += '<div id="av_template_' + i + '">' + val + '</div>';
+								output += '<tr id="av-scan-result-' + i + '">' +
+									'<td class="av-toggle-column"></td>' +
+									'<td class="av-file-column">' + val + '</td>' +
+									'<td class="av-status-column">' + av_settings.texts.pending + '</td>' +
+									'</tr>';
 							}
 						);
 
+						output += '</tbody><tfoot><tr>' +
+							'<td class="av-toggle-column"></td>' +
+							'<th class="av-file-column">' + av_settings.labels.file + '</th>' +
+							'<th class="av-status-column">' + av_settings.labels.status + '</th>' +
+							'</tr></tfoot></table>';
+
 						// assign values.
-						$( '#av_manual_scan .alert' ).empty();
-						$( '#av_manual_scan .output' ).empty().append( output );
+						$( '#av-scan-process' ).html( '<span class="spinner is-active" title="running"></span>' );
+						$( '#av-scan-output' ).empty().append( output );
 
 						// Start loop through files.
 						checkThemeFile();

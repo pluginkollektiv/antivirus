@@ -1,93 +1,74 @@
-/* @group Manual Scan */
+/* Scan controls */
 
-#av_manual_scan {
-	height: 1%;
-	overflow: hidden;
-}
-
-#av_manual_scan a.button {
-	float: left;
-}
-
-#av_manual_scan .alert {
-	float: left;
-	color: #008a20;
-	margin: 0 10px;
-	border: 1px solid #007017;
-	display: none;
-	height: 26px;
-	line-height: 26px;
-	padding: 0 10px;
+span.av-scan-complete {
 	background: #fff;
+	border: 1px solid #007017;
 	border-radius: 3px;
+	color: #008a20;
+	display: inline-block;
+	line-height: 2;
+	margin: 0 10px;
+	padding: 0 0.5em;
 }
 
-#av_main .inside .output {
-	clear: both;
-	height: 1%;
-	margin: 0 0 0 -6px;
-	padding: 0 0 6px;
-	overflow: hidden;
+#av-scan-process .spinner {
+	float: none;
 }
 
-#av_main .inside .output div {
-	float: left;
-	color: #000;
-	margin: 12px 6px 0;
-	padding: 8px 12px 10px;
-	background: #dba617;
-	border-radius: 3px;
 
-	transition: background-color 0.5s linear;
-	-o-transition: background-color 0.5s linear;
-	-ms-transition: background-color 0.5s linear;
-	-moz-transition: background-color 0.5s linear;
-	-webkit-transition: background-color 0.5s linear;
+/* Scan results table. */
+
+table.av-scan-results .av-toggle-column {
+	width: 2.2em;
 }
 
-#av_main .inside .output div.done {
-	background: #008a20;
-	color: #fff;
+table.av-scan-results .av-file-column > p a.button {
+	float: right;
 }
 
-#av_main .inside .output div.danger {
-	width: 97%;
-	background: #d63638;
-	color: #fff;
+table.av-scan-results .av-status-column {
+	text-align: center;
+	width: 7em;
 }
 
-#av_main .inside .output div p {
-	padding: 10px;
-	overflow: hidden;
+table.av-scan-results .av-file-column > p {
 	background: #f6f7f7;
-	white-space: nowrap;
-	border-radius: 3px;
+	line-height: 2;
+	padding: 0.5em;
 }
 
-#av_main .inside .output div p a {
-	margin: 0 6px 12px 0;
+table.av-scan-results .av-file-column > p a {
+	margin: 0 0.5em 0.5em 0.5em;
 }
 
-#av_main .inside .output div p code {
-	clear: both;
+table.av-scan-results .av-file-column > p code {
 	float: left;
-	color: #000;
-	padding: 2px 5px;
-	border-radius: 3px;
+	padding: 0.2em 0.5em;
 }
 
-#av_main .inside .output div p code span {
-	padding: 2px;
+table.av-scan-results .av-file-column > p code span {
+	padding: 0.2em;
 	background: #f2d675;
 }
 
-/* @end group */
-
-
-/* @group WordPress 3.8 Fix */
-
-#av_notify_email {
-	line-height: 1.5;
+tr.av-status-pending .av-status-column {
+	font-style: italic;
 }
 
-/* @end group */
+tr.av-status-ok td:first-of-type {
+	border-left: 4px solid #007017;
+}
+
+tr.av-status-ok .av-status-column {
+	color: #008a20;
+	font-weight: 700;
+}
+
+tr.av-status-warning td:first-of-type {
+	border-left: 4px solid #b32d2e;
+}
+
+tr.av-status-warning td.av-status-column {
+	color: #d63638;
+	font-weight: 700;
+}
