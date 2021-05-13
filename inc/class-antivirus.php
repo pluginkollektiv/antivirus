@@ -752,7 +752,7 @@ class AntiVirus {
 									<?php esc_html_e( 'Safe Browsing API key', 'antivirus' ); ?>
 								</label>
 								<br/>
-								<input type="text" name="av_safe_browsing_key" id="av_safe_browsing_key"
+								<input type="text" name="av_safe_browsing_key" id="av_safe_browsing_key" size="45"
 									   value="<?php echo esc_attr( self::_get_option( 'safe_browsing_key' ) ); ?>" />
 
 								<p class="description">
