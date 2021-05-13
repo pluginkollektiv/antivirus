@@ -586,10 +586,15 @@ class AntiVirus {
 	 * Show notice on the dashboard.
 	 */
 	public static function show_dashboard_notice() {
-		// Add admin notice, if Safe Browsing is enabled without custom API key.
-		$safe_browsing_key = self::_get_option( 'safe_browsing_key' );
-		if ( self::_get_option( 'safe_browsing' ) && empty( $safe_browsing_key ) ) {
-			self::show_safebrowsing_notice();
+		// Add admin notice to users who can manage options, if Safe Browsing is enabled without custom API key.
+		if ( current_user_can( 'manage_options' ) ) {
+			$screen = get_current_screen();
+			if ( ! is_object( $screen ) || 'settings_page_antivirus' !== $screen->base ) {
+				$safe_browsing_key = self::_get_option( 'safe_browsing_key' );
+				if ( self::_get_option( 'safe_browsing' ) && empty( $safe_browsing_key ) ) {
+					self::show_safebrowsing_notice();
+				}
+			}
 		}
 
 		// Only show notice if there's an alert.
@@ -660,12 +665,12 @@ class AntiVirus {
 				</p>
 			</div>
 			<?php
+		}
 
-			// Show admin notice for Safe Browsing without API key immediately after saving settings.
-			$safe_browsing_key = self::_get_option( 'safe_browsing_key' );
-			if ( self::_get_option( 'safe_browsing' ) && empty( $safe_browsing_key ) ) {
-				self::show_safebrowsing_notice();
-			}
+		// Show admin notice for Safe Browsing without API key immediately after saving settings.
+		$safe_browsing_key = self::_get_option( 'safe_browsing_key' );
+		if ( self::_get_option( 'safe_browsing' ) && empty( $safe_browsing_key ) ) {
+			self::show_safebrowsing_notice();
 		}
 		?>
 
