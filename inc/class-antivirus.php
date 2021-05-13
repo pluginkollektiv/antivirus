@@ -586,6 +586,17 @@ class AntiVirus {
 	 * Show notice on the dashboard.
 	 */
 	public static function show_dashboard_notice() {
+		// Add admin notice to users who can manage options, if Safe Browsing is enabled without custom API key.
+		if ( current_user_can( 'manage_options' ) ) {
+			$screen = get_current_screen();
+			if ( ! is_object( $screen ) || 'settings_page_antivirus' !== $screen->base ) {
+				$safe_browsing_key = self::_get_option( 'safe_browsing_key' );
+				if ( self::_get_option( 'safe_browsing' ) && empty( $safe_browsing_key ) ) {
+					self::show_safebrowsing_notice();
+				}
+			}
+		}
+
 		// Only show notice if there's an alert.
 		if ( ! self::_get_option( 'cronjob_alert' ) ) {
 			return;
@@ -653,7 +664,15 @@ class AntiVirus {
 					</strong>
 				</p>
 			</div>
-		<?php } ?>
+			<?php
+		}
+
+		// Show admin notice for Safe Browsing without API key immediately after saving settings.
+		$safe_browsing_key = self::_get_option( 'safe_browsing_key' );
+		if ( self::_get_option( 'safe_browsing' ) && empty( $safe_browsing_key ) ) {
+			self::show_safebrowsing_notice();
+		}
+		?>
 
 		<div class="wrap" id="av_main">
 			<h1>
@@ -826,5 +845,42 @@ class AntiVirus {
 			</form>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Show admin notice for Safe Browsing use without API key.
+	 *
+	 * @since 1.4.3
+	 */
+	private static function show_safebrowsing_notice() {
+		printf(
+			'<div class="notice notice-warning is-dismissible"><p><strong>%1$s</strong></p><p>%2$s</p><p>%3$s %4$s</p></div>',
+			esc_html( 'No Safe Browsing API key provided for AntiVirus', 'antivirus' ),
+			esc_html( 'Google Safe Browsing check is enabled without a custom API key. The built-in key is no longer supported and will be be removed with the next release of AntiVirus.', 'antivirus' ),
+			wp_kses(
+				sprintf(
+					/* translators: First placeholder (%1$s) starting link tag to the plugin settings page, second placeholder (%2$s) closing link tag */
+					__( 'If you want to continue using this feature, please provide an API key using the %1$sAntiVirus settings page%2$s.', 'antivirus' ),
+					'<a href="' . esc_attr( add_query_arg( array( 'page' => 'antivirus' ), admin_url( '/options-general.php' ) ) ) . '">',
+					'</a>'
+				),
+				array( 'a' => array( 'href' => array() ) )
+			),
+			wp_kses(
+				sprintf(
+					/* translators: First placeholder (%1$s) starting link tag to the documentation page, second placeholder (%2$s) closing link tag */
+					__( 'See official %1$sdocumentation%2$s from Google.', 'antivirus' ),
+					'<a href="https://cloud.google.com/docs/authentication/api-keys" target="_blank" rel="noopener noreferrer">',
+					'</a>'
+				),
+				array(
+					'a' => array(
+						'href' => array(),
+						'target' => array(),
+						'rel' => array(),
+					),
+				)
+			)
+		);
 	}
 }
