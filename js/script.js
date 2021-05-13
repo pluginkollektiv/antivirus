@@ -128,7 +128,7 @@ jQuery( document ).ready(
 						// Initialize output value.
 						var output = '<table class="wp-list-table widefat fixed striped table-view-list av-scan-results">' +
 							'<thead><tr class="av-status-pending">' +
-							'<td class="av-toggle-column"></td>' +
+							'<td class="av-toggle-column check-column"></td>' +
 							'<th class="av-file-column">Theme File</th>' +
 							'<th class="av-status-column">Check Status</th>' +
 							'</tr></thead>' +
@@ -153,7 +153,7 @@ jQuery( document ).ready(
 							avFiles,
 							function( i, val ) {
 								output += '<tr id="av-scan-result-' + i + '">' +
-									'<td class="av-toggle-column"></td>' +
+									'<td class="av-toggle-column check-column"></td>' +
 									'<td class="av-file-column">' + val + '</td>' +
 									'<td class="av-status-column">' + av_settings.texts.pending + '</td>' +
 									'</tr>';
@@ -161,7 +161,7 @@ jQuery( document ).ready(
 						);
 
 						output += '</tbody><tfoot><tr>' +
-							'<td class="av-toggle-column"></td>' +
+							'<td class="av-toggle-column check-column"></td>' +
 							'<th class="av-file-column">' + av_settings.labels.file + '</th>' +
 							'<th class="av-status-column">' + av_settings.labels.status + '</th>' +
 							'</tr></tfoot></table>';
