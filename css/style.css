@@ -32,7 +32,6 @@ table.av-scan-results .av-status-column {
 }
 
 table.av-scan-results .av-file-column > p {
-	background: #f6f7f7;
 	line-height: 2;
 	padding: 0.5em;
 }
@@ -42,8 +41,9 @@ table.av-scan-results .av-file-column > p a {
 }
 
 table.av-scan-results .av-file-column > p code {
-	float: left;
-	padding: 0.2em 0.5em;
+	background-color: #f0f0f1;
+	border: 1px solid #a7aaad;
+	padding: 0.5em;
 }
 
 table.av-scan-results .av-file-column > p code span {
@@ -51,24 +51,32 @@ table.av-scan-results .av-file-column > p code span {
 	background: #f2d675;
 }
 
-tr.av-status-pending .av-status-column {
+table.av-scan-results tr.av-status-pending .av-status-column {
 	font-style: italic;
 }
 
-tr.av-status-ok td:first-of-type {
+table.av-scan-results tr.av-status-ok {
+	background-color: #edfaef;
+}
+
+table.av-scan-results tr.av-status-ok td:first-of-type {
 	border-left: 4px solid #007017;
 }
 
-tr.av-status-ok .av-status-column {
-	color: #008a20;
+table.av-scan-results tr.av-status-ok .av-status-column {
+	color: #005c12;
 	font-weight: 700;
 }
 
-tr.av-status-warning td:first-of-type {
+table.av-scan-results tr.av-status-warning {
+	background-color: #fcf0f1;
+}
+
+table.av-scan-results tr.av-status-warning td:first-of-type {
 	border-left: 4px solid #b32d2e;
 }
 
-tr.av-status-warning td.av-status-column {
-	color: #d63638;
+table.av-scan-results tr.av-status-warning td.av-status-column {
+	color: #8a2424;
 	font-weight: 700;
 }
