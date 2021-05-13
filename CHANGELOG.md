@@ -1,6 +1,7 @@
 # Changelog
 
 ### unreleased ###
+* Point Safe Browsing link on settings page to site-specific URL (#106)
 * Show warning if Safe Browsing check is enabled without custom API key (#105)
 
 ### 1.4.2 ###
