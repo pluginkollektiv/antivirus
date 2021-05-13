@@ -729,13 +729,19 @@ class AntiVirus {
 											/* translators: First placeholder (%1$s) starting link tag to transparency report, second placeholder (%2$s) closing link tag */
 											__( 'For more details read %1$sthe transparency report%2$s.', 'antivirus' ),
 											sprintf(
-												'<a href="https://transparencyreport.google.com/safe-browsing/search?url=%s&hl=%s">',
+												'<a href="https://transparencyreport.google.com/safe-browsing/search?url=%s&hl=%s" target="_blank" rel="noopener noreferrer">',
 												urlencode( get_bloginfo( 'url' ) ),
 												substr( get_locale(), 0, 2 )
 											),
 											'</a>'
 										),
-										array( 'a' => array( 'href' => array() ) )
+										array(
+											'a' => array(
+												'href'   => array(),
+												'target' => array(),
+												'rel'    => array(),
+											),
+										)
 									);
 									?>
 								</p>
