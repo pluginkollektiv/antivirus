@@ -856,7 +856,7 @@ class AntiVirus {
 			wp_kses(
 				sprintf(
 					/* translators: First placeholder (%1$s) starting link tag to the documentation page, second placeholder (%2$s) closing link tag */
-					__( 'See official %1$sdocumentation%2$s.', 'antivirus' ),
+					__( 'See official %1$sdocumentation%2$s from Google.', 'antivirus' ),
 					'<a href="https://cloud.google.com/docs/authentication/api-keys" target="_blank" rel="noopener noreferrer">',
 					'</a>'
 				),
