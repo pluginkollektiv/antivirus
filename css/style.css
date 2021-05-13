@@ -51,6 +51,10 @@ table.av-scan-results .av-file-column > p code span {
 	background: #f2d675;
 }
 
+table.av-scan-results td {
+	color: #3c434a;
+}
+
 table.av-scan-results tr.av-status-pending .av-status-column {
 	font-style: italic;
 }
