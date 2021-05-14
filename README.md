@@ -5,9 +5,9 @@
 * Requires at least: 4.1
 * Requires PHP:      5.2
 * Tested up to:      5.7
-* Stable tag:        1.4.2
+* Stable tag:        1.4.3
 * License:           GPLv2 or later
-* License URI:       http://www.gnu.org/licenses/gpl-2.0.html
+* License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
 Security plugin to protect your blog or website against exploits and spam injections.
 
@@ -40,6 +40,11 @@ A complete documentation is available on the [AntiVirus website](https://antivir
 
 
 ## Changelog ##
+
+### 1.4.3 ###
+* Point Safe Browsing link on settings page to site-specific URL (#106)
+* Increase the size of the Safe Browsing API input to show the entire key (#109)
+* Show warning if Safe Browsing check is enabled without custom API key (#105)
 
 ### 1.4.2 ###
 * Drop recursive check on option that failed in several scenarios (#96, #97)
@@ -80,6 +85,10 @@ A complete documentation is available on the [AntiVirus website](https://antivir
 For the complete changelog, check out our [GitHub repository](https://github.com/pluginkollektiv/antivirus).
 
 ## Upgrade Notice ##
+
+### 1.4.3 ###
+Please note that we will discontinue providing a built-in API key for the Google Safe Browsing feature.
+If you have enabled this check, please provide your own API key before the next update.
 
 ### 1.4.2 ###
 This is a bugfix release removing two checks of the theme scan causing false positives.
