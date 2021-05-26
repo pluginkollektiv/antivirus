@@ -8,13 +8,14 @@
  * Text Domain: antivirus
  * License:     GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
- * Version:     1.4.2
+ * Version:     1.4.3
  *
  * @package AntiVirus
  */
 
 /*
 Copyright (C)  2009-2015 Sergej Müller
+Copyright (C)  2016-2021 pluginkollektiv
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

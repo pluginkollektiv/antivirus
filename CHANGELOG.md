@@ -1,5 +1,10 @@
 # Changelog
 
+### 1.4.3 ###
+* Point Safe Browsing link on settings page to site-specific URL (#106)
+* Increase the size of the Safe Browsing API input to show the entire key (#109)
+* Show warning if Safe Browsing check is enabled without custom API key (#105)
+
 ### 1.4.2 ###
 * Drop recursive check on option that failed in several scenarios (#96) (#97)
 * Drop check for base64 encoded strings which did not work properly in al cases (#100)
