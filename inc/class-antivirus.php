@@ -725,12 +725,15 @@ class AntiVirus {
 					<tr>
 						<th scope="row">
 							<label for="av_cronjob_enable">
-								<?php esc_html_e( 'Check the theme templates for malware', 'antivirus' ); ?>
+								<?php esc_html_e( 'Theme templates scan', 'antivirus' ); ?>
 							</label>
 						</td>
 						<td>
 							<input type="checkbox" name="av_cronjob_enable" id="av_cronjob_enable"
 								   value="1" <?php checked( self::_get_option( 'cronjob_enable' ), 1 ); ?> />
+							<label for="av_cronjob_enable">
+								<?php esc_html_e( 'Enable theme templates scan for malware', 'antivirus' ); ?>
+							</label>
 							<p class="description">
 								<?php
 								$timestamp = wp_next_scheduled( 'antivirus_daily_cronjob' );
@@ -747,14 +750,15 @@ class AntiVirus {
 					</tr>
 					<tr>
 						<th scope="row">
-							<label for="av_safe_browsing">
-								<?php esc_html_e( 'Malware detection by Google Safe Browsing', 'antivirus' ); ?>
-							</label>
+							<?php esc_html_e( 'Google Safe Browsing', 'antivirus' ); ?>
 						</td>
 						<td>
 							<fieldset>
 								<input type="checkbox" name="av_safe_browsing" id="av_safe_browsing"
 									   value="1" <?php checked( self::_get_option( 'safe_browsing' ), 1 ); ?> />
+								<label for="av_safe_browsing">
+									<?php esc_html_e( 'Enable malware detection by Google Safe Browsing', 'antivirus' ); ?>
+								</label>
 								<p class="description">
 									<?php
 									esc_html_e( 'Diagnosis and notification in suspicion case.', 'antivirus' );
@@ -798,15 +802,18 @@ class AntiVirus {
 					<tr>
 						<th scope="row">
 							<label for="av_checksum_verifier">
-								<?php esc_html_e( 'Checksum verification of WordPress core files', 'antivirus' ); ?>
+								<?php esc_html_e( 'Checksum verification', 'antivirus' ); ?>
 							</label>
 						</td>
 						<td>
 							<input type="checkbox" name="av_checksum_verifier" id="av_checksum_verifier"
 								   value="1" <?php checked( self::_get_option( 'checksum_verifier' ), 1 ); ?> />
-								<p class="description">
-									<?php esc_html_e( 'Matches checksums of all WordPress core files against the values provided by the official API.', 'antivirus' ); ?>
-								</p>
+							<label for="av_checksum_verifier">
+								<?php esc_html_e( 'Enable checksum verification of WordPress core files', 'antivirus' ); ?>
+							</label>
+							<p class="description">
+								<?php esc_html_e( 'Matches checksums of all WordPress core files against the values provided by the official API.', 'antivirus' ); ?>
+							</p>
 						</td>
 					</tr>
 					<tr>
