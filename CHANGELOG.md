@@ -1,5 +1,8 @@
 # Changelog
 
+### unreleased ###
+* Separate manual theme file scan from settings and overhaul the UI for better integration into the WordPress backend (#107)
+
 ### 1.4.3 ###
 * Point Safe Browsing link on settings page to site-specific URL (#106)
 * Increase the size of the Safe Browsing API input to show the entire key (#109)
