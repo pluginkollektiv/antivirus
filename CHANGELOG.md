@@ -1,5 +1,8 @@
 # Changelog
 
+### unreleased ###
+* Enforce use of custom Safe Browsing API key (#108)
+
 ### 1.4.3 ###
 * Point Safe Browsing link on settings page to site-specific URL (#106)
 * Increase the size of the Safe Browsing API input to show the entire key (#109)

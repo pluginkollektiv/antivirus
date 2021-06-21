@@ -23,11 +23,9 @@ class AntiVirus_SafeBrowsing extends AntiVirus {
 	public static function check_safe_browsing() {
 		// Check if API key is provided in config.
 		$key = parent::_get_option( 'safe_browsing_key' );
-		$custom_key = true;
-		// Fallback to default key if not.
+		// Opt-out, if no API key was specified.
 		if ( empty( $key ) ) {
-			$key = 'AIzaSyCGHXUd7vQAySRLNiC5y1M_wzR2W0kCVKI';
-			$custom_key = false;
+			return;
 		}
 
 		// Request the API.
@@ -44,7 +42,7 @@ class AntiVirus_SafeBrowsing extends AntiVirus {
 					array(
 						'client'     => array(
 							'clientId'      => 'wpantivirus',
-							'clientVersion' => '1.4.3',
+							'clientVersion' => '1.5.0',
 						),
 						'threatInfo' => array(
 							'threatTypes'      => array(
@@ -105,18 +103,11 @@ class AntiVirus_SafeBrowsing extends AntiVirus {
 				);
 			}
 
-			// Add advice to solve the problem, depending on the key (custom or default).
-			if ( $custom_key ) {
-				$mail_body .= sprintf(
-					"\r\n%s",
-					esc_html__( 'Please check if your API key is correct and its limit not exceeded. If everything is correct and the error persists for the next requests, please contact the plugin support.', 'antivirus' )
-				);
-			} else {
-				$mail_body .= sprintf(
-					"\r\n%s",
-					esc_html__( 'This might be due to an exceeded rate limit on the shared API key. To ensure this does not happen please provide your own key using the settings page.', 'antivirus' )
-				);
-			}
+			// Add advice to solve the problem, depending on the key.
+			$mail_body .= sprintf(
+				"\r\n%s",
+				esc_html__( 'Please check if your API key is correct and its limit not exceeded. If everything is correct and the error persists for the next requests, please contact the plugin support.', 'antivirus' )
+			);
 
 			self::_send_warning_notification(
 				esc_html__( 'Safe Browsing check failed', 'antivirus' ),

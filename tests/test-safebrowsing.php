@@ -63,13 +63,16 @@ class AntiVirus_Safebrowsing_Test extends AntiVirus_TestCase {
 					'{"error":{"message":"Invalid API key"}}'
 				);
 
+		// Specify API key.
+		$this->update_options( array( 'safe_browsing_key' => 'custom-api-key' ) );
+
 		AntiVirus_SafeBrowsing::check_safe_browsing();
 
 		// Validate the request.
 		self::assertEquals(
-			'https://safebrowsing.googleapis.com/v4/threatMatches:find?key=AIzaSyCGHXUd7vQAySRLNiC5y1M_wzR2W0kCVKI',
+			'https://safebrowsing.googleapis.com/v4/threatMatches:find?key=custom-api-key',
 			$request_url,
-			'expected call to Safe Browsing API with default key'
+			'expected call to Safe Browsing API with custom key'
 		);
 		self::assertIsArray( $request_data, 'unexpected request' );
 		$request_body = json_decode( $request_data['body'] );
@@ -107,12 +110,7 @@ class AntiVirus_Safebrowsing_Test extends AntiVirus_TestCase {
 		/*
 		 * Case 3: With custom API key and notification address.
 		 */
-		$this->update_options(
-			array(
-				'notify_email'      => 'notification@example.com',
-				'safe_browsing_key' => 'custom-api-key',
-			)
-		);
+		$this->update_options( array( 'notify_email' => 'notification@example.com' ) );
 
 		AntiVirus_SafeBrowsing::check_safe_browsing();
 
@@ -149,5 +147,18 @@ class AntiVirus_Safebrowsing_Test extends AntiVirus_TestCase {
 			'expected different subject for Safe Browsing check failing with 400'
 		);
 		self::assertStringContainsString( "\r\n  Invalid API key\r\n", $mail_body, 'Message from response not transported to mail' );
+
+		/*
+		 * Case 6: Without API key.
+		 */
+		$this->update_options( array( 'safe_browsing_key' => '' ) );
+		$request_url = null;
+
+		AntiVirus_SafeBrowsing::check_safe_browsing();
+
+		self::assertNull(
+			$request_url,
+			'API should not be called without an API key'
+		);
 	}
 }
