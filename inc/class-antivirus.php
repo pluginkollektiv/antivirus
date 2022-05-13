@@ -600,7 +600,8 @@ class AntiVirus {
 			esc_url(
 				add_query_arg(
 					array(
-						'page' => 'antivirus',
+						'page'   => 'antivirus',
+						'av_tab' => 'scan',
 					),
 					admin_url( 'options-general.php' )
 				)
