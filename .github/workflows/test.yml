@@ -8,7 +8,7 @@ jobs:
         php: [ '7.4', '8.0', '8.1' ]
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -20,12 +20,12 @@ jobs:
         run: composer test
       - name: Coverage Report
         if: matrix.php == '8.0'
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
   quality:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
