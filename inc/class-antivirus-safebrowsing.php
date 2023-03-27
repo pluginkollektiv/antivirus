@@ -101,7 +101,7 @@ class AntiVirus_SafeBrowsing extends AntiVirus {
 				$mail_body .= sprintf(
 					"\r\n\r\n%s:\r\n  %s\r\n",
 					esc_html__( 'Error message from API', 'antivirus' ),
-					filter_var( $response_json['error']['message'], FILTER_SANITIZE_STRING )
+					esc_html( $response_json['error']['message'] )
 				);
 			}
 
