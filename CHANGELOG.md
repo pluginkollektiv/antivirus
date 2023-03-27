@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.4.4 ###
+* Fix warning on SafeBrowsing API errors with PHP 8.1+ (#123)
+* Tested up to WordPress 6.2
+
 ### 1.4.3 ###
 * Point Safe Browsing link on settings page to site-specific URL (#106)
 * Increase the size of the Safe Browsing API input to show the entire key (#109)
