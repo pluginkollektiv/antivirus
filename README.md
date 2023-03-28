@@ -4,8 +4,8 @@
 * Donate link:       https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=TD4AMD2D8EMZW
 * Requires at least: 4.1
 * Requires PHP:      5.2
-* Tested up to:      6.1
-* Stable tag:        1.4.3
+* Tested up to:      6.2
+* Stable tag:        1.4.4
 * License:           GPLv2 or later
 * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,6 +40,10 @@ A complete documentation is available on the [AntiVirus website](https://antivir
 
 
 ## Changelog ##
+
+### 1.4.4 ###
+* Fix warning on SafeBrowsing API errors with PHP 8.1+ (#123)
+* Tested up to WordPress 6.2
 
 ### 1.4.3 ###
 * Point Safe Browsing link on settings page to site-specific URL (#106)
@@ -85,6 +89,9 @@ A complete documentation is available on the [AntiVirus website](https://antivir
 For the complete changelog, check out our [GitHub repository](https://github.com/pluginkollektiv/antivirus).
 
 ## Upgrade Notice ##
+
+### 1.4.4 ###
+This is a small maintenance release which fixes a PHP warning on Safe Browsing API errors with PHP 8.1.
 
 ### 1.4.3 ###
 Please note that we will discontinue providing a built-in API key for the Google Safe Browsing feature.
