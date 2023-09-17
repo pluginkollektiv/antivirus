@@ -1,5 +1,5 @@
 name: Test
-on: push
+on: [ push, pull_request ]
 jobs:
   unit:
     runs-on: ubuntu-latest
@@ -9,6 +9,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -17,10 +19,16 @@ jobs:
       - name: Install
         run: composer install --no-interaction
       - name: Unit tests
-        run: composer test
-      - name: Coverage Report
+        run: |
+          composer test
+          sed -i 's#'$GITHUB_WORKSPACE'#/github/workspace#g' tests-*.xml
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
         if: matrix.php == '8.1'
-        uses: codecov/codecov-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
   quality:
     runs-on: ubuntu-latest
     steps:

@@ -15,11 +15,12 @@
 /.gitignore
 /.stylelintrc.json
 /.travis.yml
-/clover.xml
 /composer.json
 /package.json
 /package-lock.json
 /composer.lock
 /phpcs.xml
 /phpunit.xml
-
+/sonar-project.properties
+/tests-clover.xml
+/tests-junit.xml

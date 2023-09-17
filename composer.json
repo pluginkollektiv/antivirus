@@ -52,7 +52,7 @@
       "minifyjs js/script.js > js/script.min.js"
     ],
     "test": [
-      "phpunit --coverage-clover clover.xml"
+      "phpunit"
     ]
   },
   "config": {

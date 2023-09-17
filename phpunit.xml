@@ -13,7 +13,14 @@
 			<file>./antivirus.php</file>
 			<directory suffix=".php">./inc/</directory>
 		</include>
+		<report>
+			<clover outputFile="tests-clover.xml"/>
+		</report>
 	</coverage>
+
+	<logging>
+		<junit outputFile="tests-junit.xml"/>
+	</logging>
 
 	<testsuites>
 		<testsuite name="AntiVirus TestSuite">

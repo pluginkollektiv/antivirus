@@ -4,4 +4,4 @@ js/*.min.js
 vendor/
 node_modules/
 .phpunit.result.cache
-clover.xml
+tests-*.xml

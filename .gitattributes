@@ -18,3 +18,4 @@
 /package-lock.json export-ignore
 /phpcs.xml export-ignore
 /phpunit.xml export-ignore
+/sonar-project.properties export-ignore
