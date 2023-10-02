@@ -193,7 +193,7 @@ class AntiVirus {
 	protected static function _get_option( $field ) {
 		$options = self::_get_options();
 
-		return ( empty( $options[ $field ] ) ? '' : $options[ $field ] );
+		return empty( $options[ $field ] ) ? '' : $options[ $field ];
 	}
 
 	/**
@@ -461,25 +461,6 @@ class AntiVirus {
 	}
 
 	/**
-	 * Get the name of the currently activated theme.
-	 *
-	 * @return string|false The theme name or false on failure.
-	 */
-	private static function _get_theme_name() {
-		$theme = self::_get_theme_data( wp_get_theme() );
-		if ( $theme ) {
-			if ( ! empty( $theme['Slug'] ) ) {
-				return $theme['Slug'];
-			}
-			if ( ! empty( $theme['Name'] ) ) {
-				return $theme['Name'];
-			}
-		}
-
-		return false;
-	}
-
-	/**
 	 * Get the whitelist.
 	 *
 	 * @return array MD5 hashes of whitelisted files.
@@ -650,7 +631,7 @@ class AntiVirus {
 			// Stop cron if it was disabled.
 			if ( self::_cron_enabled( $options ) && ! self::_cron_enabled( self::_get_options() ) ) {
 				self::_add_scheduled_hook();
-			} else if ( ! self::_cron_enabled( $options ) && self::_cron_enabled( self::_get_options() ) ) {
+			} elseif ( ! self::_cron_enabled( $options ) && self::_cron_enabled( self::_get_options() ) ) {
 				self::clear_scheduled_hook();
 			}
 
