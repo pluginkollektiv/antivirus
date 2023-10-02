@@ -1,5 +1,8 @@
 # Changelog
 
+### unreleased ###
+* Replace `FILTER_SANIITZE_STRING` deprecated since PHP 8.1+ (#126) (#127)
+
 ### 1.4.4 ###
 * Fix warning on SafeBrowsing API errors with PHP 8.1+ (#123)
 * Tested up to WordPress 6.2

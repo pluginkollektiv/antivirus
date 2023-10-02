@@ -504,7 +504,7 @@ class AntiVirus {
 
 			case 'check_theme_file':
 				if ( ! empty( $_POST['_theme_file'] ) ) {
-					$theme_file = filter_var( wp_unslash( $_POST['_theme_file'] ), FILTER_SANITIZE_STRING );
+					$theme_file = filter_var( wp_unslash( $_POST['_theme_file'] ), FILTER_UNSAFE_RAW );
 					$lines = AntiVirus_CheckInternals::check_theme_file( $theme_file );
 					if ( $lines ) {
 						foreach ( $lines as $num => $line ) {
