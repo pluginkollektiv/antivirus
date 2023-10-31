@@ -354,10 +354,19 @@ class AntiVirus {
 			'av_script',
 			'av_settings',
 			array(
-				'nonce' => wp_create_nonce( 'av_ajax_nonce' ),
-				'msg_1' => esc_js( __( 'Dismiss', 'antivirus' ) ),
-				'msg_3' => esc_js( __( 'Scan finished', 'antivirus' ) ),
-				'msg_4' => esc_js( __( 'Dismiss false positive virus detection', 'antivirus' ) ),
+				'nonce'  => wp_create_nonce( 'av_ajax_nonce' ),
+				'labels' => array(
+					'dismiss'  => esc_js( __( 'Dismiss', 'antivirus' ) ),
+					'complete' => esc_js( __( 'Scan finished', 'antivirus' ) ),
+					'file'     => esc_js( __( 'Theme File', 'antivirus' ) ),
+					'status'   => esc_js( __( 'Check Status', 'antivirus' ) ),
+				),
+				'texts'  => array(
+					'dismiss' => esc_js( __( 'Dismiss false positive virus detection', 'antivirus' ) ),
+					'ok'      => esc_js( __( '✔ OK', 'antivirus' ) ),
+					'pending' => esc_js( __( 'pending', 'antivirus' ) ),
+					'warning' => esc_js( __( '! Warning', 'antivirus' ) ),
+				),
 			)
 		);
 	}
@@ -591,7 +600,8 @@ class AntiVirus {
 			esc_url(
 				add_query_arg(
 					array(
-						'page' => 'antivirus',
+						'page'   => 'antivirus',
+						'av_tab' => 'scan',
 					),
 					admin_url( 'options-general.php' )
 				)
@@ -660,66 +670,96 @@ class AntiVirus {
 				<?php esc_html_e( 'AntiVirus', 'antivirus' ); ?>
 			</h1>
 
-			<table class="form-table">
-				<tr>
-					<th scope="row">
-						<?php esc_html_e( 'Manual malware scan', 'antivirus' ); ?>
-					</th>
-					<td>
-						<div class="inside" id="av_manual_scan">
-							<p>
-								<a href="#" class="button button-primary">
-									<?php esc_html_e( 'Scan the theme templates now', 'antivirus' ); ?>
-								</a>
-								<span class="alert"></span>
-							</p>
+			<h2 class="nav-tab-wrapper">
+				<?php
+				$current_tab = isset( $_GET['av_tab'] ) ? sanitize_text_field( wp_unslash( $_GET['av_tab'] ) ) : 'settings';
+				printf(
+					'<a class="nav-tab%s" href="%s">%s</a>',
+					esc_attr( 'settings' === $current_tab ? ' nav-tab-active' : '' ),
+					esc_url(
+						add_query_arg(
+							array(
+								'page'   => 'antivirus',
+								'av_tab' => 'settings',
+							),
+							admin_url( 'options-general.php' )
+						)
+					),
+					esc_html( 'Settings', 'antivirus' )
+				);
+				printf(
+					'<a class="nav-tab%s" href="%s">%s</a>',
+					esc_attr( 'scan' === $current_tab ? ' nav-tab-active' : '' ),
+					esc_url(
+						add_query_arg(
+							array(
+								'page'   => 'antivirus',
+								'av_tab' => 'scan',
+							),
+							admin_url( 'options-general.php' )
+						)
+					),
+					esc_html( 'Manual Scan', 'antivirus' )
+				);
+				?>
+			</h2>
 
-							<div class="output"></div>
-						</div>
-					</td>
-				</tr>
-			</table>
+			<?php if ( 'scan' === $current_tab ) : ?>
 
+			<p>
+				<a id="av-scan-trigger" href="#" class="button button-primary">
+					<?php esc_html_e( 'Scan the theme templates now', 'antivirus' ); ?>
+				</a>
+				<span id="av-scan-process"></span>
+			</p>
+
+			<div id="av-scan-output" class="av-scan-output"></div>
+
+			<?php else : ?>
 
 			<form id="av_settings" method="post" action="<?php echo esc_url( admin_url( 'options-general.php?page=antivirus' ) ); ?>">
 				<?php wp_nonce_field( 'antivirus' ); ?>
 
+				<h2><?php esc_html_e( 'Daily malware scan', 'antivirus' ); ?></h2>
 				<table class="form-table">
+					<tbody>
 					<tr>
 						<th scope="row">
-							<?php esc_html_e( 'Daily malware scan', 'antivirus' ); ?>
-						</th>
+							<label for="av_cronjob_enable">
+								<?php esc_html_e( 'Theme templates scan', 'antivirus' ); ?>
+							</label>
+						</td>
+						<td>
+							<input type="checkbox" name="av_cronjob_enable" id="av_cronjob_enable"
+								   value="1" <?php checked( self::_get_option( 'cronjob_enable' ), 1 ); ?> />
+							<label for="av_cronjob_enable">
+								<?php esc_html_e( 'Enable theme templates scan for malware', 'antivirus' ); ?>
+							</label>
+							<p class="description">
+								<?php
+								$timestamp = wp_next_scheduled( 'antivirus_daily_cronjob' );
+								if ( $timestamp ) {
+									echo sprintf(
+										'%s: %s',
+										esc_html__( 'Next Run', 'antivirus' ),
+										esc_html( date_i18n( 'd.m.Y H:i:s', $timestamp + get_option( 'gmt_offset' ) * 3600 ) )
+									);
+								}
+								?>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">
+							<?php esc_html_e( 'Google Safe Browsing', 'antivirus' ); ?>
+						</td>
 						<td>
 							<fieldset>
-								<label for="av_cronjob_enable">
-									<input type="checkbox" name="av_cronjob_enable" id="av_cronjob_enable"
-										   value="1" <?php checked( self::_get_option( 'cronjob_enable' ), 1 ); ?> />
-									<?php esc_html_e( 'Check the theme templates for malware', 'antivirus' ); ?>
-								</label>
-
-								<p class="description">
-									<?php
-									$timestamp = wp_next_scheduled( 'antivirus_daily_cronjob' );
-									if ( $timestamp ) {
-										echo sprintf(
-											'%s: %s',
-											esc_html__( 'Next Run', 'antivirus' ),
-											esc_html( date_i18n( 'd.m.Y H:i:s', $timestamp + get_option( 'gmt_offset' ) * 3600 ) )
-										);
-									}
-									?>
-								</p>
-							</fieldset>
-
-							<br/>
-
-							<fieldset>
+								<input type="checkbox" name="av_safe_browsing" id="av_safe_browsing"
+									   value="1" <?php checked( self::_get_option( 'safe_browsing' ), 1 ); ?> />
 								<label for="av_safe_browsing">
-									<input type="checkbox" name="av_safe_browsing" id="av_safe_browsing"
-										   value="1" <?php checked( self::_get_option( 'safe_browsing' ), 1 ); ?> />
-									<?php esc_html_e( 'Malware detection by Google Safe Browsing', 'antivirus' ); ?>
+									<?php esc_html_e( 'Enable malware detection by Google Safe Browsing', 'antivirus' ); ?>
 								</label>
-
 								<p class="description">
 									<?php
 									esc_html_e( 'Diagnosis and notification in suspicion case.', 'antivirus' );
@@ -745,50 +785,50 @@ class AntiVirus {
 									);
 									?>
 								</p>
-
-								<br/>
-
+								<br>
 								<label for="av_safe_browsing_key">
 									<?php esc_html_e( 'Safe Browsing API key', 'antivirus' ); ?>
 								</label>
 								<br/>
 								<input type="text" name="av_safe_browsing_key" id="av_safe_browsing_key" size="45"
 									   value="<?php echo esc_attr( self::_get_option( 'safe_browsing_key' ) ); ?>" />
-
 								<p class="description">
 									<?php
 									esc_html_e( 'Provide a custom key for the Google Safe Browsing API (v4). If this value is left empty, a fallback will be used. However, to ensure valid results due to rate limitations, it is recommended to use your own key.', 'antivirus' );
 									?>
 								</p>
 							</fieldset>
-
-							<br/>
-
-							<fieldset>
-								<label for="av_checksum_verifier">
-									<input type="checkbox" name="av_checksum_verifier" id="av_checksum_verifier"
-										   value="1" <?php checked( self::_get_option( 'checksum_verifier' ), 1 ); ?> />
-									<?php esc_html_e( 'Checksum verification of WordPress core files', 'antivirus' ); ?>
-								</label>
-
-								<p class="description">
-									<?php esc_html_e( 'Matches checksums of all WordPress core files against the values provided by the official API.', 'antivirus' ); ?>
-								</p>
-							</fieldset>
-
-							<br/>
-
-							<fieldset>
-								<label for="av_notify_email"><?php esc_html_e( 'Email address for notifications', 'antivirus' ); ?></label>
-								<input type="text" name="av_notify_email" id="av_notify_email"
-									   value="<?php echo esc_attr( self::_get_option( 'notify_email' ) ); ?>"
-									   class="regular-text"
-									   placeholder="<?php esc_attr_e( 'Email address for notifications', 'antivirus' ); ?>" />
-
-								<p class="description">
-									<?php esc_html_e( 'If the field is empty, the blog admin will be notified.', 'antivirus' ); ?>
-								</p>
-							</fieldset>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">
+							<label for="av_checksum_verifier">
+								<?php esc_html_e( 'Checksum verification', 'antivirus' ); ?>
+							</label>
+						</td>
+						<td>
+							<input type="checkbox" name="av_checksum_verifier" id="av_checksum_verifier"
+								   value="1" <?php checked( self::_get_option( 'checksum_verifier' ), 1 ); ?> />
+							<label for="av_checksum_verifier">
+								<?php esc_html_e( 'Enable checksum verification of WordPress core files', 'antivirus' ); ?>
+							</label>
+							<p class="description">
+								<?php esc_html_e( 'Matches checksums of all WordPress core files against the values provided by the official API.', 'antivirus' ); ?>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">
+							<label for="av_notify_email"><?php esc_html_e( 'Email address for notifications', 'antivirus' ); ?></label>
+						</td>
+						<td>
+							<input type="text" name="av_notify_email" id="av_notify_email"
+								   value="<?php echo esc_attr( self::_get_option( 'notify_email' ) ); ?>"
+								   class="regular-text"
+								   placeholder="<?php esc_attr_e( 'Email address for notifications', 'antivirus' ); ?>" />
+							<p class="description">
+								<?php esc_html_e( 'If the field is empty, the blog admin will be notified.', 'antivirus' ); ?>
+							</p>
 						</td>
 					</tr>
 
@@ -822,8 +862,11 @@ class AntiVirus {
 							?>
 						</td>
 					</tr>
+					</tbody>
 				</table>
 			</form>
+
+			<?php endif; ?>
 		</div>
 		<?php
 	}
