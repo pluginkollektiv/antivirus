@@ -2,6 +2,7 @@
 
 ### unreleased ###
 * Replace `FILTER_SANIITZE_STRING` deprecated since PHP 8.1+ (#126) (#127)
+* Enforce use of custom Safe Browsing API key (#108)
 
 ### 1.4.4 ###
 * Fix warning on SafeBrowsing API errors with PHP 8.1+ (#123)
