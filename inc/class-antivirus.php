@@ -751,7 +751,7 @@ class AntiVirus {
 							<label for="av_cronjob_enable">
 								<?php esc_html_e( 'Theme templates scan', 'antivirus' ); ?>
 							</label>
-						</td>
+						</th>
 						<td>
 							<input type="checkbox" name="av_cronjob_enable" id="av_cronjob_enable"
 								   value="1" <?php checked( self::_get_option( 'cronjob_enable' ), 1 ); ?> />
@@ -775,7 +775,7 @@ class AntiVirus {
 					<tr>
 						<th scope="row">
 							<?php esc_html_e( 'Google Safe Browsing', 'antivirus' ); ?>
-						</td>
+						</th>
 						<td>
 							<fieldset>
 								<input type="checkbox" name="av_safe_browsing" id="av_safe_browsing"
@@ -844,7 +844,7 @@ class AntiVirus {
 							<label for="av_checksum_verifier">
 								<?php esc_html_e( 'Checksum verification', 'antivirus' ); ?>
 							</label>
-						</td>
+						</th>
 						<td>
 							<input type="checkbox" name="av_checksum_verifier" id="av_checksum_verifier"
 								   value="1" <?php checked( self::_get_option( 'checksum_verifier' ), 1 ); ?> />
@@ -859,7 +859,7 @@ class AntiVirus {
 					<tr>
 						<th scope="row">
 							<label for="av_notify_email"><?php esc_html_e( 'Email address for notifications', 'antivirus' ); ?></label>
-						</td>
+						</th>
 						<td>
 							<input type="text" name="av_notify_email" id="av_notify_email"
 								   value="<?php echo esc_attr( self::_get_option( 'notify_email' ) ); ?>"
