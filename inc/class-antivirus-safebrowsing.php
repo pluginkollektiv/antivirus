@@ -38,7 +38,7 @@ class AntiVirus_SafeBrowsing extends AntiVirus {
 				'headers' => array(
 					'Content-Type' => 'application/json',
 				),
-				'body'    => json_encode(
+				'body'    => wp_json_encode(
 					array(
 						'client'     => array(
 							'clientId'      => 'wpantivirus',
