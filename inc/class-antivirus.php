@@ -587,8 +587,8 @@ class AntiVirus {
 		if ( current_user_can( 'manage_options' ) && get_transient( 'antivirus-activation-notice' ) ) {
 			printf(
 				'<div class="notice notice-warning is-dismissible"><p><strong>%1$s</strong></p><p>%2$s</p><p>%3$s %4$s</p></div>',
-				esc_html( 'No Safe Browsing API key provided for AntiVirus', 'antivirus' ),
-				esc_html( 'Google Safe Browsing check was disabled, because no API key has been provided.', 'antivirus' ),
+				esc_html__( 'No Safe Browsing API key provided for AntiVirus', 'antivirus' ),
+				esc_html__( 'Google Safe Browsing check was disabled, because no API key has been provided.', 'antivirus' ),
 				wp_kses(
 					sprintf(
 						/* translators: First placeholder (%1$s) starting link tag to the plugin settings page, second placeholder (%2$s) closing link tag */
@@ -708,7 +708,7 @@ class AntiVirus {
 							admin_url( 'options-general.php' )
 						)
 					),
-					esc_html( 'Settings', 'antivirus' )
+					esc_html__( 'Settings', 'antivirus' )
 				);
 				printf(
 					'<a class="nav-tab%s" href="%s">%s</a>',
@@ -722,7 +722,7 @@ class AntiVirus {
 							admin_url( 'options-general.php' )
 						)
 					),
-					esc_html( 'Manual Scan', 'antivirus' )
+					esc_html__( 'Manual Scan', 'antivirus' )
 				);
 				?>
 			</h2>
@@ -819,7 +819,7 @@ class AntiVirus {
 									<?php
 									printf(
 										'%1$s %2$s<br>%3$s',
-										esc_html( 'Provide a custom key for the Google Safe Browsing API (v4).', 'antivirus' ),
+										esc_html__( 'Provide a custom key for the Google Safe Browsing API (v4).', 'antivirus' ),
 										wp_kses(
 											__( 'A key is <em>required</em> in order to use this check.', 'antivirus' ),
 											array( 'em' => array() )
