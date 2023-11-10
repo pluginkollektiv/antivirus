@@ -42,17 +42,17 @@ define( 'ANTIVIRUS_FILE', __FILE__ );
 /**
  * Plugin autoloader.
  *
- * @param string $class The classname.
+ * @param string $class_name The classname.
  */
-function antivirus_autoload( $class ) {
-	if ( in_array( $class, array( 'AntiVirus', 'AntiVirus_CheckInternals', 'AntiVirus_SafeBrowsing', 'AntiVirus_ChecksumVerifier' ), true ) ) {
+function antivirus_autoload( $class_name ) {
+	if ( in_array( $class_name, array( 'AntiVirus', 'AntiVirus_CheckInternals', 'AntiVirus_SafeBrowsing', 'AntiVirus_ChecksumVerifier' ), true ) ) {
 		require_once sprintf(
 			'%s%s%s%sclass-%s.php',
 			dirname( __FILE__ ),
 			DIRECTORY_SEPARATOR,
 			'inc',
 			DIRECTORY_SEPARATOR,
-			strtolower( str_replace( '_', '-', $class ) )
+			strtolower( str_replace( '_', '-', $class_name ) )
 		);
 	}
 }
