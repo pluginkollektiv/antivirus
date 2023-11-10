@@ -623,7 +623,7 @@ class AntiVirus {
 		}
 
 		// Display warning.
-		echo sprintf(
+		printf(
 			'<div class="error"><p><strong>%1$s:</strong> %2$s <a href="%3$s">%4$s &rarr;</a></p></div>',
 			esc_html__( 'Virus suspected', 'antivirus' ),
 			esc_html__( 'The daily antivirus scan of your blog suggests alarm.', 'antivirus' ),
@@ -762,7 +762,7 @@ class AntiVirus {
 								<?php
 								$timestamp = wp_next_scheduled( 'antivirus_daily_cronjob' );
 								if ( $timestamp ) {
-									echo sprintf(
+									printf(
 										'%s: %s',
 										esc_html__( 'Next Run', 'antivirus' ),
 										esc_html( date_i18n( 'd.m.Y H:i:s', $timestamp + get_option( 'gmt_offset' ) * 3600 ) )
