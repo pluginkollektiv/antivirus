@@ -35,6 +35,7 @@ class AntiVirus_Checkinternals_Test extends AntiVirus_TestCase {
 				'themefile2' => '/themes/theme1/themefile2',
 			)
 		);
+
 		$parent_theme = new WP_Theme_Mock(
 			'Theme 2',
 			'theme2',

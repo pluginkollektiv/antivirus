@@ -40,8 +40,8 @@ class AntiVirus_ChecksumVerifier_Test extends AntiVirus_TestCase {
 				->andReturn( 'de_DE' );
 
 		// We capture the remote call to SafeBrowsing API and mock the response.
-		$response     = new stdClass();
-		$request_url  = null;
+		$response    = new stdClass();
+		$request_url = null;
 		WP_Mock::userFunction( 'wp_remote_get' )
 				->with( Mockery::capture( $request_url ) )
 				->atLeast()
@@ -59,7 +59,7 @@ class AntiVirus_ChecksumVerifier_Test extends AntiVirus_TestCase {
 				)
 				->atLeast()
 				->once();
-		$transient = null;
+		$transient            = null;
 		$transient_expiration = null;
 		WP_Mock::userFunction( 'set_site_transient' )
 			->with(

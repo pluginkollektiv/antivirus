@@ -521,7 +521,7 @@ class AntiVirus {
 			case 'check_theme_file':
 				if ( ! empty( $_POST['_theme_file'] ) ) {
 					$theme_file = filter_var( wp_unslash( $_POST['_theme_file'] ), FILTER_UNSAFE_RAW );
-					$lines = AntiVirus_CheckInternals::check_theme_file( $theme_file );
+					$lines      = AntiVirus_CheckInternals::check_theme_file( $theme_file );
 					if ( $lines ) {
 						foreach ( $lines as $num => $line ) {
 							foreach ( $line as $string ) {
@@ -607,9 +607,9 @@ class AntiVirus {
 					),
 					array(
 						'a' => array(
-							'href' => array(),
+							'href'   => array(),
 							'target' => array(),
-							'rel' => array(),
+							'rel'    => array(),
 						),
 					)
 				)
@@ -660,7 +660,7 @@ class AntiVirus {
 
 			// No cronjob?
 			if ( ! self::_cron_enabled( $options ) ) {
-				$options['notify_email']      = '';
+				$options['notify_email'] = '';
 			}
 
 			// No Safe Browsing?
