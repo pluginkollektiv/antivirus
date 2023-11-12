@@ -64,13 +64,13 @@ jQuery(document).ready(($) => {
 								'</a></p>'
 						);
 
-						$('#av-dismiss-' + md5).click(() => {
+						$('#av-dismiss-' + md5).click((evt) => {
 							$.post(
 								ajaxurl,
 								{
 									action: 'get_ajax_response',
 									_ajax_nonce: avNonce,
-									_file_md5: $(this).attr('id').substring(11),
+									_file_md5: evt.target.id.substring(11),
 									_action_request: 'update_white_list',
 								},
 								(res) => {
