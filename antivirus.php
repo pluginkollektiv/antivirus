@@ -8,14 +8,14 @@
  * Text Domain: antivirus
  * License:     GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
- * Version:     1.4.4
+ * Version:     1.5.0
  *
  * @package AntiVirus
  */
 
 /*
 Copyright (C)  2009-2015 Sergej Müller
-Copyright (C)  2016-2021 pluginkollektiv
+Copyright (C)  2016-2023 pluginkollektiv
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -42,17 +42,17 @@ define( 'ANTIVIRUS_FILE', __FILE__ );
 /**
  * Plugin autoloader.
  *
- * @param string $class The classname.
+ * @param string $class_name The classname.
  */
-function antivirus_autoload( $class ) {
-	if ( in_array( $class, array( 'AntiVirus', 'AntiVirus_CheckInternals', 'AntiVirus_SafeBrowsing', 'AntiVirus_ChecksumVerifier' ), true ) ) {
+function antivirus_autoload( $class_name ) {
+	if ( in_array( $class_name, array( 'AntiVirus', 'AntiVirus_CheckInternals', 'AntiVirus_SafeBrowsing', 'AntiVirus_ChecksumVerifier' ), true ) ) {
 		require_once sprintf(
 			'%s%s%s%sclass-%s.php',
 			dirname( __FILE__ ),
 			DIRECTORY_SEPARATOR,
 			'inc',
 			DIRECTORY_SEPARATOR,
-			strtolower( str_replace( '_', '-', $class ) )
+			strtolower( str_replace( '_', '-', $class_name ) )
 		);
 	}
 }

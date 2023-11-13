@@ -146,6 +146,13 @@ class AntiVirus {
 		if ( self::_cron_enabled( self::_get_options() ) ) {
 			self::_add_scheduled_hook();
 		}
+
+		// Add admin notice and disable the feature, if Safe Browsing is enabled without custom API key.
+		$safe_browsing_key = self::_get_option( 'safe_browsing_key' );
+		if ( self::_get_option( 'safe_browsing' ) && empty( $safe_browsing_key ) ) {
+			self::_update_option( 'safe_browsing', 0 );
+			set_transient( 'antivirus-activation-notice', true, 2592000 );
+		}
 	}
 
 	/**
@@ -193,7 +200,7 @@ class AntiVirus {
 	protected static function _get_option( $field ) {
 		$options = self::_get_options();
 
-		return ( empty( $options[ $field ] ) ? '' : $options[ $field ] );
+		return empty( $options[ $field ] ) ? '' : $options[ $field ];
 	}
 
 	/**
@@ -354,10 +361,19 @@ class AntiVirus {
 			'av_script',
 			'av_settings',
 			array(
-				'nonce' => wp_create_nonce( 'av_ajax_nonce' ),
-				'msg_1' => esc_js( __( 'Dismiss', 'antivirus' ) ),
-				'msg_3' => esc_js( __( 'Scan finished', 'antivirus' ) ),
-				'msg_4' => esc_js( __( 'Dismiss false positive virus detection', 'antivirus' ) ),
+				'nonce'  => wp_create_nonce( 'av_ajax_nonce' ),
+				'labels' => array(
+					'dismiss'  => esc_js( __( 'Dismiss', 'antivirus' ) ),
+					'complete' => esc_js( __( 'Scan finished', 'antivirus' ) ),
+					'file'     => esc_js( __( 'Theme File', 'antivirus' ) ),
+					'status'   => esc_js( __( 'Check Status', 'antivirus' ) ),
+				),
+				'texts'  => array(
+					'dismiss' => esc_js( __( 'Dismiss false positive virus detection', 'antivirus' ) ),
+					'ok'      => esc_js( __( '✔ OK', 'antivirus' ) ),
+					'pending' => esc_js( __( 'pending', 'antivirus' ) ),
+					'warning' => esc_js( __( '! Warning', 'antivirus' ) ),
+				),
 			)
 		);
 	}
@@ -461,25 +477,6 @@ class AntiVirus {
 	}
 
 	/**
-	 * Get the name of the currently activated theme.
-	 *
-	 * @return string|false The theme name or false on failure.
-	 */
-	private static function _get_theme_name() {
-		$theme = self::_get_theme_data( wp_get_theme() );
-		if ( $theme ) {
-			if ( ! empty( $theme['Slug'] ) ) {
-				return $theme['Slug'];
-			}
-			if ( ! empty( $theme['Name'] ) ) {
-				return $theme['Name'];
-			}
-		}
-
-		return false;
-	}
-
-	/**
 	 * Get the whitelist.
 	 *
 	 * @return array MD5 hashes of whitelisted files.
@@ -523,8 +520,8 @@ class AntiVirus {
 
 			case 'check_theme_file':
 				if ( ! empty( $_POST['_theme_file'] ) ) {
-					$theme_file = filter_var( wp_unslash( $_POST['_theme_file'] ), FILTER_SANITIZE_STRING );
-					$lines = AntiVirus_CheckInternals::check_theme_file( $theme_file );
+					$theme_file = filter_var( wp_unslash( $_POST['_theme_file'] ), FILTER_UNSAFE_RAW );
+					$lines      = AntiVirus_CheckInternals::check_theme_file( $theme_file );
 					if ( $lines ) {
 						foreach ( $lines as $num => $line ) {
 							foreach ( $line as $string ) {
@@ -586,15 +583,38 @@ class AntiVirus {
 	 * Show notice on the dashboard.
 	 */
 	public static function show_dashboard_notice() {
-		// Add admin notice to users who can manage options, if Safe Browsing is enabled without custom API key.
-		if ( current_user_can( 'manage_options' ) ) {
-			$screen = get_current_screen();
-			if ( ! is_object( $screen ) || 'settings_page_antivirus' !== $screen->base ) {
-				$safe_browsing_key = self::_get_option( 'safe_browsing_key' );
-				if ( self::_get_option( 'safe_browsing' ) && empty( $safe_browsing_key ) ) {
-					self::show_safebrowsing_notice();
-				}
-			}
+		// Show admin notice to users who can manage options that Safe Browsing has been disabled because custom API key is missing.
+		if ( current_user_can( 'manage_options' ) && get_transient( 'antivirus-activation-notice' ) ) {
+			printf(
+				'<div class="notice notice-warning is-dismissible"><p><strong>%1$s</strong></p><p>%2$s</p><p>%3$s %4$s</p></div>',
+				esc_html__( 'No Safe Browsing API key provided for AntiVirus', 'antivirus' ),
+				esc_html__( 'Google Safe Browsing check was disabled, because no API key has been provided.', 'antivirus' ),
+				wp_kses(
+					sprintf(
+						/* translators: First placeholder (%1$s) starting link tag to the plugin settings page, second placeholder (%2$s) closing link tag */
+						__( 'If you want to continue using this feature, please provide an API key using the %1$sAntiVirus settings page%2$s.', 'antivirus' ),
+						'<a href="' . esc_attr( add_query_arg( array( 'page' => 'antivirus' ), admin_url( '/options-general.php' ) ) ) . '">',
+						'</a>'
+					),
+					array( 'a' => array( 'href' => array() ) )
+				),
+				wp_kses(
+					sprintf(
+					/* translators: First placeholder (%1$s) starting link tag to the documentation page, second placeholder (%2$s) closing link tag */
+						__( 'See official %1$sdocumentation%2$s from Google.', 'antivirus' ),
+						'<a href="https://cloud.google.com/docs/authentication/api-keys" target="_blank" rel="noopener noreferrer">',
+						'</a>'
+					),
+					array(
+						'a' => array(
+							'href'   => array(),
+							'target' => array(),
+							'rel'    => array(),
+						),
+					)
+				)
+			);
+			delete_transient( 'antivirus-activation-notice' );
 		}
 
 		// Only show notice if there's an alert.
@@ -603,14 +623,15 @@ class AntiVirus {
 		}
 
 		// Display warning.
-		echo sprintf(
+		printf(
 			'<div class="error"><p><strong>%1$s:</strong> %2$s <a href="%3$s">%4$s &rarr;</a></p></div>',
 			esc_html__( 'Virus suspected', 'antivirus' ),
 			esc_html__( 'The daily antivirus scan of your blog suggests alarm.', 'antivirus' ),
 			esc_url(
 				add_query_arg(
 					array(
-						'page' => 'antivirus',
+						'page'   => 'antivirus',
+						'av_tab' => 'scan',
 					),
 					admin_url( 'options-general.php' )
 				)
@@ -639,7 +660,7 @@ class AntiVirus {
 
 			// No cronjob?
 			if ( ! self::_cron_enabled( $options ) ) {
-				$options['notify_email']      = '';
+				$options['notify_email'] = '';
 			}
 
 			// No Safe Browsing?
@@ -650,13 +671,12 @@ class AntiVirus {
 			// Stop cron if it was disabled.
 			if ( self::_cron_enabled( $options ) && ! self::_cron_enabled( self::_get_options() ) ) {
 				self::_add_scheduled_hook();
-			} else if ( ! self::_cron_enabled( $options ) && self::_cron_enabled( self::_get_options() ) ) {
+			} elseif ( ! self::_cron_enabled( $options ) && self::_cron_enabled( self::_get_options() ) ) {
 				self::clear_scheduled_hook();
 			}
 
 			// Save options.
 			self::_update_options( $options ); ?>
-
 			<div id="message" class="notice notice-success">
 				<p>
 					<strong>
@@ -666,12 +686,6 @@ class AntiVirus {
 			</div>
 			<?php
 		}
-
-		// Show admin notice for Safe Browsing without API key immediately after saving settings.
-		$safe_browsing_key = self::_get_option( 'safe_browsing_key' );
-		if ( self::_get_option( 'safe_browsing' ) && empty( $safe_browsing_key ) ) {
-			self::show_safebrowsing_notice();
-		}
 		?>
 
 		<div class="wrap" id="av_main">
@@ -679,66 +693,96 @@ class AntiVirus {
 				<?php esc_html_e( 'AntiVirus', 'antivirus' ); ?>
 			</h1>
 
-			<table class="form-table">
-				<tr>
-					<th scope="row">
-						<?php esc_html_e( 'Manual malware scan', 'antivirus' ); ?>
-					</th>
-					<td>
-						<div class="inside" id="av_manual_scan">
-							<p>
-								<a href="#" class="button button-primary">
-									<?php esc_html_e( 'Scan the theme templates now', 'antivirus' ); ?>
-								</a>
-								<span class="alert"></span>
-							</p>
+			<h2 class="nav-tab-wrapper">
+				<?php
+				$current_tab = isset( $_GET['av_tab'] ) ? sanitize_text_field( wp_unslash( $_GET['av_tab'] ) ) : 'settings';
+				printf(
+					'<a class="nav-tab%s" href="%s">%s</a>',
+					esc_attr( 'settings' === $current_tab ? ' nav-tab-active' : '' ),
+					esc_url(
+						add_query_arg(
+							array(
+								'page'   => 'antivirus',
+								'av_tab' => 'settings',
+							),
+							admin_url( 'options-general.php' )
+						)
+					),
+					esc_html__( 'Settings', 'antivirus' )
+				);
+				printf(
+					'<a class="nav-tab%s" href="%s">%s</a>',
+					esc_attr( 'scan' === $current_tab ? ' nav-tab-active' : '' ),
+					esc_url(
+						add_query_arg(
+							array(
+								'page'   => 'antivirus',
+								'av_tab' => 'scan',
+							),
+							admin_url( 'options-general.php' )
+						)
+					),
+					esc_html__( 'Manual Scan', 'antivirus' )
+				);
+				?>
+			</h2>
 
-							<div class="output"></div>
-						</div>
-					</td>
-				</tr>
-			</table>
+			<?php if ( 'scan' === $current_tab ) : ?>
 
+			<p>
+				<a id="av-scan-trigger" href="#" class="button button-primary">
+					<?php esc_html_e( 'Scan the theme templates now', 'antivirus' ); ?>
+				</a>
+				<span id="av-scan-process"></span>
+			</p>
+
+			<div id="av-scan-output" class="av-scan-output"></div>
+
+			<?php else : ?>
 
 			<form id="av_settings" method="post" action="<?php echo esc_url( admin_url( 'options-general.php?page=antivirus' ) ); ?>">
 				<?php wp_nonce_field( 'antivirus' ); ?>
 
+				<h2><?php esc_html_e( 'Daily malware scan', 'antivirus' ); ?></h2>
 				<table class="form-table">
+					<tbody>
 					<tr>
 						<th scope="row">
-							<?php esc_html_e( 'Daily malware scan', 'antivirus' ); ?>
+							<label for="av_cronjob_enable">
+								<?php esc_html_e( 'Theme templates scan', 'antivirus' ); ?>
+							</label>
+						</th>
+						<td>
+							<input type="checkbox" name="av_cronjob_enable" id="av_cronjob_enable"
+								   value="1" <?php checked( self::_get_option( 'cronjob_enable' ), 1 ); ?> />
+							<label for="av_cronjob_enable">
+								<?php esc_html_e( 'Enable theme templates scan for malware', 'antivirus' ); ?>
+							</label>
+							<p class="description">
+								<?php
+								$timestamp = wp_next_scheduled( 'antivirus_daily_cronjob' );
+								if ( $timestamp ) {
+									printf(
+										'%s: %s',
+										esc_html__( 'Next Run', 'antivirus' ),
+										esc_html( date_i18n( 'd.m.Y H:i:s', $timestamp + get_option( 'gmt_offset' ) * 3600 ) )
+									);
+								}
+								?>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">
+							<?php esc_html_e( 'Google Safe Browsing', 'antivirus' ); ?>
 						</th>
 						<td>
 							<fieldset>
-								<label for="av_cronjob_enable">
-									<input type="checkbox" name="av_cronjob_enable" id="av_cronjob_enable"
-										   value="1" <?php checked( self::_get_option( 'cronjob_enable' ), 1 ); ?> />
-									<?php esc_html_e( 'Check the theme templates for malware', 'antivirus' ); ?>
-								</label>
-
-								<p class="description">
-									<?php
-									$timestamp = wp_next_scheduled( 'antivirus_daily_cronjob' );
-									if ( $timestamp ) {
-										echo sprintf(
-											'%s: %s',
-											esc_html__( 'Next Run', 'antivirus' ),
-											esc_html( date_i18n( 'd.m.Y H:i:s', $timestamp + get_option( 'gmt_offset' ) * 3600 ) )
-										);
-									}
-									?>
-								</p>
-							</fieldset>
-
-							<br/>
-
-							<fieldset>
+								<input type="checkbox" name="av_safe_browsing" id="av_safe_browsing"
+									   value="1" <?php checked( self::_get_option( 'safe_browsing' ), 1 ); ?> />
 								<label for="av_safe_browsing">
-									<input type="checkbox" name="av_safe_browsing" id="av_safe_browsing"
-										   value="1" <?php checked( self::_get_option( 'safe_browsing' ), 1 ); ?> />
-									<?php esc_html_e( 'Malware detection by Google Safe Browsing', 'antivirus' ); ?>
+									<?php esc_html_e( 'Enable malware detection by Google Safe Browsing', 'antivirus' ); ?>
 								</label>
-
 								<p class="description">
 									<?php
 									esc_html_e( 'Diagnosis and notification in suspicion case.', 'antivirus' );
@@ -764,50 +808,66 @@ class AntiVirus {
 									);
 									?>
 								</p>
-
-								<br/>
-
+								<br>
 								<label for="av_safe_browsing_key">
 									<?php esc_html_e( 'Safe Browsing API key', 'antivirus' ); ?>
 								</label>
 								<br/>
-								<input type="text" name="av_safe_browsing_key" id="av_safe_browsing_key" size="45"
+								<input type="text" name="av_safe_browsing_key" id="av_safe_browsing_key" size="45" required
 									   value="<?php echo esc_attr( self::_get_option( 'safe_browsing_key' ) ); ?>" />
-
 								<p class="description">
 									<?php
-									esc_html_e( 'Provide a custom key for the Google Safe Browsing API (v4). If this value is left empty, a fallback will be used. However, to ensure valid results due to rate limitations, it is recommended to use your own key.', 'antivirus' );
+									printf(
+										'%1$s %2$s<br>%3$s',
+										esc_html__( 'Provide a custom key for the Google Safe Browsing API (v4).', 'antivirus' ),
+										wp_kses(
+											__( 'A key is <em>required</em> in order to use this check.', 'antivirus' ),
+											array( 'em' => array() )
+										),
+										wp_kses(
+											sprintf(
+												/* translators: First placeholder (%1$s) starting link tag to the documentation page, second placeholder (%2$s) closing link tag */
+												__( 'See official %1$sdocumentation%2$s from Google.', 'antivirus' ),
+												'<a href="https://cloud.google.com/docs/authentication/api-keys">',
+												'</a>'
+											),
+											array( 'a' => array( 'href' => array() ) )
+										)
+									);
 									?>
 								</p>
 							</fieldset>
-
-							<br/>
-
-							<fieldset>
-								<label for="av_checksum_verifier">
-									<input type="checkbox" name="av_checksum_verifier" id="av_checksum_verifier"
-										   value="1" <?php checked( self::_get_option( 'checksum_verifier' ), 1 ); ?> />
-									<?php esc_html_e( 'Checksum verification of WordPress core files', 'antivirus' ); ?>
-								</label>
-
-								<p class="description">
-									<?php esc_html_e( 'Matches checksums of all WordPress core files against the values provided by the official API.', 'antivirus' ); ?>
-								</p>
-							</fieldset>
-
-							<br/>
-
-							<fieldset>
-								<label for="av_notify_email"><?php esc_html_e( 'Email address for notifications', 'antivirus' ); ?></label>
-								<input type="text" name="av_notify_email" id="av_notify_email"
-									   value="<?php echo esc_attr( self::_get_option( 'notify_email' ) ); ?>"
-									   class="regular-text"
-									   placeholder="<?php esc_attr_e( 'Email address for notifications', 'antivirus' ); ?>" />
-
-								<p class="description">
-									<?php esc_html_e( 'If the field is empty, the blog admin will be notified.', 'antivirus' ); ?>
-								</p>
-							</fieldset>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">
+							<label for="av_checksum_verifier">
+								<?php esc_html_e( 'Checksum verification', 'antivirus' ); ?>
+							</label>
+						</th>
+						<td>
+							<input type="checkbox" name="av_checksum_verifier" id="av_checksum_verifier"
+								   value="1" <?php checked( self::_get_option( 'checksum_verifier' ), 1 ); ?> />
+							<label for="av_checksum_verifier">
+								<?php esc_html_e( 'Enable checksum verification of WordPress core files', 'antivirus' ); ?>
+							</label>
+							<p class="description">
+								<?php esc_html_e( 'Matches checksums of all WordPress core files against the values provided by the official API.', 'antivirus' ); ?>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">
+							<label for="av_notify_email"><?php esc_html_e( 'Email address for notifications', 'antivirus' ); ?></label>
+						</th>
+						<td>
+							<input type="text" name="av_notify_email" id="av_notify_email"
+								   value="<?php echo esc_attr( self::_get_option( 'notify_email' ) ); ?>"
+								   class="regular-text"
+								   placeholder="<?php esc_attr_e( 'Email address for notifications', 'antivirus' ); ?>" />
+							<p class="description">
+								<?php esc_html_e( 'If the field is empty, the blog admin will be notified.', 'antivirus' ); ?>
+							</p>
 						</td>
 					</tr>
 
@@ -841,46 +901,12 @@ class AntiVirus {
 							?>
 						</td>
 					</tr>
+					</tbody>
 				</table>
 			</form>
+
+			<?php endif; ?>
 		</div>
 		<?php
-	}
-
-	/**
-	 * Show admin notice for Safe Browsing use without API key.
-	 *
-	 * @since 1.4.3
-	 */
-	private static function show_safebrowsing_notice() {
-		printf(
-			'<div class="notice notice-warning is-dismissible"><p><strong>%1$s</strong></p><p>%2$s</p><p>%3$s %4$s</p></div>',
-			esc_html( 'No Safe Browsing API key provided for AntiVirus', 'antivirus' ),
-			esc_html( 'Google Safe Browsing check is enabled without a custom API key. The built-in key is no longer supported and will be be removed with the next release of AntiVirus.', 'antivirus' ),
-			wp_kses(
-				sprintf(
-					/* translators: First placeholder (%1$s) starting link tag to the plugin settings page, second placeholder (%2$s) closing link tag */
-					__( 'If you want to continue using this feature, please provide an API key using the %1$sAntiVirus settings page%2$s.', 'antivirus' ),
-					'<a href="' . esc_attr( add_query_arg( array( 'page' => 'antivirus' ), admin_url( '/options-general.php' ) ) ) . '">',
-					'</a>'
-				),
-				array( 'a' => array( 'href' => array() ) )
-			),
-			wp_kses(
-				sprintf(
-					/* translators: First placeholder (%1$s) starting link tag to the documentation page, second placeholder (%2$s) closing link tag */
-					__( 'See official %1$sdocumentation%2$s from Google.', 'antivirus' ),
-					'<a href="https://cloud.google.com/docs/authentication/api-keys" target="_blank" rel="noopener noreferrer">',
-					'</a>'
-				),
-				array(
-					'a' => array(
-						'href' => array(),
-						'target' => array(),
-						'rel' => array(),
-					),
-				)
-			)
-		);
 	}
 }

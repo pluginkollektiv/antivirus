@@ -4,8 +4,8 @@
 * Donate link:       https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=TD4AMD2D8EMZW
 * Requires at least: 4.1
 * Requires PHP:      5.2
-* Tested up to:      6.2
-* Stable tag:        1.4.4
+* Tested up to:      6.4
+* Stable tag:        1.5.0
 * License:           GPLv2 or later
 * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,6 +40,12 @@ A complete documentation is available on the [AntiVirus website](https://antivir
 
 
 ## Changelog ##
+
+### 1.5.0 ###
+* Fix deprecation warning with PHP 8.1+ (#126) (#127)
+* Enforce use of custom Safe Browsing API key (#104) (#108)
+* Separate settings page from manual scanning with overhauled UI (#107)
+* Update JS to ES2015 (IE11 no longer supported) (#32)
 
 ### 1.4.4 ###
 * Fix warning on SafeBrowsing API errors with PHP 8.1+ (#123)
@@ -89,6 +95,11 @@ A complete documentation is available on the [AntiVirus website](https://antivir
 For the complete changelog, check out our [GitHub repository](https://github.com/pluginkollektiv/antivirus).
 
 ## Upgrade Notice ##
+
+### 1.5.0 ###
+This update finally removed support for Safe Browsing API without an API key.
+If you are using this feature and did not provide your own key yet, it will be disabled.
+Can be easily enabled again, just enter a key.
 
 ### 1.4.4 ###
 This is a small maintenance release which fixes a PHP warning on Safe Browsing API errors with PHP 8.1.

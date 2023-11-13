@@ -1,5 +1,11 @@
 # Changelog
 
+### 1.5.0 ###
+* Replace `FILTER_SANIITZE_STRING` deprecated since PHP 8.1+ (#126) (#127)
+* Enforce use of custom Safe Browsing API key (#104) (#108)
+* Separate settings page from manual scanning with overhauled UI (#107)
+* Update JS to ES2015 (IE11 no longer supported) (#32)
+
 ### 1.4.4 ###
 * Fix warning on SafeBrowsing API errors with PHP 8.1+ (#123)
 * Tested up to WordPress 6.2

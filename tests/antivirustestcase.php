@@ -64,7 +64,7 @@ abstract class AntiVirus_TestCase extends WP_Mock\Tools\TestCase {
 						implode(
 							'&',
 							array_map(
-								function( $k, $v ) {
+								function ( $k, $v ) {
 									return urlencode( $k ) . '=' . urlencode( $v );
 								},
 								array_keys( $args ),
