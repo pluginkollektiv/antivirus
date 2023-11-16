@@ -85,22 +85,23 @@ jQuery(document).ready(($) => {
 									}
 
 									// Get table column above the dismiss button.
-									const parent = $(
+									const issue = $(
 										'#av-dismiss-' + res.data[0]
-									)
-										.parent()
-										.parent();
+									).parent();
+									const col = issue.parent();
 
-									// Hide code details and mark row as "OK".
-									parent.find('p').hide('slow').remove();
-									parent
-										.parent()
-										.addClass('av-status-ok')
-										.removeClass('av-status-warning');
-									parent
-										.parent()
-										.find('td.av-status-column')
-										.text(av_settings.texts.ok);
+									// Hide code details and "dismiss" button.
+									issue.hide('slow').remove();
+
+									// Mark row as "OK", if no more issues are present.
+									if (col.find('p').length === 0) {
+										col.parent()
+											.addClass('av-status-ok')
+											.removeClass('av-status-warning');
+										col.parent()
+											.find('td.av-status-column')
+											.text(av_settings.texts.ok);
+									}
 								}
 							);
 
