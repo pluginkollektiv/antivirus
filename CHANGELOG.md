@@ -1,5 +1,8 @@
 # Changelog
 
+### 1.5.1 ###
+* Fix issue with "dismiss" button if multiple warnings are found for one theme file (#135) (#136)
+
 ### 1.5.0 ###
 * Replace `FILTER_SANIITZE_STRING` deprecated since PHP 8.1+ (#126) (#127)
 * Enforce use of custom Safe Browsing API key (#104) (#108)

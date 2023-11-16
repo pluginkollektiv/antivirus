@@ -5,7 +5,7 @@
 * Requires at least: 4.1
 * Requires PHP:      5.2
 * Tested up to:      6.4
-* Stable tag:        1.5.0
+* Stable tag:        1.5.1
 * License:           GPLv2 or later
 * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,6 +40,9 @@ A complete documentation is available on the [AntiVirus website](https://antivir
 
 
 ## Changelog ##
+
+### 1.5.1 ###
+* Fix issue with "dismiss" button if multiple warnings are found for one theme file (#135) (#136)
 
 ### 1.5.0 ###
 * Fix deprecation warning with PHP 8.1+ (#126) (#127)
@@ -96,20 +99,13 @@ For the complete changelog, check out our [GitHub repository](https://github.com
 
 ## Upgrade Notice ##
 
+### 1.5.1 ###
+This is a bugfix release which resolves a UI issue. Recommended for all users.
+
 ### 1.5.0 ###
 This update finally removed support for Safe Browsing API without an API key.
 If you are using this feature and did not provide your own key yet, it will be disabled.
 Can be easily enabled again, just enter a key.
-
-### 1.4.4 ###
-This is a small maintenance release which fixes a PHP warning on Safe Browsing API errors with PHP 8.1.
-
-### 1.4.3 ###
-Please note that we will discontinue providing a built-in API key for the Google Safe Browsing feature.
-If you have enabled this check, please provide your own API key before the next update.
-
-### 1.4.2 ###
-This is a bugfix release removing two checks of the theme scan causing false positives.
 
 ## Screenshots ##
 1. WordPress AntiVirus settings
