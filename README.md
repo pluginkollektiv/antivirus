@@ -4,7 +4,7 @@
 * Donate link:       https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=TD4AMD2D8EMZW
 * Requires at least: 4.1
 * Requires PHP:      5.2
-* Tested up to:      6.4
+* Tested up to:      6.6
 * Stable tag:        1.5.1
 * License:           GPLv2 or later
 * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
