@@ -356,24 +356,15 @@ class AntiVirus {
 			$data['Version']
 		);
 
+		// Sets translated strings for the script.
+		wp_set_script_translations( 'av_script', 'antivirus' );
+
 		// Localize script data.
 		wp_localize_script(
 			'av_script',
 			'av_settings',
 			array(
 				'nonce'  => wp_create_nonce( 'av_ajax_nonce' ),
-				'labels' => array(
-					'dismiss'  => esc_js( __( 'Dismiss', 'antivirus' ) ),
-					'complete' => esc_js( __( 'Scan finished', 'antivirus' ) ),
-					'file'     => esc_js( __( 'Theme File', 'antivirus' ) ),
-					'status'   => esc_js( __( 'Check Status', 'antivirus' ) ),
-				),
-				'texts'  => array(
-					'dismiss' => esc_js( __( 'Dismiss false positive virus detection', 'antivirus' ) ),
-					'ok'      => esc_js( __( '✔ OK', 'antivirus' ) ),
-					'pending' => esc_js( __( 'pending', 'antivirus' ) ),
-					'warning' => esc_js( __( '! Warning', 'antivirus' ) ),
-				),
 			)
 		);
 	}
