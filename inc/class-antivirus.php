@@ -353,7 +353,8 @@ class AntiVirus {
 			'av_script',
 			plugins_url( 'js/script.min.js', ANTIVIRUS_FILE ),
 			array( 'jquery' ),
-			$data['Version']
+			$data['Version'],
+			true
 		);
 
 		// Localize script data.
