@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.5.2 ###
+* Add JavaScript to page footer (#145)
+* Tested up to WordPress 6.7
+
 ### 1.5.1 ###
 * Fix issue with "dismiss" button if multiple warnings are found for one theme file (#135) (#136)
 

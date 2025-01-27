@@ -1,11 +1,11 @@
 # AntiVirus #
 * Contributors:      pluginkollektiv
-* Tags:              antivirus, malware, scanner, phishing, safe browsing, vulnerability
+* Tags:              antivirus, malware, scanner, safe browsing, vulnerability
 * Donate link:       https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=TD4AMD2D8EMZW
 * Requires at least: 4.1
 * Requires PHP:      5.2
 * Tested up to:      6.7
-* Stable tag:        1.5.1
+* Stable tag:        1.5.2
 * License:           GPLv2 or later
 * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,6 +40,10 @@ A complete documentation is available on the [AntiVirus website](https://antivir
 
 
 ## Changelog ##
+
+### 1.5.2 ###
+* Add JavaScript to page footer (#145)
+* Tested up to WordPress 6.7
 
 ### 1.5.1 ###
 * Fix issue with "dismiss" button if multiple warnings are found for one theme file (#135) (#136)
@@ -98,6 +102,9 @@ A complete documentation is available on the [AntiVirus website](https://antivir
 For the complete changelog, check out our [GitHub repository](https://github.com/pluginkollektiv/antivirus).
 
 ## Upgrade Notice ##
+
+### 1.5.2 ###
+Small maintenance release, compatible up to WordPress 6.7.
 
 ### 1.5.1 ###
 This is a bugfix release which resolves a UI issue. Recommended for all users.
