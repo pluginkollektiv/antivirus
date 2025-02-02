@@ -48,7 +48,7 @@ function antivirus_autoload( $class_name ) {
 	if ( in_array( $class_name, array( 'AntiVirus', 'AntiVirus_CheckInternals', 'AntiVirus_SafeBrowsing', 'AntiVirus_ChecksumVerifier' ), true ) ) {
 		require_once sprintf(
 			'%s%s%s%sclass-%s.php',
-			dirname( __FILE__ ),
+			__DIR__,
 			DIRECTORY_SEPARATOR,
 			'inc',
 			DIRECTORY_SEPARATOR,
