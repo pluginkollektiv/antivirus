@@ -51,8 +51,8 @@ class AntiVirus_Test_Plugin extends AntiVirus_TestCase {
 		WP_Mock::expectActionAdded( 'admin_menu', array( AntiVirus::class, 'add_sidebar_menu' ) );
 		WP_Mock::expectActionAdded( 'admin_notices', array( AntiVirus::class, 'show_dashboard_notice' ) );
 		WP_Mock::expectActionAdded( 'deactivate_antivirus.php', array( AntiVirus::class, 'clear_scheduled_hook' ) );
-		WP_Mock::expectActionAdded( 'plugin_row_meta', array( AntiVirus::class, 'init_row_meta' ), 10, 2 );
-		WP_Mock::expectActionAdded( 'plugin_action_links_antivirus.php', array( AntiVirus::class, 'init_action_links' ) );
+		WP_Mock::expectFilterAdded( 'plugin_row_meta', array( AntiVirus::class, 'init_row_meta' ), 10, 2 );
+		WP_Mock::expectFilterAdded( 'plugin_action_links_antivirus.php', array( AntiVirus::class, 'init_action_links' ) );
 		AntiVirus::init();
 		self::assertTrue( true );
 	}

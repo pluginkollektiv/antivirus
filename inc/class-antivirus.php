@@ -59,8 +59,8 @@ class AntiVirus {
 				add_action( 'admin_menu', array( __CLASS__, 'add_sidebar_menu' ) );
 				add_action( 'admin_notices', array( __CLASS__, 'show_dashboard_notice' ) );
 				add_action( 'deactivate_' . self::$base, array( __CLASS__, 'clear_scheduled_hook' ) );
-				add_action( 'plugin_row_meta', array( __CLASS__, 'init_row_meta' ), 10, 2 );
-				add_action( 'plugin_action_links_' . self::$base, array( __CLASS__, 'init_action_links' ) );
+				add_filter( 'plugin_row_meta', array( __CLASS__, 'init_row_meta' ), 10, 2 );
+				add_filter( 'plugin_action_links_' . self::$base, array( __CLASS__, 'init_action_links' ) );
 			}
 		}
 	}
