@@ -170,7 +170,7 @@ class AntiVirus_CheckInternals extends AntiVirus {
 		$line = trim( $line );
 
 		// Make sure the values aren't empty.
-		if ( ! $line || ! isset( $num ) ) {
+		if ( empty( $line ) ) {
 			return false;
 		}
 
