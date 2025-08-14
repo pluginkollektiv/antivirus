@@ -20,7 +20,7 @@ class AntiVirus_CheckInternals extends AntiVirus {
 	/**
 	 * Check blog internals like theme files and the permalink structure.
 	 */
-	public static function check_blog_internals() {
+	public static function check_blog_internals(): void {
 		// Execute checks.
 		if ( ! self::_check_theme_files() && ! self::_check_permalink_structure() ) {
 			return;
@@ -80,7 +80,7 @@ class AntiVirus_CheckInternals extends AntiVirus {
 	 *
 	 * @return array|false Results array or false on failure.
 	 */
-	public static function check_theme_file( $file ) {
+	public static function check_theme_file( string $file ) {
 		// Simple file path check.
 		if ( filter_var( $file, FILTER_SANITIZE_URL ) !== $file ) {
 			return false;
@@ -153,7 +153,7 @@ class AntiVirus_CheckInternals extends AntiVirus {
 	 *
 	 * @return string Regular expression.
 	 */
-	private static function _php_match_pattern() {
+	private static function _php_match_pattern(): string {
 		return '/\b(assert|file_get_contents|curl_exec|popen|proc_open|unserialize|eval|base64_encode|base64_decode|create_function|exec|shell_exec|system|passthru|ob_get_contents|file|curl_init|readfile|fopen|fsockopen|pfsockopen|fclose|fread|file_put_contents)\b\s*?\(/';
 	}
 
@@ -165,12 +165,12 @@ class AntiVirus_CheckInternals extends AntiVirus {
 	 *
 	 * @return array|bool An array of matched lines or false on failure.
 	 */
-	private static function _check_file_line( $line, $num ) {
+	private static function _check_file_line( string $line, int $num ) {
 		// Trim value.
-		$line = trim( (string) $line );
+		$line = trim( $line );
 
 		// Make sure the values aren't empty.
-		if ( ! $line || ! isset( $num ) ) {
+		if ( empty( $line ) ) {
 			return false;
 		}
 
@@ -247,7 +247,7 @@ class AntiVirus_CheckInternals extends AntiVirus {
 	 *
 	 * @return array An array containing all the lines of the file.
 	 */
-	private static function _get_file_content( $file ) {
+	private static function _get_file_content( string $file ): array {
 		return file( WP_CONTENT_DIR . $file );
 	}
 
@@ -260,7 +260,7 @@ class AntiVirus_CheckInternals extends AntiVirus {
 	 *
 	 * @return string|false The shortened string or false on failure.
 	 */
-	private static function _get_dotted_line( $line, $tag, $max = 100 ) {
+	private static function _get_dotted_line( string $line, string $tag, int $max = 100 ) {
 		// No values?
 		if ( ! $line || ! $tag ) {
 			return false;

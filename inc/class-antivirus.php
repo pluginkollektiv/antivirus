@@ -26,7 +26,7 @@ class AntiVirus {
 	 * @deprecated Since 1.4, use init() instead.
 	 * @see AntiVirus::init()
 	 */
-	public static function instance() {
+	public static function instance(): void {
 		self::init();
 	}
 
@@ -35,7 +35,7 @@ class AntiVirus {
 	 *
 	 * @since 1.4
 	 */
-	public static function init() {
+	public static function init(): void {
 		// Don't run during autosave or XML-RPC request.
 		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ( defined( 'XMLRPC_REQUEST' ) && XMLRPC_REQUEST ) ) {
 			return;
@@ -85,7 +85,7 @@ class AntiVirus {
 	 *
 	 * @return array The modified action links array.
 	 */
-	public static function init_action_links( $data ) {
+	public static function init_action_links( array $data ): array {
 		// Only add link if user has permissions to view them.
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return $data;
@@ -116,7 +116,7 @@ class AntiVirus {
 	 *
 	 * @return array The modified links array.
 	 */
-	public static function init_row_meta( $data, $page ) {
+	public static function init_row_meta( array $data, string $page ): array {
 		if ( $page !== self::$base ) {
 			return $data;
 		}
@@ -133,7 +133,7 @@ class AntiVirus {
 	/**
 	 * Plugin activation hook.
 	 */
-	public static function activation() {
+	public static function activation(): void {
 		// Add default option.
 		add_option(
 			'antivirus',
@@ -158,14 +158,14 @@ class AntiVirus {
 	/**
 	 * Plugin deactivation hook.
 	 */
-	public static function deactivation() {
+	public static function deactivation(): void {
 		self::clear_scheduled_hook();
 	}
 
 	/**
 	 * Plugin uninstall hook.
 	 */
-	public static function uninstall() {
+	public static function uninstall(): void {
 		delete_option( 'antivirus' );
 	}
 
@@ -175,7 +175,7 @@ class AntiVirus {
 	 * @return array The options array.
 	 * @since 1.4 Extracted from _get_option() for use with _cron_enabled().
 	 */
-	private static function _get_options() {
+	private static function _get_options(): array {
 		return wp_parse_args(
 			get_option( 'antivirus' ),
 			array(
@@ -197,7 +197,7 @@ class AntiVirus {
 	 *
 	 * @return string The option value.
 	 */
-	protected static function _get_option( $field ) {
+	protected static function _get_option( string $field ): string {
 		$options = self::_get_options();
 
 		return empty( $options[ $field ] ) ? '' : $options[ $field ];
@@ -209,7 +209,7 @@ class AntiVirus {
 	 * @param string     $field The option name.
 	 * @param string|int $value The option value.
 	 */
-	protected static function _update_option( $field, $value ) {
+	protected static function _update_option( string $field, $value ): void {
 		self::_update_options(
 			array(
 				$field => $value,
@@ -222,7 +222,7 @@ class AntiVirus {
 	 *
 	 * @param array $data An associative array of option fields and values.
 	 */
-	private static function _update_options( $data ) {
+	private static function _update_options( array $data ): void {
 		update_option(
 			'antivirus',
 			array_merge(
@@ -237,7 +237,7 @@ class AntiVirus {
 	 *
 	 * Schedules the AntiVirus cronjob to run daily.
 	 */
-	private static function _add_scheduled_hook() {
+	private static function _add_scheduled_hook(): void {
 		if ( ! wp_next_scheduled( 'antivirus_daily_cronjob' ) ) {
 			wp_schedule_event(
 				time(),
@@ -255,7 +255,7 @@ class AntiVirus {
 	 * @return bool TRUE, if at least one check is enabled.
 	 * @since 1.4
 	 */
-	private static function _cron_enabled( $options ) {
+	private static function _cron_enabled( array $options ): bool {
 		return ( isset( $options['cronjob_enable'] ) && $options['cronjob_enable'] )
 			|| ( isset( $options['safe_browsing'] ) && $options['safe_browsing'] )
 			|| ( isset( $options['checksum_verifier'] ) && $options['checksum_verifier'] );
@@ -264,7 +264,7 @@ class AntiVirus {
 	/**
 	 * Cancel the daily cronjob.
 	 */
-	public static function clear_scheduled_hook() {
+	public static function clear_scheduled_hook(): void {
 		if ( wp_next_scheduled( 'antivirus_daily_cronjob' ) ) {
 			wp_clear_scheduled_hook( 'antivirus_daily_cronjob' );
 		}
@@ -273,7 +273,7 @@ class AntiVirus {
 	/**
 	 * Cronjob callback.
 	 */
-	public static function do_daily_cronjob() {
+	public static function do_daily_cronjob(): void {
 		// Check the theme and permalinks.
 		if ( self::_get_option( 'cronjob_enable' ) ) {
 			AntiVirus_CheckInternals::check_blog_internals();
@@ -296,7 +296,7 @@ class AntiVirus {
 	 * @param string $subject Subject of the notification email.
 	 * @param string $body    Email body.
 	 */
-	protected static function _send_warning_notification( $subject, $body ) {
+	protected static function _send_warning_notification( string $subject, string $body ): void {
 		// Get recipient email address.
 		$email = self::_get_option( 'notify_email' );
 
@@ -325,7 +325,7 @@ class AntiVirus {
 	/**
 	 * Add sub menu page to the options main menu.
 	 */
-	public static function add_sidebar_menu() {
+	public static function add_sidebar_menu(): void {
 		$page = add_options_page(
 			__( 'AntiVirus', 'antivirus' ),
 			__( 'AntiVirus', 'antivirus' ),
@@ -344,7 +344,7 @@ class AntiVirus {
 	/**
 	 * Enqueue our JavaScript.
 	 */
-	public static function add_enqueue_script() {
+	public static function add_enqueue_script(): void {
 		// Get plugin data.
 		$data = get_plugin_data( ANTIVIRUS_FILE );
 
@@ -382,7 +382,7 @@ class AntiVirus {
 	/**
 	 * Enqueue our stylesheet.
 	 */
-	public static function add_enqueue_style() {
+	public static function add_enqueue_style(): void {
 		// Get plugin data.
 		$data = get_plugin_data( ANTIVIRUS_FILE );
 
@@ -473,7 +473,7 @@ class AntiVirus {
 	 *
 	 * @return string The stripped path.
 	 */
-	private static function _strip_content_dir( $string ) {
+	private static function _strip_content_dir( string $string ): string {
 		return str_replace( array( WP_CONTENT_DIR, 'wp-content' ), '', $string );
 	}
 
@@ -482,7 +482,7 @@ class AntiVirus {
 	 *
 	 * @return array MD5 hashes of whitelisted files.
 	 */
-	protected static function _get_white_list() {
+	protected static function _get_white_list(): array {
 		return explode(
 			':',
 			self::_get_option( 'white_list' )
@@ -492,7 +492,7 @@ class AntiVirus {
 	/**
 	 * Ajax response handler.
 	 */
-	public static function get_ajax_response() {
+	public static function get_ajax_response(): void {
 		// Check referer.
 		check_ajax_referer( 'av_ajax_nonce' );
 
@@ -583,7 +583,7 @@ class AntiVirus {
 	/**
 	 * Show notice on the dashboard.
 	 */
-	public static function show_dashboard_notice() {
+	public static function show_dashboard_notice(): void {
 		// Show admin notice to users who can manage options that Safe Browsing has been disabled because custom API key is missing.
 		if ( current_user_can( 'manage_options' ) && get_transient( 'antivirus-activation-notice' ) ) {
 			printf(
@@ -644,7 +644,7 @@ class AntiVirus {
 	/**
 	 * Print the settings page.
 	 */
-	public static function show_admin_menu() {
+	public static function show_admin_menu(): void {
 		// Save updates.
 		if ( ! empty( $_POST ) ) {
 			// Check the referer.

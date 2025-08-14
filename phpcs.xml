@@ -12,10 +12,7 @@
 
 	<!-- Extend from WPCS ruleset -->
 	<config name="minimum_supported_wp_version" value="4.1"/>
-	<rule ref="WordPress">
-		<!-- we still support PHP 5.2 -->
-		<exclude name="Modernize.FunctionCalls.Dirname.FileConstant"/>
-	</rule>
+	<rule ref="WordPress"/>
 
 	<!-- Verify i18n text domain -->
 	<rule ref="WordPress.WP.I18n">
@@ -30,7 +27,7 @@
 	</rule>
 
 	<!-- PHP compatibility level -->
-	<config name="testVersion" value="5.2-"/>
+	<config name="testVersion" value="7.4-"/>
 	<rule ref="PHPCompatibility">
 		<exclude-pattern>tests</exclude-pattern>
 	</rule>

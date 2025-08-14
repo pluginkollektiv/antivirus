@@ -20,7 +20,7 @@ class AntiVirus_ChecksumVerifier extends AntiVirus {
 	/**
 	 * Perform the check
 	 */
-	public static function verify_files() {
+	public static function verify_files(): void {
 		// Get checksums via API.
 		$checksums = self::get_checksums();
 		if ( ! $checksums ) {
@@ -58,7 +58,7 @@ class AntiVirus_ChecksumVerifier extends AntiVirus {
 	/**
 	 * Get file checksums.
 	 *
-	 * @return  array|boolean  Checksums getting from API or FALSE on errors.
+	 * @return array|boolean Checksums getting from API or FALSE on errors.
 	 */
 	private static function get_checksums() {
 		// Blog information.
@@ -125,13 +125,13 @@ class AntiVirus_ChecksumVerifier extends AntiVirus {
 	/**
 	 * Matching of MD5 hashes
 	 *
-	 * @param array $checksums File checksums.
+	 * @param object $checksums File checksums.
 	 *
 	 * @return  array            File paths
 	 *
 	 * @hook    array  antivirus_checksum_verifier_ignore_files
 	 */
-	private static function match_checksums( $checksums ) {
+	private static function match_checksums( object $checksums ): array {
 		// Ignore files filter.
 		$ignore_files = (array) apply_filters(
 			'antivirus_checksum_verifier_ignore_files',

@@ -20,7 +20,7 @@ class AntiVirus_SafeBrowsing extends AntiVirus {
 	/**
 	 * Pings the Safe Browsing API to see if the website is infected.
 	 */
-	public static function check_safe_browsing() {
+	public static function check_safe_browsing(): void {
 		// Check if API key is provided in config.
 		$key = parent::_get_option( 'safe_browsing_key' );
 		// Opt-out, if no API key was specified.
