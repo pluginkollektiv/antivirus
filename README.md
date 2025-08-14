@@ -38,6 +38,10 @@ A complete documentation is available on the [AntiVirus website](https://antivir
 * Author: [Sergej Müller](https://sergejmueller.github.io/)
 * Maintainers: [pluginkollektiv](https://pluginkollektiv.org)
 
+## Frequently Asked Questions ##
+
+### How can I report security bugs? ###
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team helps validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/9e5fb3ed-fe33-4a1b-9c28-5a8b1b8d5eee)
 
 ## Changelog ##
 
