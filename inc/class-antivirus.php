@@ -135,12 +135,7 @@ class AntiVirus {
 	 */
 	public static function activation(): void {
 		// Add default option.
-		add_option(
-			'antivirus',
-			array(),
-			'',
-			'no'
-		);
+		add_option( 'antivirus', array(), '', false );
 
 		// Add cron schedule.
 		if ( self::_cron_enabled( self::_get_options() ) ) {
