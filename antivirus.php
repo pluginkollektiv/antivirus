@@ -8,7 +8,7 @@
  * Text Domain: antivirus
  * License:     GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
- * Version:     1.5.1
+ * Version:     1.5.2
  *
  * @package AntiVirus
  */
@@ -44,11 +44,11 @@ define( 'ANTIVIRUS_FILE', __FILE__ );
  *
  * @param string $class_name The classname.
  */
-function antivirus_autoload( $class_name ) {
+function antivirus_autoload( string $class_name ): void {
 	if ( in_array( $class_name, array( 'AntiVirus', 'AntiVirus_CheckInternals', 'AntiVirus_SafeBrowsing', 'AntiVirus_ChecksumVerifier' ), true ) ) {
 		require_once sprintf(
 			'%s%s%s%sclass-%s.php',
-			dirname( __FILE__ ),
+			__DIR__,
 			DIRECTORY_SEPARATOR,
 			'inc',
 			DIRECTORY_SEPARATOR,
