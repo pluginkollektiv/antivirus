@@ -757,7 +757,7 @@ class AntiVirus {
 											__( 'For more details read %1$sthe transparency report%2$s.', 'antivirus' ),
 											sprintf(
 												'<a href="https://transparencyreport.google.com/safe-browsing/search?url=%s&hl=%s" target="_blank" rel="noopener noreferrer">',
-												urlencode( get_bloginfo( 'url' ) ),
+												rawurlencode( get_bloginfo( 'url' ) ),
 												substr( get_locale(), 0, 2 )
 											),
 											'</a>'

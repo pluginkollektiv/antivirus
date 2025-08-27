@@ -81,7 +81,7 @@ class AntiVirus_SafeBrowsing extends AntiVirus {
 					sprintf(
 						"%s\r\nhttps://transparencyreport.google.com/safe-browsing/search?url=%s&hl=%s",
 						esc_html__( 'Google has found a problem on your page and probably listed it on a blacklist. It is likely that your website or your hosting account has been hacked and malware or phishing code was installed. We recommend to check your site. For more details please check the Google Safe Browsing diagnostic page:', 'antivirus' ),
-						urlencode( get_bloginfo( 'url' ) ),
+						rawurlencode( get_bloginfo( 'url' ) ),
 						substr( get_locale(), 0, 2 )
 					)
 				);
