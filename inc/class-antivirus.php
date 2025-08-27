@@ -18,7 +18,7 @@ class AntiVirus {
 	 *
 	 * @var string
 	 */
-	private static $base;
+	private static string $base;
 
 	/**
 	 * Pseudo constructor.
