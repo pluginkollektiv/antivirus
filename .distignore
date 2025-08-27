@@ -20,6 +20,7 @@
 /package-lock.json
 /composer.lock
 /phpcs.xml
+/phpstan.neon
 /phpunit.xml
 /sonar-project.properties
 /tests-clover.xml
