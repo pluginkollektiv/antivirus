@@ -17,7 +17,9 @@
 	<!-- Verify i18n text domain -->
 	<rule ref="WordPress.WP.I18n">
 		<properties>
-			<property name="text_domain" type="array" value="antivirus"/>
+			<property name="text_domain" type="array">
+				<element value="antivirus"/>
+			</property>
 		</properties>
 	</rule>
 
