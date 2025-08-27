@@ -81,7 +81,7 @@ class AntiVirus_Safebrowsing_Test extends AntiVirus_TestCase {
 		$entries = $request_body->threatInfo->threatEntries;
 		self::assertCount( 1, $entries, 'unexpected number of requested threat entries' );
 		self::assertEquals(
-			urlencode( 'https://antivirus.pluginkollektiv.org/test/' ),
+			'https://antivirus.pluginkollektiv.org/test/',
 			$entries[0]->url,
 			'unexpected blog URL in requested threat entries'
 		);

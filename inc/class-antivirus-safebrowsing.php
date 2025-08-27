@@ -55,7 +55,7 @@ class AntiVirus_SafeBrowsing extends AntiVirus {
 							'platformTypes'    => array( 'ANY_PLATFORM' ),
 							'threatEntryTypes' => array( 'URL' ),
 							'threatEntries'    => array(
-								array( 'url' => urlencode( get_bloginfo( 'url' ) ) ),
+								array( 'url' => get_bloginfo( 'url' ) ),
 							),
 						),
 					)
