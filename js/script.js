@@ -39,7 +39,7 @@ jQuery(document).ready(($) => {
 						'av-status-pending'
 					);
 					row.find('td.av-status-column').text(
-						av_settings.texts.warning
+						wp.i18n.__('! Warning', 'antivirus')
 					);
 
 					// Initialize lines of current file.
@@ -58,9 +58,12 @@ jQuery(document).ready(($) => {
 								'</code> <a href="#" id="av-dismiss-' +
 								md5 +
 								'" class="button" title="' +
-								av_settings.texts.dismiss +
+								wp.i18n.__(
+									'Dismiss false positive virus detection',
+									'antivirus'
+								) +
 								'">' +
-								av_settings.labels.dismiss +
+								wp.i18n.__('Dismiss', 'antivirus') +
 								'</a></p>'
 						);
 
@@ -100,7 +103,9 @@ jQuery(document).ready(($) => {
 											.removeClass('av-status-warning');
 										col.parent()
 											.find('td.av-status-column')
-											.text(av_settings.texts.ok);
+											.text(
+												wp.i18n.__('✔ OK', 'antivirus')
+											);
 									}
 								}
 							);
@@ -113,7 +118,9 @@ jQuery(document).ready(($) => {
 					row.addClass('av-status-ok').removeClass(
 						'av-status-pending'
 					);
-					row.find('td.av-status-column').text(av_settings.texts.ok);
+					row.find('td.av-status-column').text(
+						wp.i18n.__('✔ OK', 'antivirus')
+					);
 				}
 
 				// Increment counter.
@@ -124,7 +131,7 @@ jQuery(document).ready(($) => {
 					$('#av-scan-process')
 						.html(
 							'<span class="av-scan-complete">' +
-								av_settings.labels.complete +
+								wp.i18n.__('Scan finished', 'antivirus') +
 								'</span>'
 						)
 						.fadeOut()
@@ -157,8 +164,12 @@ jQuery(document).ready(($) => {
 					'<table class="wp-list-table widefat fixed striped table-view-list av-scan-results">' +
 					'<thead><tr class="av-status-pending">' +
 					'<td class="av-toggle-column check-column"></td>' +
-					'<th class="av-file-column">Theme File</th>' +
-					'<th class="av-status-column">Check Status</th>' +
+					'<th class="av-file-column">' +
+					wp.i18n.__('Theme File', 'antivirus') +
+					'</th>' +
+					'<th class="av-status-column">' +
+					wp.i18n.__('Check Status', 'antivirus') +
+					'</th>' +
 					'</tr></thead>' +
 					'<tbody>';
 
@@ -187,7 +198,7 @@ jQuery(document).ready(($) => {
 						val +
 						'</td>' +
 						'<td class="av-status-column">' +
-						av_settings.texts.pending +
+						wp.i18n.__('pending', 'antivirus') +
 						'</td>' +
 						'</tr>';
 				});
@@ -196,9 +207,9 @@ jQuery(document).ready(($) => {
 					'</tbody><tfoot><tr>' +
 					'<td class="av-toggle-column check-column"></td>' +
 					'<th class="av-file-column">' +
-					av_settings.labels.file +
+					wp.i18n.__('Theme File', 'antivirus') +
 					'</th><th class="av-status-column">' +
-					av_settings.labels.status +
+					wp.i18n.__('Check Status', 'antivirus') +
 					'</th></tr></tfoot></table>';
 
 				// assign values.
