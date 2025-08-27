@@ -58,7 +58,7 @@ class AntiVirus_ChecksumVerifier extends AntiVirus {
 	/**
 	 * Get file checksums.
 	 *
-	 * @return array|boolean Checksums getting from API or FALSE on errors.
+	 * @return object|boolean Checksums getting from API or FALSE on errors.
 	 */
 	private static function get_checksums() {
 		// Blog information.
