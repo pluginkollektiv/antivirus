@@ -21,16 +21,6 @@ class AntiVirus {
 	private static string $base;
 
 	/**
-	 * Pseudo constructor.
-	 *
-	 * @deprecated Since 1.4, use init() instead.
-	 * @see AntiVirus::init()
-	 */
-	public static function instance(): void {
-		self::init();
-	}
-
-	/**
 	 * Initialize the plugin.
 	 *
 	 * @since 1.4
@@ -63,19 +53,6 @@ class AntiVirus {
 				add_filter( 'plugin_action_links_' . self::$base, array( __CLASS__, 'init_action_links' ) );
 			}
 		}
-	}
-
-	/**
-	 * Constructor.
-	 *
-	 * Should not be called directly,
-	 *
-	 * @deprecated Since 1.4, use init() instead.
-	 * @see AntiVirus::init()
-	 */
-	public function __construct() {
-		// Nothing to construct, just run the initialization for backwards compatibility.
-		self::init();
 	}
 
 	/**
