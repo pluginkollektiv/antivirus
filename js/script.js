@@ -70,16 +70,14 @@ document.addEventListener('DOMContentLoaded', () => {
 				// Increment counter.
 				avFilesLoaded++;
 
-				// Output notification.
 				if (avFilesLoaded >= avFiles.length) {
-					document.getElementById('av-scan-process').innerHTML =
-						'<span class="av-scan-complete">' +
-						wp.i18n.__('Scan finished', 'antivirus') +
-						'</span>';
+					scanSuccess();
 				} else {
+					// Continue with the next file.
 					checkThemeFile(id + 1);
 				}
-			});
+			})
+			.catch(scanFailed);
 	}
 
 	/**
@@ -120,7 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
 						'td.av-status-column'
 					).innerText = wp.i18n.__('✔ OK', 'antivirus');
 				}
-			});
+			})
+			.catch(scanFailed);
 
 		return false;
 	}
@@ -128,9 +127,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	/**
 	 * Trigger a manual scan.
 	 *
+	 * @param {MouseEvent} evt Click event
 	 * @return {boolean} false
 	 */
-	function triggerScan() {
+	function triggerScan(evt) {
+		// Lock the button.
+		evt.target.disabled = true;
+
 		ajaxRequest({
 			_action_request: 'get_theme_files',
 		})
@@ -163,8 +166,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
 				// Start loop through files.
 				checkThemeFile();
-			});
+			})
+			.catch(scanFailed);
 		return false;
+	}
+
+	/**
+	 * Scan success handler.
+	 * Display a success message and re-enable the trigger button.
+	 */
+	function scanSuccess() {
+		document.getElementById('av-scan-process').innerHTML =
+			`<span class="av-scan-complete">${wp.i18n.__('Scan finished', 'antivirus')}</span>`;
+		document.getElementById('av-scan-trigger').disabled = false;
+	}
+
+	/**
+	 * Scan error handler.
+	 * Display an error message and re-enable the trigger button
+	 */
+	function scanFailed() {
+		document.getElementById('av-scan-process').innerHTML =
+			`<span class="av-scan-error">${wp.i18n.__('Scan failed', 'antivirus')}</span>`;
+		document.getElementById('av-scan-trigger').disabled = false;
 	}
 
 	/**

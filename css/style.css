@@ -1,14 +1,25 @@
 /* Scan controls */
 
-span.av-scan-complete {
+span.av-scan-complete,
+span.av-scan-error {
 	background: #fff;
-	border: 1px solid #007017;
+	border-style:solid;
 	border-radius: 3px;
-	color: #008a20;
+	border-width: 1px;
 	display: inline-block;
 	line-height: 2;
 	margin: 0 10px;
 	padding: 0 0.5em;
+}
+
+span.av-scan-complete {
+	border-color: #007017;
+	color: #008a20;
+}
+
+span.av-scan-error {
+	border-color: #701700;
+	color: #8a2000;
 }
 
 #av-scan-process .spinner {

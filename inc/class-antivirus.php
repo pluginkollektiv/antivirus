@@ -694,9 +694,9 @@ class AntiVirus {
 			<?php if ( 'scan' === $current_tab ) : ?>
 
 			<p>
-				<a id="av-scan-trigger" href="#" class="button button-primary">
+				<button id="av-scan-trigger" class="button button-primary">
 					<?php esc_html_e( 'Scan the theme templates now', 'antivirus' ); ?>
-				</a>
+				</button>
 				<span id="av-scan-process"></span>
 			</p>
 
