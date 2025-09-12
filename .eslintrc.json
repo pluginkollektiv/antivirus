@@ -1,8 +1,7 @@
 {
   "extends": "plugin:@wordpress/eslint-plugin/recommended",
   "env": {
-    "browser": true,
-    "jquery": true
+    "browser": true
   },
   "globals": {
     "ajaxurl": "readonly",

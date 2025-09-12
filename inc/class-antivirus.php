@@ -324,7 +324,7 @@ class AntiVirus {
 		wp_enqueue_script(
 			'av_script',
 			plugins_url( 'js/script.min.js', ANTIVIRUS_FILE ),
-			array( 'jquery' ),
+			array(),
 			$data['Version'],
 			true
 		);
