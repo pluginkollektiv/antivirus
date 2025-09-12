@@ -162,7 +162,7 @@ jQuery(document).ready(($) => {
 				// Initialize output value.
 				let output =
 					'<table class="wp-list-table widefat fixed striped table-view-list av-scan-results">' +
-					'<thead><tr class="av-status-pending">' +
+					'<thead><tr>' +
 					'<td class="av-toggle-column check-column"></td>' +
 					'<th class="av-file-column">' +
 					wp.i18n.__('Theme File', 'antivirus') +
@@ -192,7 +192,7 @@ jQuery(document).ready(($) => {
 					output +=
 						'<tr id="av-scan-result-' +
 						i +
-						'">' +
+						'" class="av-status-pending">' +
 						'<td class="av-toggle-column check-column"></td>' +
 						'<td class="av-file-column">' +
 						val +
