@@ -1,5 +1,19 @@
 # Changelog
 
+### 1.6.0 ###
+* Requires PHP 7.4 or later (#149)
+* Requires WordPress 5.0 or later (#153)
+* Translate JavaScript strings using WP i18n API (#139)
+* Correct internal filter registration (#150)
+* Remove deprecated constructor methods (#155)
+* Fix encoding of URLs in SafeBrowsing API requests (#156)
+* Rewrite JavaScripts for settings and manual scan (#157)
+* Lock scan button while scan is running
+* Various internal code improvements
+* Add link to Patchstack mVDP (#151) (#152)
+* Tested up to WordPress 6.8 (#148)
+
+
 ### 1.5.2 ###
 * Add JavaScript to page footer (#145)
 * Tested up to WordPress 6.7

@@ -5,7 +5,7 @@
 * Requires at least: 5.0
 * Requires PHP:      7.4
 * Tested up to:      6.8
-* Stable tag:        1.5.2
+* Stable tag:        1.6.0
 * License:           GPLv2 or later
 * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,19 @@ A complete documentation is available on the [AntiVirus website](https://antivir
 You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team helps validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/9e5fb3ed-fe33-4a1b-9c28-5a8b1b8d5eee)
 
 ## Changelog ##
+
+### 1.5.2 ###
+* Requires PHP 7.4 or later
+* Requires WordPress 5.0 or later
+* Translate JavaScript strings using WP i18n API
+* Correct internal filter registration
+* Remove deprecated constructor methods
+* Fix encoding of URLs in SafeBrowsing API requests
+* Rewrite JavaScripts for settings and manual scan
+* Lock scan button while scan is running
+* Various internal code improvements
+* Add link to Patchstack mVDP
+* Tested up to WordPress 6.8
 
 ### 1.5.2 ###
 * Add JavaScript to page footer (#145)
@@ -106,6 +119,9 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 For the complete changelog, check out our [GitHub repository](https://github.com/pluginkollektiv/antivirus).
 
 ## Upgrade Notice ##
+
+### 1.6.0 ###
+This version requires at least PHP 7.4 and WordPress 5.0
 
 ### 1.5.2 ###
 Small maintenance release, compatible up to WordPress 6.7.
