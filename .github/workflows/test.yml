@@ -23,7 +23,7 @@ jobs:
           composer test
           sed -i 's#'$GITHUB_WORKSPACE'#/github/workspace#g' tests-*.xml
       - name: SonarCloud Scan
-        uses: sonarsource/sonarqube-scan-action@v5
+        uses: sonarsource/sonarqube-scan-action@v6
         if: matrix.php == '8.2' && env.SONAR_TOKEN != ''
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
