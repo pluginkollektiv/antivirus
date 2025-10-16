@@ -50,15 +50,21 @@ document.addEventListener('DOMContentLoaded', () => {
 							.replace(/@span@/g, '<span>')
 							.replace(/@\/span@/g, '</span>');
 
-						row.querySelector('td.av-file-column').innerHTML +=
-							`<p><code>${line}</code> <a href="#" id="av-dismiss-${md5}" class="button" ` +
-							`title="${wp.i18n.__('Dismiss false positive virus detection', 'antivirus')}">` +
-							wp.i18n.__('Dismiss', 'antivirus') +
-							'</a></p>';
-
-						document
-							.getElementById(`av-dismiss-${md5}`)
-							?.addEventListener('click', handleDismiss);
+						const p = document.createElement('p');
+						const code = document.createElement('code');
+						code.innerHTML = line;
+						const btn = document.createElement('a');
+						btn.id = `av-dismiss-${md5}`;
+						btn.href = '#';
+						btn.classList.add('button');
+						btn.title = wp.i18n.__(
+							'Dismiss false positive virus detection',
+							'antivirus'
+						);
+						btn.innerText = wp.i18n.__('Dismiss', 'antivirus');
+						btn.addEventListener('click', handleDismiss);
+						p.append(code, btn);
+						row.querySelector('td.av-file-column').append(p);
 					}
 				} else {
 					const row = document.getElementById(`av-scan-result-${id}`);
