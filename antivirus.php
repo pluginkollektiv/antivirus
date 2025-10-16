@@ -5,7 +5,7 @@
  * Description:       Security plugin to protect your blog or website against exploits and spam injections.
  * Author:            pluginkollektiv
  * Author URI:        https://pluginkollektiv.org
- * Version:           1.6.0
+ * Version:           1.6.1
  * Requires at least: 5.0
  * Requires PHP:      7.4
  * License:           GPLv2 or later

@@ -5,7 +5,7 @@
 * Requires at least: 5.0
 * Requires PHP:      7.4
 * Tested up to:      6.8
-* Stable tag:        1.6.0
+* Stable tag:        1.6.1
 * License:           GPLv2 or later
 * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,7 +45,10 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 ## Changelog ##
 
-### 1.5.2 ###
+### 1.6.1 ###
+* Fixed issue with "dismiss" button if multiple warnings are found for one theme file
+
+### 1.6.0 ###
 * Requires PHP 7.4 or later
 * Requires WordPress 5.0 or later
 * Translate JavaScript strings using WP i18n API
@@ -119,6 +122,9 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 For the complete changelog, check out our [GitHub repository](https://github.com/pluginkollektiv/antivirus).
 
 ## Upgrade Notice ##
+
+### 1.6.1 ###
+This is a bugfix release which resolves a UI issue. Recommended for all users.
 
 ### 1.6.0 ###
 This version requires at least PHP 7.4 and WordPress 5.0

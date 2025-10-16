@@ -1,5 +1,8 @@
 # Changelog
 
+### 1.6.1 ###
+* Fixed issue with "dismiss" button if multiple warnings are found for one theme file (#161) (#162)
+
 ### 1.6.0 ###
 * Requires PHP 7.4 or later (#149)
 * Requires WordPress 5.0 or later (#153)
