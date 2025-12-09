@@ -42,10 +42,10 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: '22'
+          node-version: '24'
       - name: Install
         run: |
           composer install --no-interaction
-          npm ci
+          npm ci --ignore-scripts
       - name: Code style checks for PHP, JS and CSS
         run: composer lint-all
