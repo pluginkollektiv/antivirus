@@ -10,12 +10,12 @@
 # Files
 /.distignore
 /.editorconfig
-/.eslintrc.json
 /.gitattributes
 /.gitignore
 /.stylelintrc.json
 /.travis.yml
 /composer.json
+/eslint.config.mjs
 /package.json
 /package-lock.json
 /composer.lock
