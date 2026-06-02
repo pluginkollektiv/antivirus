@@ -70,13 +70,13 @@ class AntiVirus {
 			array(
 				sprintf(
 					'<a href="%s">%s</a>',
-					add_query_arg(
+					esc_url( add_query_arg(
 						array(
 							'page' => 'antivirus',
 						),
 						admin_url( 'options-general.php' )
-					),
-					__( 'Settings', 'antivirus' )
+					) ),
+					esc_html__( 'Settings', 'antivirus' )
 				),
 			)
 		);
