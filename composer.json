@@ -17,7 +17,7 @@
     "phpunit/phpunit": "^9.6",
     "squizlabs/php_codesniffer": "^3.13",
     "szepeviktor/phpstan-wordpress": "^v2.0",
-    "wp-coding-standards/wpcs": "^3.3"
+    "wp-coding-standards/wpcs": "^3.4"
   },
   "scripts": {
     "post-install-cmd": [
