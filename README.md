@@ -5,7 +5,7 @@
 * Requires at least: 5.0
 * Requires PHP:      7.4
 * Tested up to:      7.1
-* Stable tag:        1.6.1
+* Stable tag:        1.6.2
 * License:           GPLv2 or later
 * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,9 @@ A complete documentation is available on the [AntiVirus website](https://antivir
 You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team helps validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/9e5fb3ed-fe33-4a1b-9c28-5a8b1b8d5eee)
 
 ## Changelog ##
+* Properly escape some URL arguments in plugin links
+* Tested with PHP 8.5
+* Tested up to WordPress 7.1
 
 ### 1.6.1 ###
 * Fixed issue with "dismiss" button if multiple warnings are found for one theme file

@@ -1,5 +1,10 @@
 # Changelog
 
+### 1.6.2 ###
+* Properly escape some URL arguments in plugin links (#169)
+* Tested with PHP 8.5
+* Tested up to WordPress 7.1 (#170)
+
 ### 1.6.1 ###
 * Fixed issue with "dismiss" button if multiple warnings are found for one theme file (#161) (#162)
 
