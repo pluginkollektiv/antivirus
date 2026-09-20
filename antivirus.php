@@ -17,7 +17,7 @@
 
 /*
 Copyright (C)  2009-2015 Sergej Müller
-Copyright (C)  2016-2025 pluginkollektiv
+Copyright (C)  2016-2026 pluginkollektiv
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -35,9 +35,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 */
 
 // Make sure we don't expose any info if called directly.
-if ( ! class_exists( 'WP' ) ) {
-	die();
-}
+defined( 'ABSPATH' ) || exit;
 
 define( 'ANTIVIRUS_FILE', __FILE__ );
 
